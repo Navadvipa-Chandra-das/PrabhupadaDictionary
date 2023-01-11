@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PrabhupadaDictionaryWindow</class>
+ <widget class="QMainWindow" name="PrabhupadaDictionaryWindow">
+  <property name="windowTitle" stdset="0">
+   <string>MainWindow</string>
+  </property>
+  <property name="minimumSize" stdset="0">
+   <size>
+    <width>320</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="geometry" stdset="0">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="vlPrabhuadaMain">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3,3">
+      <item>
+       <widget class="QSpinBox" name="sbFontSize">
+        <property name="value" stdset="0">
+         <number>14</number>
+        </property>
+        <property name="minimum" stdset="0">
+         <number>14</number>
+        </property>
+        <property name="maximum" stdset="0">
+         <number>24</number>
+        </property>
+        <property name="alignment" stdset="0">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="toolTip" stdset="0">
+         <string>Font size</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cbLanguage">
+        <property name="toolTip" stdset="0">
+         <string>Language dictionary</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cbLanguageUI">
+        <property name="toolTip" stdset="0">
+         <string>Language user interface</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="vlDictionary">
+      <item>
+       <widget class="QTableView" name="tbvPrabhupadaDictionary">
+        <property name="font" stdset="0">
+         <font>
+          <family>Gaura Times</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSplitter" name="splSanskritTranslate">
+        <property name="orientation" stdset="0">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="childrenCollapsible" stdset="0">
+         <bool>false</bool>
+        </property>
+        <widget class="QLineEdit" name="leSanskrit">
+         <property name="whatsThis" stdset="0">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search string for Sanskrit!&lt;/p&gt;&lt;p&gt;You can use regular expressions!&lt;/p&gt;&lt;p&gt;For example muni|rishi !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="toolTip" stdset="0">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search Sanskrit!&lt;br/&gt;Type and press enter!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="font" stdset="0">
+          <font>
+           <family>Gaura Times</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="leTranslate">
+         <property name="whatsThis" stdset="0">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search bar for translation!&lt;/p&gt;&lt;p&gt;You can use regular expressions!&lt;/p&gt;&lt;p&gt;For example, a teacher|sage !&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="toolTip" stdset="0">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search Translate!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="font" stdset="0">
+          <font>
+           <family>Gaura Times</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="mbPrabupadaDictionary">
+   <property name="sizePolicy" stdset="0">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="geometry" stdset="0">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>320</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAction">
+    <property name="title" stdset="0">
+     <string>&amp;Action</string>
+    </property>
+    <addaction name="actionFind"/>
+    <addaction name="actionCase_Sensitive"/>
+    <addaction name="actionDelete"/>
+    <addaction name="actionInsert"/>
+    <addaction name="actionRemove_Duplicates"/>
+    <addaction name="actionWhats_This_mode"/>
+   </widget>
+   <widget class="QMenu" name="menuSet_Bookmark">
+    <property name="title" stdset="0">
+     <string>&amp;Set Bookmark</string>
+    </property>
+    <addaction name="actionSet_Bookmark_0"/>
+    <addaction name="actionSet_Bookmark_1"/>
+    <addaction name="actionSet_Bookmark_2"/>
+    <addaction name="actionSet_Bookmark_3"/>
+    <addaction name="actionSet_Bookmark_4"/>
+    <addaction name="actionSet_Bookmark_5"/>
+    <addaction name="actionSet_Bookmark_6"/>
+    <addaction name="actionSet_Bookmark_7"/>
+    <addaction name="actionSet_Bookmark_8"/>
+    <addaction name="actionSet_Bookmark_9"/>
+   </widget>
+   <widget class="QMenu" name="menuGo_Bookmarks">
+    <property name="title" stdset="0">
+     <string>&amp;Go Bookmarks</string>
+    </property>
+    <addaction name="actionGo_to_ookmark_0"/>
+    <addaction name="actionGo_to_bookmark_1"/>
+    <addaction name="actionGo_to_bookmark_2"/>
+    <addaction name="actionGo_to_bookmark_3"/>
+    <addaction name="actionGo_to_bookmark_4"/>
+    <addaction name="actionGo_to_bookmark_5"/>
+    <addaction name="actionGo_to_bookmark_6"/>
+    <addaction name="actionGo_to_bookmark_7"/>
+    <addaction name="actionGo_to_bookmark_8"/>
+    <addaction name="actionGo_to_bookmark_9"/>
+   </widget>
+   <addaction name="menuAction"/>
+   <addaction name="menuSet_Bookmark"/>
+   <addaction name="menuGo_Bookmarks"/>
+  </widget>
+  <widget class="QToolBar" name="tbPrabhupada">
+   <property name="toolButtonStyle" stdset="0">
+    <enum>Qt::ToolButtonFollowStyle</enum>
+   </property>
+   <property name="orientation" stdset="0">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="floatable" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle" stdset="0">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionDelete"/>
+   <addaction name="actionFind"/>
+   <addaction name="actionInsert"/>
+   <addaction name="actionWhats_This_mode"/>
+  </widget>
+  <action name="actionFind">
+   <property name="text" stdset="0">
+    <string>&amp;Find</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Return</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;Find</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/Find.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="actionCase_Sensitive">
+   <property name="text" stdset="0">
+    <string>&amp;Case Sensitive</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;Case Sensitive</string>
+   </property>
+   <property name="checkable" stdset="0">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text" stdset="0">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Del</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/Delete.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="actionInsert">
+   <property name="text" stdset="0">
+    <string>&amp;Insert</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Ins</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;Insert</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/Insert.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="actionRemove_Duplicates">
+   <property name="text" stdset="0">
+    <string>&amp;Remove Duplicates</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;Remove Duplicates</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_0">
+   <property name="text" stdset="0">
+    <string>Set bookmark 0</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+0</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_1">
+   <property name="text" stdset="0">
+    <string>Set bookmark 1</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+1</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_2">
+   <property name="text" stdset="0">
+    <string>Set bookmark 2</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+2</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_3">
+   <property name="text" stdset="0">
+    <string>Set bookmark 3</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+3</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_4">
+   <property name="text" stdset="0">
+    <string>Set bookmark 4</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+4</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_5">
+   <property name="text" stdset="0">
+    <string>Set bookmark 5</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+5</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_6">
+   <property name="text" stdset="0">
+    <string>Set bookmark 6</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+6</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_7">
+   <property name="text" stdset="0">
+    <string>Set bookmark 7</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+7</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_8">
+   <property name="text" stdset="0">
+    <string>Set bookmark 8</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+₽</string>
+   </property>
+  </action>
+  <action name="actionSet_Bookmark_9">
+   <property name="text" stdset="0">
+    <string>Set bookmark 9</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+9</string>
+   </property>
+  </action>
+  <action name="actionGo_to_ookmark_0">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 0</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+0</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_1">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 1</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_2">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 2</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+2</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_3">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 3</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+3</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_4">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 4</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+4</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_5">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 5</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_6">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 6</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+6</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_7">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 7</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+7</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_8">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 8</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+8</string>
+   </property>
+  </action>
+  <action name="actionGo_to_bookmark_9">
+   <property name="text" stdset="0">
+    <string>Go to bookmark 9</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+9</string>
+   </property>
+  </action>
+  <action name="actionWhats_This_mode">
+   <property name="text" stdset="0">
+    <string>&amp;Whats This mode</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+F1</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;Whats This mode</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/WhatsThis.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>tbvPrabhupadaDictionary</tabstop>
+  <tabstop>leSanskrit</tabstop>
+  <tabstop>leTranslate</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../PrabhupadaDictionary.qrc"/>
+ </resources>
+ <connections/>
+</ui>
