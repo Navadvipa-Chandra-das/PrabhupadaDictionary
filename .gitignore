@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+NewNavadvipa.sql
+Release\*.*
+Arhive\*.*
