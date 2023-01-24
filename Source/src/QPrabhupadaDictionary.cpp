@@ -3,80 +3,6 @@
 #include <memory>
 #include <algorithm>
 
-QPrabhupadaBukvary PrabhupadaBukvary;
-
-QString QPrabhupadaDictionary::RemoveDiacritics( const QString& S )
-{
-  QString R;
-
-  int L = S.length();
-  for ( int i = 1; i <= L; ++i )
-    R += PrabhupadaBukvary[ S[ i ] ].Bukva();
-  return R;
-}
-
-bool QPrabhupadaDictionary::PrabhupadaComareLess( const QString& A, const QString& B )
-{
-  std::size_t AL = A.length()
-            , BL = B.length();
-
-  int L = std::min( AL, BL );
-
-  int AV, BV;
-  for ( int i = 1; i <= L; ++i ) {
-    AV = PrabhupadaBukvary[ A[ i ] ].Ves();
-    BV = PrabhupadaBukvary[ B[ i ] ].Ves();
-    if ( AV == BV ) {
-      continue;
-    } else if ( AV > BV ) {
-      return false;
-    } else if ( AV < BV ) {
-      return true;
-    }
-  }
-
-  if ( AL < BL )
-    return true;
-
-  return false;
-}
-
-bool QPrabhupadaDictionary::PrabhupadaComareMore( const QString& A, const QString& B )
-{
-  std::size_t AL = A.length()
-            , BL = B.length();
-
-  int L = std::min( AL, BL );
-
-  int AV, BV;
-  for ( int i = 1; i <= L; ++i ) {
-    AV = PrabhupadaBukvary[ A[ i ] ].Ves();
-    BV = PrabhupadaBukvary[ B[ i ] ].Ves();
-    if ( AV == BV ) {
-      continue;
-    } else if ( AV < BV ) {
-      return false;
-    } else if ( AV > BV ) {
-      return true;
-    }
-  }
-
-  if ( AL > BL )
-    return true;
-
-  return false;
-}
-
-void QPrabhupadaDictionary::LoadFromStream( QDataStream &ST )
-{
-  inherited::LoadFromStream( ST );
-}
-
-void QPrabhupadaDictionary::SaveToStream( QDataStream &ST )
-{
-  inherited::SaveToStream( ST );
-}
-
 QStringMap::QStringMap()
   : inherited()
 {
@@ -112,8 +38,8 @@ QFilterSlovar::QFilterSlovar( const QString &ASanskrit
   : m_Sanskrit( ASanskrit )
   , m_Translate( ATranslate )
 {
-  m_SanskritWithoutDiakritik  = RemoveDiacritics( m_Sanskrit );
-  m_TranslateWithoutDiakritik = RemoveDiacritics( m_Translate );
+  m_SanskritWithoutDiakritik  = QPrabhupadaDictionary::RemoveDiacritics( m_Sanskrit );
+  m_TranslateWithoutDiakritik = QPrabhupadaDictionary::RemoveDiacritics( m_Translate );
 }
 
 QFilterSlovar::~QFilterSlovar()
@@ -132,7 +58,7 @@ void QFilterSlovar::SetSanskrit( const QString &Value )
 {
   if ( m_Sanskrit != Value ) {
     m_Sanskrit = Value;
-    m_SanskritWithoutDiakritik = RemoveDiacritics( m_Sanskrit );
+    m_SanskritWithoutDiakritik = QPrabhupadaDictionary::RemoveDiacritics( m_Sanskrit );
   }
 }
 
@@ -140,7 +66,7 @@ void QFilterSlovar::SetTranslate( const QString &Value )
 {
   if ( m_Translate != Value ) {
     m_Translate = Value;
-    m_TranslateWithoutDiakritik = RemoveDiacritics( m_Translate );
+    m_TranslateWithoutDiakritik = QPrabhupadaDictionary::RemoveDiacritics( m_Translate );
   }
 }
 
@@ -330,4 +256,140 @@ void QYazykVector::SaveToStream( QDataStream &ST )
     (*I).m_FilterSlovar.SaveToStream( ST );
     (*I).m_PrabhupadaZakladkaMap.SaveToStream( ST );
   }
+}
+
+QPrabhupadaBukvary QPrabhupadaDictionary::PrabhupadaBukvary;
+const QString QPrabhupadaDictionary::PrabhupadaDictionaryFiles = QString( "./PrabhupadaDictionaryFiles/" );
+
+QPrabhupadaDictionary::QPrabhupadaDictionary()
+  : inherited()
+{
+  PreparePrabhupadaBukvary();
+}
+
+QPrabhupadaDictionary::~QPrabhupadaDictionary()
+{
+}
+
+QString QPrabhupadaDictionary::RemoveDiacritics( const QString& S )
+{
+  QString R;
+
+  int L = S.length();
+  for ( int i = 1; i <= L; ++i )
+    R += PrabhupadaBukvary[ S[ i ] ].Bukva();
+  return R;
+}
+
+bool QPrabhupadaDictionary::PrabhupadaComareLess( const QString& A, const QString& B )
+{
+  std::size_t AL = A.length()
+            , BL = B.length();
+
+  int L = std::min( AL, BL );
+
+  int AV, BV;
+  for ( int i = 1; i <= L; ++i ) {
+    AV = PrabhupadaBukvary[ A[ i ] ].Ves();
+    BV = PrabhupadaBukvary[ B[ i ] ].Ves();
+    if ( AV == BV ) {
+      continue;
+    } else if ( AV > BV ) {
+      return false;
+    } else if ( AV < BV ) {
+      return true;
+    }
+  }
+
+  if ( AL < BL )
+    return true;
+
+  return false;
+}
+
+bool QPrabhupadaDictionary::PrabhupadaComareMore( const QString& A, const QString& B )
+{
+  std::size_t AL = A.length()
+            , BL = B.length();
+
+  int L = std::min( AL, BL );
+
+  int AV, BV;
+  for ( int i = 1; i <= L; ++i ) {
+    AV = PrabhupadaBukvary[ A[ i ] ].Ves();
+    BV = PrabhupadaBukvary[ B[ i ] ].Ves();
+    if ( AV == BV ) {
+      continue;
+    } else if ( AV < BV ) {
+      return false;
+    } else if ( AV > BV ) {
+      return true;
+    }
+  }
+
+  if ( AL > BL )
+    return true;
+
+  return false;
+}
+
+void QPrabhupadaDictionary::PreparePrabhupadaBukvary()
+{
+  QPrabhupadaBukva B;
+
+  QFile AFile( PrabhupadaDictionaryFiles + "PrabhupadaBukvary.txt" );
+  QTextStream AStream( &AFile );
+  AFile.open( QIODevice::ReadOnly );
+
+  int V = 0;
+  QString S;
+  while ( true ) {
+    S = AStream.readLine( 3 );
+    if ( S.length() < 3 )
+      break;
+
+    B.SetBukva( S[ 3 ] );
+    B.SetVes( ++V );
+
+    PrabhupadaBukvary[ S[ 1 ] ] = B;
+  }
+}
+
+void QPrabhupadaDictionary::PrepareYazykAndMaxID()
+{
+  QSqlQuery qu( *DB() );
+  qu.exec( QString( "select\n"
+                    "  a.\"ID\"\n"
+                    ", a.\"YAZYK\"\n"
+                    ", a.\"YAZYK_SLOVO\"\n"
+                    "from\n"
+                    "    %1\"YAZYK\" a\n"
+                    "order by a.\"YAZYK_SLOVO\";" ).formatArg( m_Schema ) );
+
+  QYazykInfo YI;
+  QString ALang;
+
+  while ( qu.next() ) {
+    YI.m_ID         = qu.value( 0 ).toInt();
+    YI.m_Yazyk      = qu.value( 1 ).toString();
+    YI.m_YazykSlovo = qu.value( 2 ).toString();
+
+    m_YazykVector.push_back( YI );
+  }
+
+  qu.clear();
+  qu.exec( QString( "select max( a.\"ID\" ) as \"MAX_ID\" from %1\"SANSKRIT\" a;" ).formatArg( m_Schema ) );
+  qu.next();
+
+  m_MaxID = qu.value( 0 ).toInt();
+}
+
+void QPrabhupadaDictionary::LoadFromStream( QDataStream &ST )
+{
+  inherited::LoadFromStream( ST );
+}
+
+void QPrabhupadaDictionary::SaveToStream( QDataStream &ST )
+{
+  inherited::SaveToStream( ST );
 }

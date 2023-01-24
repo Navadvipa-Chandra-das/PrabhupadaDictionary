@@ -1,7 +1,7 @@
 list(APPEND PrabhupadaDictionary_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaDictionary_build_info.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaLoginWindow.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaDictionaryWindow.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaLoginWindow.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionaryWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.h
@@ -9,13 +9,13 @@ list(APPEND PrabhupadaDictionary_INCLUDES
 
 list(APPEND PrabhupadaDictionary_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaMain.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaLoginWindow.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaDictionaryWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaLoginWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionaryWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/PrabhupadaLoginWindow.ui
-  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/PrabhupadaDictionaryWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaLoginWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaDictionaryWindow.ui
   ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_en.ts
   ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_de.ts
   ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_fr.ts
@@ -48,8 +48,8 @@ COPPERSPICE_RESOURCES(
 
 # run uic to generate source
 COPPERSPICE_RESOURCES(
-  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/PrabhupadaLoginWindow.ui
-  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/PrabhupadaDictionaryWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaLoginWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaDictionaryWindow.ui
 )
 
 add_executable( PrabhupadaDictionary ${PrabhupadaDictionary_SOURCES} )
@@ -114,8 +114,6 @@ else()
 endif()
 
 # копирует файлы в папку установки
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/script.js     DESTINATION ./resources)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/sampleMenu.xml  DESTINATION ./resources)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/ShrilaPrabhupada.jpg DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Sanskrit.db DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/PrabhupadaLila.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)

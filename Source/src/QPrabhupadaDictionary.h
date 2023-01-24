@@ -8,21 +8,6 @@
 #include <map>
 #include <set>
 
-class QPrabhupadaDictionary : public QObject
-{
-  CS_OBJECT( QPrabhupadaDictionary )
-  private:
-    using inherited = QObject;
-  public:
-    static const int RussianIndex = 4;
-    static QString RemoveDiacritics( const QString& S );
-    static bool PrabhupadaComareLess( const QString& A, const QString& B );
-    static bool PrabhupadaComareMore( const QString& A, const QString& B );
-  protected:
-    void LoadFromStream( QDataStream &ST ) override;
-    void SaveToStream( QDataStream &ST ) override;
-}
-
 class QStringMap : public std::map< QString, QString >
 {
   private:
@@ -102,9 +87,9 @@ class QPrabhupadaBukva
     QPrabhupadaBukva();
     ~QPrabhupadaBukva();
     inline QChar32 Bukva() { return m_Bukva; };
-    void SetBukva( QChar32 Value );
+    inline void SetBukva( QChar32 Value ) { m_Bukva = Value; };
     inline int Ves() { return m_Ves; };
-    void SetVes( int Value );
+    inline void SetVes( int Value ) { m_Ves = Value; };
 };
 
 class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
@@ -200,6 +185,35 @@ class QYazykVector : public std::vector< QYazykInfo >
     int FindLang( const QString &S );
     void LoadFromStream( QDataStream &ST );
     void SaveToStream( QDataStream &ST );
+};
+
+//extern const QString PrabhupadaDictionaryFiles;
+//extern QPrabhupadaBukvary PrabhupadaBukvary;
+
+class QPrabhupadaDictionary : public QObject
+{
+  CS_OBJECT( QPrabhupadaDictionary )
+  private:
+    using inherited = QObject;
+  public:
+    QPrabhupadaDictionary();
+    ~QPrabhupadaDictionary();
+    QSqlDatabase *m_DB = nullptr;
+    inline QSqlDatabase *DB() { return m_DB; };
+    QYazykVector m_YazykVector;
+    int m_MaxID;
+    QString m_Schema;
+    static const QString PrabhupadaDictionaryFiles;
+    static QPrabhupadaBukvary PrabhupadaBukvary;
+    static void PreparePrabhupadaBukvary();
+    void PrepareYazykAndMaxID();
+    static const int RussianIndex = 4;
+    static QString RemoveDiacritics( const QString& S );
+    static bool PrabhupadaComareLess( const QString& A, const QString& B );
+    static bool PrabhupadaComareMore( const QString& A, const QString& B );
+  protected:
+    void LoadFromStream( QDataStream &ST ) override;
+    void SaveToStream( QDataStream &ST ) override;
 };
 
 #endif

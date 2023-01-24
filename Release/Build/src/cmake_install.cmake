@@ -48,14 +48,6 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/script.js")
-endif()
-
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/sampleMenu.xml")
-endif()
-
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources/PrabhupadaDictionaryFiles" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/PrabhupadaDictionaryFiles/ShrilaPrabhupada.jpg")
 endif()
 

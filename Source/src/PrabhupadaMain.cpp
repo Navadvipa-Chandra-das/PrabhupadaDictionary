@@ -17,8 +17,8 @@
 *
 ***********************************************************************/
 
-#include <PrabhupadaLoginWindow.h>
-#include <PrabhupadaDictionaryWindow.h>
+#include <QPrabhupadaLoginWindow.h>
+#include <QPrabhupadaDictionaryWindow.h>
 
 #include <QApplication>
 #include <QPrabhupadaStorage.h>
@@ -27,31 +27,34 @@
 int main( int argc, char *argv[] )
 {
   QApplication app( argc, argv );
-  QApplication::setApplicationDisplayName( "Prabhupada Dictionary!" );
+  QApplication::setApplicationDisplayName( QObject::tr( "Словарь Шрилы Прабхупады!" ) );
 
-  PrabhupadaLoginWindow *PrabhupadaLogin = new PrabhupadaLoginWindow();
+  QPrabhupadaLoginWindow *PrabhupadaLoginWindow = new QPrabhupadaLoginWindow();
 
-  PrabhupadaLogin->m_ui->ComboBoxUserName->setEditText( "Navadvipa Chandra das" );
-  PrabhupadaLogin->m_ui->ComboBoxDatabaseName->setEditText( "NewNavadvipa" );
-  PrabhupadaLogin->m_ui->ComboBoxHostName->setEditText( "127.0.0.1" );
-  PrabhupadaLogin->m_ui->ComboBoxPort->setEditText( QString::number( 5432 ) );
+  PrabhupadaLoginWindow->m_ui->ComboBoxUserName->setEditText( "Navadvipa Chandra das" );
+  PrabhupadaLoginWindow->m_ui->ComboBoxDatabaseName->setEditText( "NewNavadvipa" );
+  PrabhupadaLoginWindow->m_ui->ComboBoxHostName->setEditText( "127.0.0.1" );
+  PrabhupadaLoginWindow->m_ui->ComboBoxPort->setEditText( QString::number( 5432 ) );
+  PrabhupadaLoginWindow->m_ui->ComboBoxSchema->setEditText( "\"NewNavadvipa\"" );
 
   QPrabhupadaStorage APrabhupadaStorage;
-  APrabhupadaStorage.LoadObject( PrabhupadaLogin );
+  APrabhupadaStorage.LoadObject( PrabhupadaLoginWindow );
 
   int R, N = 0;
   while ( ++N < 4 ) {
-    R = PrabhupadaLogin->exec();
+    R = PrabhupadaLoginWindow->exec();
     if ( R == QDialog::Accepted ) {
-      QSqlDatabase DB = QSqlDatabase::addDatabase( PrabhupadaLogin->DriverName(), "PrabhupadaDB" );
-      if ( PrabhupadaLogin->Connect( &DB ) ) {
-        PrabhupadaDictionaryWindow PrabhupadaDictionary;
-        PrabhupadaDictionary.setPrabhupadaStorage( &APrabhupadaStorage );
-        APrabhupadaStorage.LoadObject( &PrabhupadaDictionary );
-        PrabhupadaDictionary.show();
+      QSqlDatabase DB = QSqlDatabase::addDatabase( PrabhupadaLoginWindow->DriverName(), "PrabhupadaDB" );
+      if ( PrabhupadaLoginWindow->Connect( &DB ) ) {
+        QPrabhupadaDictionaryWindow PrabhupadaDictionaryWindow;
+        PrabhupadaDictionaryWindow.m_PrabhupadaDictionary.m_Schema = PrabhupadaLoginWindow->Schema();
+        PrabhupadaDictionaryWindow.setPrabhupadaStorage( &APrabhupadaStorage );
+        PrabhupadaDictionaryWindow.PrepareDictionary( &DB );
+        APrabhupadaStorage.LoadObject( &PrabhupadaDictionaryWindow );
+        PrabhupadaDictionaryWindow.show();
         if ( DB.open() ) {
-          APrabhupadaStorage.SaveObject( PrabhupadaLogin );
-          delete PrabhupadaLogin;
+          APrabhupadaStorage.SaveObject( PrabhupadaLoginWindow );
+          delete PrabhupadaLoginWindow;
           APrabhupadaStorage.setDatabase( &DB );
           return app.exec();
         }
@@ -59,6 +62,6 @@ int main( int argc, char *argv[] )
     } else
       break;
   }
-  delete PrabhupadaLogin;
+  delete PrabhupadaLoginWindow;
   return 0;
 }
