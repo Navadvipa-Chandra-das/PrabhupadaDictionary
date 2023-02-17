@@ -27,9 +27,12 @@
 int main( int argc, char *argv[] )
 {
   QApplication app( argc, argv );
-  QApplication::setApplicationDisplayName( QObject::tr( "Словарь Шрилы Прабхупады!" ) );
+  QPrabhupadaDictionary APrabhupadaDictionary;
+  APrabhupadaDictionary.setObjectName( "PrabhupadaDictionary" );
+  QPrabhupadaStorage APrabhupadaStorage;
+  bool ASetLang = !APrabhupadaStorage.LoadObject( &APrabhupadaDictionary );
 
-  QPrabhupadaLoginWindow *PrabhupadaLoginWindow = new QPrabhupadaLoginWindow();
+  QPrabhupadaLoginWindow *PrabhupadaLoginWindow = new QPrabhupadaLoginWindow( &APrabhupadaStorage, &APrabhupadaDictionary );
 
   PrabhupadaLoginWindow->m_ui->ComboBoxUserName->setEditText( "Navadvipa Chandra das" );
   PrabhupadaLoginWindow->m_ui->ComboBoxDatabaseName->setEditText( "NewNavadvipa" );
@@ -37,8 +40,14 @@ int main( int argc, char *argv[] )
   PrabhupadaLoginWindow->m_ui->ComboBoxPort->setEditText( QString::number( 5432 ) );
   PrabhupadaLoginWindow->m_ui->ComboBoxSchema->setEditText( "\"NewNavadvipa\"" );
 
-  QPrabhupadaStorage APrabhupadaStorage;
-  APrabhupadaStorage.LoadObject( PrabhupadaLoginWindow );
+  APrabhupadaDictionary.m_LanguageUIIndex.IncStart();
+  if ( !APrabhupadaStorage.LoadObject( PrabhupadaLoginWindow ) ) {
+    PrabhupadaLoginWindow->m_ui->ComboBoxLanguageUI->addItem( "Русский" );
+  } else {
+    APrabhupadaDictionary.m_LanguageUIIndex.PrepareComboBox( PrabhupadaLoginWindow->m_ui->ComboBoxLanguageUI );
+    PrabhupadaLoginWindow->m_ui->ComboBoxLanguageUI->setCurrentIndex( APrabhupadaDictionary.m_LanguageUIIndex.Index() );
+  }
+  APrabhupadaDictionary.m_LanguageUIIndex.DecStart();
 
   int R, N = 0;
   while ( ++N < 4 ) {
@@ -46,10 +55,16 @@ int main( int argc, char *argv[] )
     if ( R == QDialog::Accepted ) {
       QSqlDatabase DB = QSqlDatabase::addDatabase( PrabhupadaLoginWindow->DriverName(), "PrabhupadaDB" );
       if ( PrabhupadaLoginWindow->Connect( &DB ) ) {
-        QPrabhupadaDictionaryWindow PrabhupadaDictionaryWindow;
-        PrabhupadaDictionaryWindow.m_PrabhupadaDictionary.m_Schema = PrabhupadaLoginWindow->Schema();
+        QPrabhupadaDictionaryWindow PrabhupadaDictionaryWindow( &APrabhupadaStorage, &APrabhupadaDictionary );
+
+        // QObject::connect( &PrabhupadaDictionaryWindow
+        //                 , &QPrabhupadaDictionaryWindow::addYazykSlovo
+        //                 , PrabhupadaLoginWindow
+        //                 , &QPrabhupadaLoginWindow::addYazykSlovo );
+
+        PrabhupadaDictionaryWindow.m_PrabhupadaDictionary->m_Schema = PrabhupadaLoginWindow->Schema();
         PrabhupadaDictionaryWindow.setPrabhupadaStorage( &APrabhupadaStorage );
-        PrabhupadaDictionaryWindow.PrepareDictionary( &DB );
+        PrabhupadaDictionaryWindow.PrepareDictionary( &DB, ASetLang );
         APrabhupadaStorage.LoadObject( &PrabhupadaDictionaryWindow );
         PrabhupadaDictionaryWindow.show();
         if ( DB.open() ) {

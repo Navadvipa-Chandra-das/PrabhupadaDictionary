@@ -16,8 +16,13 @@
 #include <QPrabhupadaStorage.h>
 #include <QSaveFile>
 
-QPrabhupadaDictionaryWindow::QPrabhupadaDictionaryWindow()
+//QTranslator *QPrabhupadaDictionaryWindow::m_Translator = new QTranslator;
+
+QPrabhupadaDictionaryWindow::QPrabhupadaDictionaryWindow( QPrabhupadaStorage *APrabhupadaStorage
+                                                        , QPrabhupadaDictionary *APrabhupadaDictionary )
   : inherited()
+, m_PrabhupadaStorage( APrabhupadaStorage )
+, m_PrabhupadaDictionary( APrabhupadaDictionary )
 {
   m_ui->setupUi( this );
 
@@ -45,16 +50,29 @@ QPrabhupadaDictionaryWindow::QPrabhupadaDictionaryWindow()
                   , &QAction::triggered
                   , this
                   , &QPrabhupadaDictionaryWindow::actionWhats_This_mode );
-
   QObject::connect( m_ui->sbFontSize
                   , ( void ( QSpinBox::* )( int ) )( QSpinBox::valueChanged )
                   , this
                   , &QPrabhupadaDictionaryWindow::FontSizeChanged );
-
+  QObject::connect( m_ui->ComboBoxLanguage
+                  , ( void ( QComboBox::* )( int ) )( QComboBox::currentIndexChanged )
+                  , &m_PrabhupadaDictionary->m_LanguageIndex
+                  , &QLanguageIndex::IndexChanged );
+  QObject::connect( m_ui->ComboBoxLanguageUI
+                  , ( void ( QComboBox::* )( int ) )( QComboBox::currentIndexChanged )
+                  , &m_PrabhupadaDictionary->m_LanguageUIIndex
+                  , &QLanguageIndex::IndexChanged );
+  QObject::connect( &m_PrabhupadaDictionary->m_LanguageIndex
+                  , &QLanguageIndex::SignalIndexChanged
+                  , this
+                  , &QPrabhupadaDictionaryWindow::Language_IndexChanged );
+  QObject::connect( &m_PrabhupadaDictionary->m_LanguageUIIndex
+                  , &QLanguageIndex::SignalIndexChanged
+                  , this
+                  , &QPrabhupadaDictionaryWindow::LanguageUI_IndexChanged );
 #ifdef Q_OS_MAC
   setUnifiedTitleAndToolBarOnMac( true );
 #endif
-
 }
 
 QPrabhupadaDictionaryWindow::~QPrabhupadaDictionaryWindow()
@@ -81,7 +99,6 @@ void QPrabhupadaDictionaryWindow::actionCase_Sensitive( bool ACaseSensitive )
 
 void QPrabhupadaDictionaryWindow::actionDelete()
 {
-  PrabhupadaMessage( QPrabhupadaStorage::KeyStorage( this ) );
 }
 
 void QPrabhupadaDictionaryWindow::actionInsert()
@@ -109,6 +126,13 @@ void QPrabhupadaDictionaryWindow::changeEvent( QEvent *event )
   inherited::changeEvent( event );
 }
 
+void QPrabhupadaDictionaryWindow::closeEvent( QCloseEvent *event )
+{
+  m_PrabhupadaStorage->SaveObject( m_PrabhupadaDictionary );
+
+  inherited::closeEvent( event );
+}
+
 void QPrabhupadaDictionaryWindow::actionExit_Program()
 {
    close();
@@ -132,15 +156,19 @@ void QPrabhupadaDictionaryWindow::SaveToStream( QDataStream &ST )
   ST << m_ui->splSanskritTranslate->saveState();
 }
 
-void QPrabhupadaDictionaryWindow::PrepareDictionary( QSqlDatabase *DB )
+void QPrabhupadaDictionaryWindow::PrepareDictionary( QSqlDatabase *DB, bool ASetLang )
 {
-  m_PrabhupadaDictionary.m_DB = DB;
-  m_PrabhupadaDictionary.PrepareYazykAndMaxID();
+  m_PrabhupadaDictionary->m_DB = DB;
+  m_PrabhupadaDictionary->PrepareYazykAndMaxID();
 //   OrderBy       = QOrderBy::SanskritVozrastanie;
 //   YazykIndex    = RussianIndex;
 //   CaseSensitive = false;
 //
   PrepareLanguages();
+  if ( ASetLang ) {
+    m_PrabhupadaDictionary->m_LanguageIndex.SetIndex( QLanguageIndex::RussianIndex );
+    m_PrabhupadaDictionary->m_LanguageUIIndex.SetIndex( QLanguageIndex::RussianIndex );
+  }
 //
 //   SetFilterStart = true;
 //   FilterSlovar   = FilterSlovar;
@@ -148,10 +176,17 @@ void QPrabhupadaDictionaryWindow::PrepareDictionary( QSqlDatabase *DB )
 
 void QPrabhupadaDictionaryWindow::PrepareLanguages()
 {
-  for ( QYazykVector::iterator i = m_PrabhupadaDictionary.m_YazykVector.begin(); i != m_PrabhupadaDictionary.m_YazykVector.end(); ++i ) {
-    m_ui->ComboBoxLanguage  ->addItem( ( *i ).m_YazykSlovo );
-    m_ui->ComboBoxLanguageUI->addItem( ( *i ).m_YazykSlovo );
-  }
+  // m_PrabhupadaDictionary->IncLanguageUI_Start();
+  // for ( QYazykVector::iterator i = m_PrabhupadaDictionary->m_YazykVector.begin(); i != m_PrabhupadaDictionary->m_YazykVector.end(); ++i ) {
+  //   m_ui->ComboBoxLanguage  ->addItem( ( *i ).m_YazykSlovo );
+  //   m_ui->ComboBoxLanguageUI->addItem( ( *i ).m_YazykSlovo );
+  //   emit addYazykSlovo( ( *i ).m_YazykSlovo );
+  // }
+  // m_ui->ComboBoxLanguageUI->setCurrentIndex( m_PrabhupadaDictionary->LanguageUI_Index() );
+  // m_PrabhupadaDictionary->DecLanguageUI_Start();
+
+  m_PrabhupadaDictionary->m_LanguageIndex.PrepareComboBox( m_ui->ComboBoxLanguage   );
+  m_PrabhupadaDictionary->m_LanguageUIIndex.PrepareComboBox( m_ui->ComboBoxLanguageUI );
   // dmfNewNavadvipa->lmDB->PrepareStrings( cbLanguage->Items );
   // dmfNewNavadvipa->lmDB->MainLanguageID = NNFConst::MainLanguageID;
   // cbLanguage->ItemIndex = dmfNewNavadvipa->lmDB->LanguageIDToItemIndex( dmfNewNavadvipa->lmDB->CurrentLanguageID );
@@ -180,4 +215,14 @@ void QPrabhupadaDictionaryWindow::SetFilterSlovar( QFilterSlovar Value )
   //   edSanskrit->Text = FS.Sanskrit;
   //   edPerevod->Text  = FS.Perevod;
   // }
+}
+
+void QPrabhupadaDictionaryWindow::Language_IndexChanged( int Value )
+{
+  m_ui->ComboBoxLanguage->setCurrentIndex( Value );
+}
+
+void QPrabhupadaDictionaryWindow::LanguageUI_IndexChanged( int Value )
+{
+  m_ui->ComboBoxLanguageUI->setCurrentIndex( Value );
 }

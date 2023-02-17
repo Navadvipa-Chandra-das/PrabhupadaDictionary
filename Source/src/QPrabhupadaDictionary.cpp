@@ -119,7 +119,6 @@ QYazykInfo::QYazykInfo( const QYazykInfo &A )
   : m_ID( A.m_ID )
   , m_Yazyk( A.m_Yazyk )
   , m_YazykSlovo( A.m_YazykSlovo )
-  , m_Lang( A.m_Lang )
   , m_CurrentRow( A.m_CurrentRow )
   , m_FilterSlovar( A.m_FilterSlovar )
   , m_PrabhupadaZakladkaMap( A.m_PrabhupadaZakladkaMap )
@@ -229,42 +228,113 @@ int QYazykVector::FindYazyk( const QString &S )
   return -1;
 }
 
-int QYazykVector::FindLang( const QString &S )
-{
-  std::size_t L = size(), I = 0;
-  for( ; I < L; ++I )
-    if ( operator[]( I ).m_Lang == S )
-      return I;
-  return -1;
-}
-
 void QYazykVector::LoadFromStream( QDataStream &ST )
 {
-  int N;
-  for ( iterator I = begin(); I != end(); ++I ) {
-    ST >> N;
-    (*I).m_CurrentRow = N;
-    (*I).m_FilterSlovar.LoadFromStream( ST );
-    (*I).m_PrabhupadaZakladkaMap.LoadFromStream( ST );
+  int L;
+  ST >> L;
+  QYazykInfo YI;
+  for ( int I = 0; I < L; ++I ) {
+    ST >> YI.m_ID;
+    ST >> YI.m_Yazyk;
+    ST >> YI.m_YazykSlovo;
+
+    ST >> YI.m_CurrentRow/* = N*/;
+    YI.m_FilterSlovar.LoadFromStream( ST );
+    YI.m_PrabhupadaZakladkaMap.LoadFromStream( ST );
+    push_back( YI );
+  }
+  if ( L > 0 ) {
+    m_LoadSuccess = true;
   }
 }
 
 void QYazykVector::SaveToStream( QDataStream &ST )
 {
+  int L = size();
+  ST << L;
   for ( iterator I = begin(); I != end(); ++I ) {
+    ST << (*I).m_ID;
+    ST << (*I).m_Yazyk;
+    ST << (*I).m_YazykSlovo;
+
     ST << (*I).m_CurrentRow;
     (*I).m_FilterSlovar.SaveToStream( ST );
     (*I).m_PrabhupadaZakladkaMap.SaveToStream( ST );
   }
 }
 
+QLanguageIndex::QLanguageIndex( QYazykVector &AYazykVector )
+  : inherited()
+  , m_YazykVector( AYazykVector )
+{
+}
+
+QLanguageIndex::~QLanguageIndex()
+{
+}
+
+void QLanguageIndex::SetIndex( int Value )
+{
+  if ( Start() == 0 && m_Index != Value ) {
+    m_Index = Value;
+    emit SignalIndexChanged( m_Index );
+  }
+}
+
+void QLanguageIndex::IndexChanged( int Value )
+{
+  SetIndex( Value );
+}
+
+void QLanguageIndex::PrepareComboBox( QComboBox *CB )
+{
+  if ( CB ) {
+    IncStart();
+    CB->clear();
+    for ( QYazykVector::iterator i = m_YazykVector.begin(); i != m_YazykVector.end(); ++i ) {
+      CB->addItem( ( *i ).m_YazykSlovo );
+    }
+    CB->setCurrentIndex( m_Index );
+    QObject::connect( CB
+                    , ( void ( QComboBox::* )( int ) )( QComboBox::currentIndexChanged )
+                    , this
+                    , &IndexChanged );
+    DecStart();
+  }
+}
+
+void QLanguageIndex::LoadFromStream( QDataStream &ST )
+{
+  inherited::LoadFromStream( ST );
+
+  int N;
+  ST >> N;
+  SetIndex( N );
+}
+
+void QLanguageIndex::SaveToStream( QDataStream &ST )
+{
+  inherited::SaveToStream( ST );
+
+  ST << m_Index;
+}
+
 QPrabhupadaBukvary QPrabhupadaDictionary::PrabhupadaBukvary;
-const QString QPrabhupadaDictionary::PrabhupadaDictionaryFiles = QString( "./PrabhupadaDictionaryFiles/" );
+const QString QPrabhupadaDictionary::PrabhupadaDictionaryFiles = QString( "./resources/PrabhupadaDictionaryFiles/" );
 
 QPrabhupadaDictionary::QPrabhupadaDictionary()
   : inherited()
 {
   PreparePrabhupadaBukvary();
+  QObject::connect( &m_LanguageIndex
+                  , &QLanguageIndex::SignalIndexChanged
+                  , this
+                  , &LanguageIndexChanged );
+  QObject::connect( &m_LanguageUIIndex
+                  , &QLanguageIndex::SignalIndexChanged
+                  , this
+                  , &LanguageUIIndexChanged );
+
 }
 
 QPrabhupadaDictionary::~QPrabhupadaDictionary()
@@ -358,23 +428,25 @@ void QPrabhupadaDictionary::PreparePrabhupadaBukvary()
 void QPrabhupadaDictionary::PrepareYazykAndMaxID()
 {
   QSqlQuery qu( *DB() );
-  qu.exec( QString( "select\n"
-                    "  a.\"ID\"\n"
-                    ", a.\"YAZYK\"\n"
-                    ", a.\"YAZYK_SLOVO\"\n"
-                    "from\n"
-                    "    %1\"YAZYK\" a\n"
-                    "order by a.\"YAZYK_SLOVO\";" ).formatArg( m_Schema ) );
 
-  QYazykInfo YI;
-  QString ALang;
+  if ( !m_YazykVector.m_LoadSuccess ) {
+    qu.exec( QString( "select\n"
+                      "  a.\"ID\"\n"
+                      ", a.\"YAZYK\"\n"
+                      ", a.\"YAZYK_SLOVO\"\n"
+                      "from\n"
+                      "    %1\"YAZYK\" a\n"
+                      "order by a.\"YAZYK_SLOVO\";" ).formatArg( m_Schema ) );
 
-  while ( qu.next() ) {
-    YI.m_ID         = qu.value( 0 ).toInt();
-    YI.m_Yazyk      = qu.value( 1 ).toString();
-    YI.m_YazykSlovo = qu.value( 2 ).toString();
+    QYazykInfo YI;
 
-    m_YazykVector.push_back( YI );
+    while ( qu.next() ) {
+      YI.m_ID         = qu.value( 0 ).toInt();
+      YI.m_Yazyk      = qu.value( 1 ).toString();
+      YI.m_YazykSlovo = qu.value( 2 ).toString();
+
+      m_YazykVector.push_back( YI );
+    }
   }
 
   qu.clear();
@@ -387,9 +459,63 @@ void QPrabhupadaDictionary::PrepareYazykAndMaxID()
 void QPrabhupadaDictionary::LoadFromStream( QDataStream &ST )
 {
   inherited::LoadFromStream( ST );
+
+  m_YazykVector.LoadFromStream( ST );
+  int N;
+  ST >> N;
+  m_LanguageIndex.SetIndex( N );
+  ST >> N;
+  m_LanguageUIIndex.SetIndex( N );
 }
 
 void QPrabhupadaDictionary::SaveToStream( QDataStream &ST )
 {
   inherited::SaveToStream( ST );
+
+  m_YazykVector.SaveToStream( ST );
+  ST << m_LanguageIndex.Index();
+  ST << m_LanguageUIIndex.Index();
 }
+
+void QPrabhupadaDictionary::LanguageIndexChanged( int Value )
+{
+  int L = m_YazykVector.size();
+  if ( Value > -1 && L > Value ) {
+    m_LanguageIndex.SetIndex( Value );
+    PrabhupadaMessage( "Установлен язык словаря - " +QString::number( Value ) );
+  }
+}
+
+void QPrabhupadaDictionary::LanguageUIIndexChanged( int Value )
+{
+  int L = m_YazykVector.size();
+  if ( Value > -1 && L > Value ) {
+    m_LanguageUIIndex.SetIndex( Value );
+    QString AFileTranslate = "PrabhupadaDictionary_" + m_YazykVector[ Value ].m_Yazyk + ".qm";
+    if ( m_Translator.load( AFileTranslate, PrabhupadaDictionaryFiles ) ) {
+      qApp->installTranslator( &m_Translator );
+      QApplication::setApplicationDisplayName( tr( "Словарь Шрилы Прабхупады!" ) );
+    }
+  }
+}
+
+// void QPrabhupadaDictionary::SetLanguageUI_Index( int Value )
+// {
+//   if ( LanguageUI_Start() == 0 && m_LanguageUI_Index != Value ) {
+//     int L = m_YazykVector.size();
+//     if ( Value > -1 && L > Value ) {
+//       m_LanguageUI_Index = Value;
+//       QString AFileTranslate = "PrabhupadaDictionary_" + m_YazykVector[ Value ].m_Yazyk + ".qm";
+//       if ( m_Translator.load( AFileTranslate, PrabhupadaDictionaryFiles ) ) {
+//         qApp->installTranslator( &m_Translator );
+//         QApplication::setApplicationDisplayName( tr( "Словарь Шрилы Прабхупады!" ) );
+//       }
+//       emit SignalLanguageUI_IndexChanged( Value );
+//     }
+//   }
+// }
+//
+// void QPrabhupadaDictionary::LanguageUI_IndexChanged( int Value )
+// {
+//   SetLanguageUI_Index( Value );
+// }

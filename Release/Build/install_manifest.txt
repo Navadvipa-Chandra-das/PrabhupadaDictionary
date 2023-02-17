@@ -9,6 +9,11 @@ C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictio
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Letter.txt
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Help.txt
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./Start.bat
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_CS-CZ.qm
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_EN-US.qm
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_ES-ES.qm
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_PT-BR.qm
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_RU-RU.qm
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./libCsCore1.8.dll
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./libCsGui1.8.dll
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./libCsNetwork1.8.dll

@@ -49,19 +49,34 @@ void QPrabhupadaStorage::EndSave()
   delete m_SaveFile;
 }
 
-void QPrabhupadaStorage::LoadObject( QObject *O )
+bool QPrabhupadaStorage::LoadObject( QObject *O )
 {
+  bool LoadSuccess = false;
   if ( m_Enabled ) {
-    if ( BeginLoad( O ) )
-      O->LoadFromStream( *m_Stream );
+
+    if ( BeginLoad( O ) ) {
+      qint8 V;
+      *m_Stream >> V;
+      if ( V == Version() ) {
+        O->LoadFromStream( *m_Stream );
+        *m_Stream >> V;
+        if ( V == Version() ) {
+          LoadSuccess = true;
+        }
+      }
+    }
     EndLoad();
   }
+  return LoadSuccess;
 }
+
 void QPrabhupadaStorage::SaveObject( QObject *O )
 {
   if ( m_Enabled ) {
     BeginSave( O );
+    *m_Stream << Version();
     O->SaveToStream( *m_Stream );
+    *m_Stream << Version();
     EndSave();
   }
 }
@@ -132,8 +147,8 @@ QPrabhupadaDialog::QPrabhupadaDialog()
 
 QPrabhupadaDialog::~QPrabhupadaDialog()
 {
-  if ( m_PrabhupadaStorage )
-    m_PrabhupadaStorage->SaveObject( this );
+//  if ( m_PrabhupadaStorage )
+//    m_PrabhupadaStorage->SaveObject( this );
 }
 
 void QPrabhupadaDialog::done( int result )

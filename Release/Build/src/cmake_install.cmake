@@ -76,6 +76,26 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources/PrabhupadaDictionaryFiles" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/PrabhupadaDictionary_CS-CZ.qm")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources/PrabhupadaDictionaryFiles" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/PrabhupadaDictionary_EN-US.qm")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources/PrabhupadaDictionaryFiles" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/PrabhupadaDictionary_ES-ES.qm")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources/PrabhupadaDictionaryFiles" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/PrabhupadaDictionary_PT-BR.qm")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./resources/PrabhupadaDictionaryFiles" TYPE FILE FILES "C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../resources/PrabhupadaDictionary_RU-RU.qm")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE FILE FILES "C:/CopperSpice/Lib/Release/1.8.0/bin/libCsCore1.8.dll")
 endif()
 

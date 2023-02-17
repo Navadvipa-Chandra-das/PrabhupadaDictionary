@@ -16,9 +16,11 @@ list(APPEND PrabhupadaDictionary_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaLoginWindow.ui
   ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaDictionaryWindow.ui
-  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_en.ts
-  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_de.ts
-  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_fr.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_CS-CZ.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_EN-US.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_ES-ES.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_PT-BR.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_RU-RU.ts
   #qrc_NewRosource.cpp
   qrc_PrabhupadaDictionary.cpp
 )
@@ -35,9 +37,11 @@ set( TS_OUTPUT_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/../resources )
 
 # run lrelease to generate translation files
 COPPERSPICE_RESOURCES(
-  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_en.ts
-  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_de.ts
-  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/ks_fr.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_CS-CZ.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_EN-US.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_ES-ES.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_PT-BR.ts
+  ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_RU-RU.ts
 )
 
 # run rcc to generate qrc output
@@ -121,6 +125,11 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Letter.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Help.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/Start.bat DESTINATION .)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_CS-CZ.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_EN-US.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_ES-ES.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_PT-BR.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_RU-RU.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
 
 # installs the CopperSpice libraries
 cs_copy_library(CsCore)

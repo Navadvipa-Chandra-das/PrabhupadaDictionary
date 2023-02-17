@@ -295,7 +295,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;0</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+0</string>
+    <string>Ctrl+0</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_1">
@@ -303,7 +303,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;1</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+1</string>
+    <string>Ctrl+1</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_2">
@@ -311,7 +311,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;2</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+2</string>
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_3">
@@ -319,7 +319,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;3</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+3</string>
+    <string>Ctrl+3</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_4">
@@ -327,7 +327,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;4</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+4</string>
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_5">
@@ -335,7 +335,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;5</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+5</string>
+    <string>Ctrl+5</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_6">
@@ -343,7 +343,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;6</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+6</string>
+    <string>Ctrl+6</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_7">
@@ -351,7 +351,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;7</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+7</string>
+    <string>Ctrl+7</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_8">
@@ -359,7 +359,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;8</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+₽</string>
+    <string>Ctrl+8</string>
    </property>
   </action>
   <action name="actionSet_Bookmark_9">
@@ -367,7 +367,7 @@ p, li { white-space: pre-wrap; }
     <string>Установить закладку &amp;9</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Alt+9</string>
+    <string>Ctrl+9</string>
    </property>
   </action>
   <action name="actionGo_to_ookmark_0">
@@ -375,7 +375,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;0</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+0</string>
+    <string>Alt+0</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_1">
@@ -383,7 +383,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;1</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+1</string>
+    <string>Alt+1</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_2">
@@ -391,7 +391,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;2</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+2</string>
+    <string>Alt+2</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_3">
@@ -399,7 +399,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;3</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+3</string>
+    <string>Alt+3</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_4">
@@ -407,7 +407,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;4</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+4</string>
+    <string>Alt+4</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_5">
@@ -415,7 +415,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;5</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+5</string>
+    <string>Alt+5</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_6">
@@ -423,7 +423,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;6</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+6</string>
+    <string>Alt+6</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_7">
@@ -431,7 +431,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;7</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+7</string>
+    <string>Alt+7</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_8">
@@ -439,7 +439,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;8</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+8</string>
+    <string>Alt+8</string>
    </property>
   </action>
   <action name="actionGo_to_bookmark_9">
@@ -447,7 +447,7 @@ p, li { white-space: pre-wrap; }
     <string>К закладке &amp;9</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+9</string>
+    <string>Alt+9</string>
    </property>
   </action>
   <action name="actionWhats_This_mode">

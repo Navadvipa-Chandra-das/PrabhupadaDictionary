@@ -17,6 +17,7 @@
 #include <QtGui>
 #include <QtSql>
 #include <QPrabhupadaStorage.h>
+#include <QPrabhupadaDictionary.h>
 #include <ui_QPrabhupadaLoginWindow.h>
 
 class QPrabhupadaLoginWindow : public QPrabhupadaDialog
@@ -24,13 +25,18 @@ class QPrabhupadaLoginWindow : public QPrabhupadaDialog
   CS_OBJECT( QPrabhupadaLoginWindow )
 
   public:
-    QPrabhupadaLoginWindow();
+    QPrabhupadaLoginWindow() = delete;
+    QPrabhupadaLoginWindow( QPrabhupadaStorage *APrabhupadaStorage
+                          , QPrabhupadaDictionary *APrabhupadaDictionary );
     ~QPrabhupadaLoginWindow();
     Ui::QPrabhupadaLoginWindow *m_ui = new Ui::QPrabhupadaLoginWindow;
-    QPrabhupadaStorage *m_QPrabhupadaStorage = nullptr;
+    QPrabhupadaStorage *m_PrabhupadaStorage;
+    QPrabhupadaDictionary *m_PrabhupadaDictionary;
     bool Connect( QSqlDatabase *DB );
     inline QString DriverName() { return m_DriverName; };
     inline QString Schema() { return m_Schema; };
+    //void addYazykSlovo( QString &AYazykSlovo );
+    //bool m_NeedAddYazykSlovo = false;
   private:
     using inherited = QPrabhupadaDialog;
     QString m_DriverName;
@@ -38,6 +44,7 @@ class QPrabhupadaLoginWindow : public QPrabhupadaDialog
     void SQLRadioButton( bool checked );
     void DatabaseToWidget( QSqlDatabase *DB );
     void WidgetToDatabase( QSqlDatabase *DB );
+    void LanguageUI_IndexChanged( int Value );
   protected:
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;

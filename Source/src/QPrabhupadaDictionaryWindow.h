@@ -24,11 +24,17 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
   CS_OBJECT( QPrabhupadaDictionaryWindow )
 
   public:
-    QPrabhupadaDictionaryWindow();
+    QPrabhupadaDictionaryWindow() = delete;
+    QPrabhupadaDictionaryWindow( QPrabhupadaStorage *APrabhupadaStorage
+                               , QPrabhupadaDictionary *APrabhupadaDictionary );
     ~QPrabhupadaDictionaryWindow();
-    QPrabhupadaStorage *m_PrabhupadaStorage = nullptr;
-    QPrabhupadaDictionary m_PrabhupadaDictionary;
-    void PrepareDictionary( QSqlDatabase *DB );
+    Ui::QPrabhupadaDictionaryWindow *m_ui = new Ui::QPrabhupadaDictionaryWindow;
+    QPrabhupadaStorage *m_PrabhupadaStorage;
+    QPrabhupadaDictionary *m_PrabhupadaDictionary;
+    void PrepareDictionary( QSqlDatabase *DB, bool ASetLang );
+
+    //CS_SIGNAL_1( Public, void addYazykSlovo( QString &AYazykSlovo ) )
+    //CS_SIGNAL_2( addYazykSlovo, AYazykSlovo )
   private:
     using inherited = QPrabhupadaMainWindow;
     bool m_Case_Sensitive = false;
@@ -40,15 +46,17 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
     void actionInsert();
     void actionRemove_Duplicates();
     void actionWhats_This_mode();
-    void FontSizeChanged( int Value );
     void PrepareLanguages();
     void SetFilterSlovar( QFilterSlovar Value );
-    inline QSqlDatabase *DB() { return m_PrabhupadaDictionary.m_DB; };
+    inline QSqlDatabase *DB() { return m_PrabhupadaDictionary->m_DB; };
+    void Language_IndexChanged( int Value );
+    void LanguageUI_IndexChanged( int Value );
   protected:
-    Ui::QPrabhupadaDictionaryWindow *m_ui = new Ui::QPrabhupadaDictionaryWindow;
     void changeEvent( QEvent *event ) override;
+    void closeEvent( QCloseEvent *event ) override;
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;
+    virtual void FontSizeChanged( int Value );
 };
 
 #endif

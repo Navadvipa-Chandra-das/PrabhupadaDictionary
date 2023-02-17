@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading the UI file 'QPrabhupadaLoginWindow.ui'
 **
-** Created by: CopperSpice User Interface Compiler, Version 1.8.0
+** Created by: CopperSpice User Interface Compiler, Version 1.8.1
 **
 ** WARNING! Any changes made to this file will be lost when the UI file is recompiled
 ********************************************************************************/
@@ -37,15 +37,17 @@ public:
     QComboBox *ComboBoxUserName;
     QLabel *LabelPassword;
     QLineEdit *LineEditPassword;
-    QLabel *LabelDatabase;
+    QLabel *LabelDatabaseName;
     QComboBox *ComboBoxDatabaseName;
-    QLabel *LabelServer;
+    QLabel *LabelHostName;
     QComboBox *ComboBoxHostName;
     QLabel *LabelPort;
     QComboBox *ComboBoxPort;
     QCheckBox *CheckBoxResetSettings;
     QComboBox *ComboBoxSchema;
     QLabel *LabelSchema;
+    QLabel *LabelLanguageUI;
+    QComboBox *ComboBoxLanguageUI;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *QPrabhupadaLoginWindow)
@@ -58,7 +60,7 @@ public:
         icon.addFile(QString::fromUtf8(":/Icon/resources/PrabhupadaDictionary.ico"), QSize(), QIcon::Normal, QIcon::Off);
         QPrabhupadaLoginWindow->setProperty("windowIcon", QVariant(icon));
         QPrabhupadaLoginWindow->setProperty("mouseTracking", QVariant(false));
-        QPrabhupadaLoginWindow->resize(263, 255);
+        QPrabhupadaLoginWindow->resize(263, 273);
         LayoutPrabhupadaLogin = new QVBoxLayout(QPrabhupadaLoginWindow);
         LayoutPrabhupadaLogin->setObjectName(QString::fromUtf8("LayoutPrabhupadaLogin"));
         LayoutSQL = new QHBoxLayout();
@@ -101,10 +103,10 @@ public:
 
         LayoutConnection->setWidget(1, QFormLayout::FieldRole, LineEditPassword);
 
-        LabelDatabase = new QLabel(QPrabhupadaLoginWindow);
-        LabelDatabase->setObjectName(QString::fromUtf8("LabelDatabase"));
+        LabelDatabaseName = new QLabel(QPrabhupadaLoginWindow);
+        LabelDatabaseName->setObjectName(QString::fromUtf8("LabelDatabaseName"));
 
-        LayoutConnection->setWidget(2, QFormLayout::LabelRole, LabelDatabase);
+        LayoutConnection->setWidget(2, QFormLayout::LabelRole, LabelDatabaseName);
 
         ComboBoxDatabaseName = new QComboBox(QPrabhupadaLoginWindow);
         ComboBoxDatabaseName->setObjectName(QString::fromUtf8("ComboBoxDatabaseName"));
@@ -112,10 +114,10 @@ public:
 
         LayoutConnection->setWidget(2, QFormLayout::FieldRole, ComboBoxDatabaseName);
 
-        LabelServer = new QLabel(QPrabhupadaLoginWindow);
-        LabelServer->setObjectName(QString::fromUtf8("LabelServer"));
+        LabelHostName = new QLabel(QPrabhupadaLoginWindow);
+        LabelHostName->setObjectName(QString::fromUtf8("LabelHostName"));
 
-        LayoutConnection->setWidget(3, QFormLayout::LabelRole, LabelServer);
+        LayoutConnection->setWidget(3, QFormLayout::LabelRole, LabelHostName);
 
         ComboBoxHostName = new QComboBox(QPrabhupadaLoginWindow);
         ComboBoxHostName->setObjectName(QString::fromUtf8("ComboBoxHostName"));
@@ -150,6 +152,16 @@ public:
 
         LayoutConnection->setWidget(5, QFormLayout::LabelRole, LabelSchema);
 
+        LabelLanguageUI = new QLabel(QPrabhupadaLoginWindow);
+        LabelLanguageUI->setObjectName(QString::fromUtf8("LabelLanguageUI"));
+
+        LayoutConnection->setWidget(7, QFormLayout::LabelRole, LabelLanguageUI);
+
+        ComboBoxLanguageUI = new QComboBox(QPrabhupadaLoginWindow);
+        ComboBoxLanguageUI->setObjectName(QString::fromUtf8("ComboBoxLanguageUI"));
+
+        LayoutConnection->setWidget(7, QFormLayout::FieldRole, ComboBoxLanguageUI);
+
 
         LayoutPrabhupadaLogin->addLayout(LayoutConnection);
 
@@ -183,14 +195,15 @@ public:
         radioButtonPostgreSQL->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "PostgreSQL", nullptr)));
         LabelUserName->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\230\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr)));
         LabelPassword->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr)));
-        LabelDatabase->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\230\320\274\321\217 \320\261\320\260\320\267\321\213 \320\264\320\260\320\275\320\275\321\213\321\205", nullptr)));
-        LabelServer->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\320\265\321\200\320\262\320\265\321\200", nullptr)));
+        LabelDatabaseName->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\230\320\274\321\217 \320\261\320\260\320\267\321\213 \320\264\320\260\320\275\320\275\321\213\321\205", nullptr)));
+        LabelHostName->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\320\265\321\200\320\262\320\265\321\200", nullptr)));
         LabelPort->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\237\320\276\321\200\321\202", nullptr)));
         CheckBoxResetSettings->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\320\261\321\200\320\276\321\201\320\270\321\202\321\214 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr)));
 #ifndef QT_NO_WHATSTHIS
-        CheckBoxResetSettings->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "<html><head/><body><p>This flag resets all settings made by the user!</p></body></html>", nullptr)));
+        CheckBoxResetSettings->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "<html><head/><body><p>\320\255\321\202\320\276\321\202 \321\204\320\273\320\260\320\263 \321\201\320\261\321\200\320\260\321\201\321\213\320\262\320\260\320\265\321\202 \320\262\321\201\320\265 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217 \320\277\320\276\321\201\320\273\320\265 \320\262\321\205\320\276\320\264\320\260 \320\262 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\203!</p></body></html>", nullptr)));
 #endif
         LabelSchema->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\321\205\320\265\320\274\320\260", nullptr)));
+        LabelLanguageUI->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\257\320\267\321\213\320\272 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\213", nullptr)));
     }  // retranslateUi
 
 };

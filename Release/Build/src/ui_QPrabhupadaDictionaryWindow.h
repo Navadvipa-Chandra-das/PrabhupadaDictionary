@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading the UI file 'QPrabhupadaDictionaryWindow.ui'
 **
-** Created by: CopperSpice User Interface Compiler, Version 1.8.0
+** Created by: CopperSpice User Interface Compiler, Version 1.8.1
 **
 ** WARNING! Any changes made to this file will be lost when the UI file is recompiled
 ********************************************************************************/
@@ -308,45 +308,45 @@ public:
         actionRemove_Duplicates->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214 \320\264\321\203\320\261\320\273\320\270\320\272\320\260\321\202\321\213", nullptr)));
         actionRemove_Duplicates->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214 \320\264\321\203\320\261\320\273\320\270\320\272\320\260\321\202\321\213", nullptr)));
         actionSet_Bookmark_0->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &0", nullptr)));
-        actionSet_Bookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+0", nullptr)));
+        actionSet_Bookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+0", nullptr)));
         actionSet_Bookmark_1->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &1", nullptr)));
-        actionSet_Bookmark_1->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+1", nullptr)));
+        actionSet_Bookmark_1->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+1", nullptr)));
         actionSet_Bookmark_2->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &2", nullptr)));
-        actionSet_Bookmark_2->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+2", nullptr)));
+        actionSet_Bookmark_2->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+2", nullptr)));
         actionSet_Bookmark_3->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &3", nullptr)));
-        actionSet_Bookmark_3->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+3", nullptr)));
+        actionSet_Bookmark_3->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+3", nullptr)));
         actionSet_Bookmark_4->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &4", nullptr)));
-        actionSet_Bookmark_4->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+4", nullptr)));
+        actionSet_Bookmark_4->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+4", nullptr)));
         actionSet_Bookmark_5->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &5", nullptr)));
-        actionSet_Bookmark_5->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+5", nullptr)));
+        actionSet_Bookmark_5->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+5", nullptr)));
         actionSet_Bookmark_6->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &6", nullptr)));
-        actionSet_Bookmark_6->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+6", nullptr)));
+        actionSet_Bookmark_6->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+6", nullptr)));
         actionSet_Bookmark_7->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &7", nullptr)));
-        actionSet_Bookmark_7->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+7", nullptr)));
+        actionSet_Bookmark_7->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+7", nullptr)));
         actionSet_Bookmark_8->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &8", nullptr)));
-        actionSet_Bookmark_8->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+\342\202\275", nullptr)));
+        actionSet_Bookmark_8->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+8", nullptr)));
         actionSet_Bookmark_9->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &9", nullptr)));
-        actionSet_Bookmark_9->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+9", nullptr)));
+        actionSet_Bookmark_9->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+9", nullptr)));
         actionGo_to_ookmark_0->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &0", nullptr)));
-        actionGo_to_ookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+0", nullptr)));
+        actionGo_to_ookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+0", nullptr)));
         actionGo_to_bookmark_1->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &1", nullptr)));
-        actionGo_to_bookmark_1->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+1", nullptr)));
+        actionGo_to_bookmark_1->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+1", nullptr)));
         actionGo_to_bookmark_2->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &2", nullptr)));
-        actionGo_to_bookmark_2->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+2", nullptr)));
+        actionGo_to_bookmark_2->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+2", nullptr)));
         actionGo_to_bookmark_3->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &3", nullptr)));
-        actionGo_to_bookmark_3->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+3", nullptr)));
+        actionGo_to_bookmark_3->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+3", nullptr)));
         actionGo_to_bookmark_4->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &4", nullptr)));
-        actionGo_to_bookmark_4->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+4", nullptr)));
+        actionGo_to_bookmark_4->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+4", nullptr)));
         actionGo_to_bookmark_5->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &5", nullptr)));
-        actionGo_to_bookmark_5->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+5", nullptr)));
+        actionGo_to_bookmark_5->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+5", nullptr)));
         actionGo_to_bookmark_6->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &6", nullptr)));
-        actionGo_to_bookmark_6->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+6", nullptr)));
+        actionGo_to_bookmark_6->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+6", nullptr)));
         actionGo_to_bookmark_7->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &7", nullptr)));
-        actionGo_to_bookmark_7->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+7", nullptr)));
+        actionGo_to_bookmark_7->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+7", nullptr)));
         actionGo_to_bookmark_8->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &8", nullptr)));
-        actionGo_to_bookmark_8->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+8", nullptr)));
+        actionGo_to_bookmark_8->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+8", nullptr)));
         actionGo_to_bookmark_9->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &9", nullptr)));
-        actionGo_to_bookmark_9->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+9", nullptr)));
+        actionGo_to_bookmark_9->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+9", nullptr)));
         actionWhats_This_mode->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\265\320\266\320\270\320\274 \320\262\320\276\320\277\321\200\320\276\321\201\320\260", nullptr)));
         actionWhats_This_mode->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+F1", nullptr)));
         actionWhats_This_mode->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\265\320\266\320\270\320\274 \320\262\320\276\320\277\321\200\320\276\321\201\320\260", nullptr)));

@@ -168,7 +168,6 @@ class QYazykInfo
     int m_ID;
     QString m_Yazyk;
     QString m_YazykSlovo;
-    QString m_Lang;
     int m_CurrentRow = 0;
     QFilterSlovar m_FilterSlovar;
     QPrabhupadaZakladkaMap m_PrabhupadaZakladkaMap;
@@ -181,39 +180,83 @@ class QYazykVector : public std::vector< QYazykInfo >
   public:
     QYazykVector();
     ~QYazykVector();
+    bool m_LoadSuccess = false;
     int FindYazyk( const QString &S );
-    int FindLang( const QString &S );
     void LoadFromStream( QDataStream &ST );
     void SaveToStream( QDataStream &ST );
 };
 
-//extern const QString PrabhupadaDictionaryFiles;
-//extern QPrabhupadaBukvary PrabhupadaBukvary;
+class QLanguageIndex : public QObject
+{
+  CS_OBJECT( QLanguageIndex )
+  private:
+    using inherited = QObject;
+    int m_Index = -1;
+    int m_Start = 0;
+  public:
+    QLanguageIndex() = delete;
+    QLanguageIndex( QYazykVector &AYazykVector );
+    ~QLanguageIndex();
+    static const int RussianIndex = 4;
+    QYazykVector &m_YazykVector;
+
+    CS_SIGNAL_1( Public, void SignalIndexChanged( int Value ) )
+    CS_SIGNAL_2( SignalIndexChanged, Value )
+
+    inline int Index() { return m_Index; };
+    void SetIndex( int Value );
+    inline void IncStart() { ++m_Start; };
+    inline void DecStart() { --m_Start; };
+    inline int Start() { return m_Start; };
+
+    void IndexChanged( int Value );
+    void PrepareComboBox( QComboBox *CB );
+    void LoadFromStream( QDataStream &ST ) override;
+    void SaveToStream( QDataStream &ST ) override;
+  protected:
+};
 
 class QPrabhupadaDictionary : public QObject
 {
   CS_OBJECT( QPrabhupadaDictionary )
   private:
     using inherited = QObject;
+    //int m_LanguageUI_Index = -1;
+    //int m_LanguageUI_Start = 0;
   public:
     QPrabhupadaDictionary();
     ~QPrabhupadaDictionary();
     QSqlDatabase *m_DB = nullptr;
     inline QSqlDatabase *DB() { return m_DB; };
     QYazykVector m_YazykVector;
+    QLanguageIndex m_LanguageIndex   = QLanguageIndex( m_YazykVector );
+    QLanguageIndex m_LanguageUIIndex = QLanguageIndex( m_YazykVector );
     int m_MaxID;
     QString m_Schema;
+    QTranslator m_Translator;
+
+    void LanguageIndexChanged( int Value );
+    void LanguageUIIndexChanged( int Value );
+    //CS_SIGNAL_1( Public, void SignalLanguageUI_IndexChanged( int Value ) )
+    //CS_SIGNAL_2( SignalLanguageUI_IndexChanged, Value )
+
+    //inline int LanguageUI_Index() { return m_LanguageUI_Index; };
+    //void SetLanguageUI_Index( int Value );
+    //inline void IncLanguageUI_Start() { ++m_LanguageUI_Start; };
+    //inline void DecLanguageUI_Start() { --m_LanguageUI_Start; };
+    //inline int LanguageUI_Start() { return m_LanguageUI_Start; };
     static const QString PrabhupadaDictionaryFiles;
     static QPrabhupadaBukvary PrabhupadaBukvary;
     static void PreparePrabhupadaBukvary();
     void PrepareYazykAndMaxID();
-    static const int RussianIndex = 4;
     static QString RemoveDiacritics( const QString& S );
     static bool PrabhupadaComareLess( const QString& A, const QString& B );
     static bool PrabhupadaComareMore( const QString& A, const QString& B );
-  protected:
+    void Language_IndexChanged( int Value );
+    void LanguageUI_IndexChanged( int Value );
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;
+  protected:
 };
 
 #endif
