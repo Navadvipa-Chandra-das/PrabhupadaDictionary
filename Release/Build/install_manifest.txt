@@ -9,6 +9,9 @@ C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictio
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Letter.txt
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Help.txt
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./Start.bat
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Fonts/gtb.ttf
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Fonts/gti.ttf
+C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/Fonts/gtr.ttf
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_CS-CZ.qm
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_EN-US.qm
 C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Bin/./resources/PrabhupadaDictionaryFiles/PrabhupadaDictionary_ES-ES.qm

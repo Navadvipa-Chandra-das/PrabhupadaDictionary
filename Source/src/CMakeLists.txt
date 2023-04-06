@@ -5,6 +5,8 @@ list(APPEND PrabhupadaDictionary_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaGoToLineWindow.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaAboutWindow.h
 )
 
 list(APPEND PrabhupadaDictionary_SOURCES
@@ -14,8 +16,14 @@ list(APPEND PrabhupadaDictionary_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaGoToLineWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaAboutWindow.cpp
+
   ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaLoginWindow.ui
   ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaDictionaryWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaGoToLineWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaAboutWindow.ui
+
   ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_CS-CZ.ts
   ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_EN-US.ts
   ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_ES-ES.ts
@@ -54,6 +62,8 @@ COPPERSPICE_RESOURCES(
 COPPERSPICE_RESOURCES(
   ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaLoginWindow.ui
   ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaDictionaryWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaGoToLineWindow.ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/../forms/QPrabhupadaAboutWindow.ui
 )
 
 add_executable( PrabhupadaDictionary ${PrabhupadaDictionary_SOURCES} )
@@ -125,6 +135,11 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Letter.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Help.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/Start.bat DESTINATION .)
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Fonts/gtb.ttf DESTINATION ./resources/PrabhupadaDictionaryFiles/Fonts)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Fonts/gti.ttf DESTINATION ./resources/PrabhupadaDictionaryFiles/Fonts)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Fonts/gtr.ttf DESTINATION ./resources/PrabhupadaDictionaryFiles/Fonts)
+
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_CS-CZ.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_EN-US.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionary_ES-ES.qm DESTINATION ./resources/PrabhupadaDictionaryFiles)

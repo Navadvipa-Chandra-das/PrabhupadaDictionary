@@ -34,7 +34,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="vlPrabhuadaMain">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3,3">
+     <layout class="QHBoxLayout" name="horizontalLayoutLanguage" stretch="1,3,3">
       <item>
        <widget class="QSpinBox" name="sbFontSize">
         <property name="value" stdset="0">
@@ -52,6 +52,9 @@ p, li { white-space: pre-wrap; }
         <property name="toolTip" stdset="0">
          <string>Размер шрифта</string>
         </property>
+        <property name="focusPolicy" stdset="0">
+         <enum>Qt::WheelFocus</enum>
+        </property>
        </widget>
       </item>
       <item>
@@ -59,12 +62,41 @@ p, li { white-space: pre-wrap; }
         <property name="toolTip" stdset="0">
          <string>Язык словаря</string>
         </property>
+        <property name="focusPolicy" stdset="0">
+         <enum>Qt::WheelFocus</enum>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QComboBox" name="ComboBoxLanguageUI">
         <property name="toolTip" stdset="0">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Язык программы словаря&lt;br/&gt;Шрилы Прабхупады&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="focusPolicy" stdset="0">
+         <enum>Qt::WheelFocus</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayoutRow">
+      <item>
+       <widget class="QLineEdit" name="lineEditRowIndicator">
+        <property name="readOnly" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="alignment" stdset="0">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="whatsThis" stdset="0">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Индикатор, который показывает номер текущей строки, а также общее количество строк в таблице!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="toolTip" stdset="0">
+         <string>Текущая строка / всего строк</string>
+        </property>
+        <property name="focusPolicy" stdset="0">
+         <enum>Qt::NoFocus</enum>
         </property>
        </widget>
       </item>
@@ -74,12 +106,21 @@ p, li { white-space: pre-wrap; }
      <layout class="QVBoxLayout" name="vlDictionary">
       <item>
        <widget class="QTableView" name="tbvPrabhupadaDictionary">
+        <property name="sortingEnabled" stdset="0">
+         <bool>true</bool>
+        </property>
         <property name="font" stdset="0">
          <font>
           <family>Gaura Times</family>
           <pointsize>14</pointsize>
          </font>
         </property>
+        <attribute name="horizontalHeaderCascadingSectionResizes" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection" stdset="0">
+         <bool>false</bool>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -90,7 +131,10 @@ p, li { white-space: pre-wrap; }
         <property name="childrenCollapsible" stdset="0">
          <bool>false</bool>
         </property>
-        <widget class="QLineEdit" name="leSanskrit">
+        <widget class="QComboBox" name="ComboBoxSanskrit">
+         <property name="editable" stdset="0">
+          <bool>true</bool>
+         </property>
          <property name="whatsThis" stdset="0">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поиск по санскриту!&lt;/p&gt;&lt;p&gt;Можно использовать регулярные выражения!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -104,7 +148,10 @@ p, li { white-space: pre-wrap; }
           </font>
          </property>
         </widget>
-        <widget class="QLineEdit" name="leTranslate">
+        <widget class="QComboBox" name="ComboBoxTranslate">
+         <property name="editable" stdset="0">
+          <bool>true</bool>
+         </property>
          <property name="whatsThis" stdset="0">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поиск по переводу!&lt;/p&gt;&lt;p&gt;Можно использовать регулярные выражения!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -149,6 +196,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionInsert"/>
     <addaction name="actionRemove_Duplicates"/>
     <addaction name="actionWhats_This_mode"/>
+    <addaction name="actionGoToRow"/>
+    <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuSet_Bookmark">
     <property name="title" stdset="0">
@@ -209,6 +258,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionWhats_This_mode"/>
    <addaction name="actionCase_Sensitive"/>
    <addaction name="actionRemove_Duplicates"/>
+   <addaction name="actionGoToRow"/>
+   <addaction name="actionAbout"/>
   </widget>
   <action name="actionFind">
    <property name="text" stdset="0">
@@ -279,10 +330,10 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionRemove_Duplicates">
    <property name="text" stdset="0">
-    <string>&amp;Удалить дубликаты</string>
+    <string>Удалить &amp;дубликаты</string>
    </property>
    <property name="iconText" stdset="0">
-    <string>&amp;Удалить дубликаты</string>
+    <string>Удалить &amp;дубликаты</string>
    </property>
    <property name="icon" stdset="0">
     <iconset>
@@ -466,14 +517,44 @@ p, li { white-space: pre-wrap; }
     </iconset>
    </property>
   </action>
+  <action name="actionGoToRow">
+   <property name="text" stdset="0">
+    <string>&amp;Перейти к строке</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+G</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/GoToRow.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text" stdset="0">
+    <string>&amp;О программе</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>F1</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>&amp;О программе</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/About.png</normaloff>
+    </iconset>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>sbFontSize</tabstop>
   <tabstop>ComboBoxLanguage</tabstop>
   <tabstop>ComboBoxLanguageUI</tabstop>
+  <tabstop>lineEditRowIndicator</tabstop>
   <tabstop>tbvPrabhupadaDictionary</tabstop>
-  <tabstop>leSanskrit</tabstop>
-  <tabstop>leTranslate</tabstop>
+  <tabstop>ComboBoxSanskrit</tabstop>
+  <tabstop>ComboBoxTranslate</tabstop>
  </tabstops>
  <resources>
   <include location="../PrabhupadaDictionary.qrc"/>

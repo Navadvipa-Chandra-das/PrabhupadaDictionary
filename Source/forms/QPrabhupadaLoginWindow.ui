@@ -24,7 +24,7 @@
     <x>0</x>
     <y>0</y>
     <width>263</width>
-    <height>273</height>
+    <height>285</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="LayoutPrabhupadaLogin">
@@ -121,13 +121,10 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
-      <widget class="QCheckBox" name="CheckBoxResetSettings">
+     <item row="5" column="0">
+      <widget class="QLabel" name="LabelSchema">
        <property name="text" stdset="0">
-        <string>Сбросить настройки</string>
-       </property>
-       <property name="whatsThis" stdset="0">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>Схема</string>
        </property>
       </widget>
      </item>
@@ -138,10 +135,13 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="LabelSchema">
+     <item row="6" column="1">
+      <widget class="QCheckBox" name="CheckBoxResetSettings">
        <property name="text" stdset="0">
-        <string>Схема</string>
+        <string>Сбросить настройки</string>
+       </property>
+       <property name="whatsThis" stdset="0">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -158,14 +158,54 @@
     </layout>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons" stdset="0">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::FirstButton|QDialogButtonBox::Ok</set>
-     </property>
-     <property name="orientation" stdset="0">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="orientation" stdset="0">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonOK">
+       <property name="default" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="text" stdset="0">
+        <string>Поехали!</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonCancel">
+       <property name="autoDefault" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="text" stdset="0">
+        <string>Задний ход!</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="orientation" stdset="0">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -183,38 +223,5 @@
  <resources>
   <include location="../PrabhupadaDictionary.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>QPrabhupadaLoginWindow</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>253</x>
-     <y>245</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>QPrabhupadaLoginWindow</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>253</x>
-     <y>245</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

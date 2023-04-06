@@ -4,42 +4,126 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtSql>
+#include <map>
+#include <memory>
 
-enum class QPrabhupadaStorageKind : char { File, DB, ByteArray };
+enum class QPrabhupadaStorageKind : quint8 { File, DB, ByteArray };
+
+//using QMapMemoryStorage = std::map< QString, std::unique_ptr< QDataStream > >;
+
+class QMapMemoryStorage : public std::map< QString, std::unique_ptr< QDataStream > >
+{
+  private:
+    using inherited = std::map< QString, std::unique_ptr< QDataStream > >;
+  public:
+    QMapMemoryStorage();
+    ~QMapMemoryStorage();
+    void LoadFromStream( QDataStream &ST );
+    void SaveToStream( QDataStream &ST );
+};
 
 class QPrabhupadaStorage : public QObject
 {
   CS_OBJECT( QPrabhupadaStorage )
 
   public:
-    explicit QPrabhupadaStorage();
+    QPrabhupadaStorage();
     ~QPrabhupadaStorage();
-    void setDatabase( QSqlDatabase *Value );
+    void SetDatabase( QSqlDatabase* Value );
     inline QSqlDatabase* Database() { return m_Database; };
+    inline void SetSchema( const QString& Value ) { m_Schema = Value; };
+    inline QString Schema() { return m_Schema; };
     void setEnabled( bool Value );
     inline bool Enabled() { return m_Enabled; };
     static QString KeyStorage( QObject *O );
-    static void LoadFromStream( QComboBox *CB, QDataStream &ST );
-    static void SaveToStream( QComboBox *CB, QDataStream &ST );
+
+    static void LoadFromStream( QComboBox *CB, QDataStream &ST, bool LoadCurrentIndex = true );
+    static void SaveToStream( QComboBox *CB, QDataStream &ST, bool SaveCurrentIndex = true );
+
+    template< class TMap, class TKey, class TValue >
+    static void LoadMap( TMap &MP, QDataStream &ST )
+    {
+      // 1
+      std::size_t L;
+      ST >> L;
+      // 2
+      TKey AKey;
+      TValue AValue;
+      for ( std::size_t I = 0; I < L; ++I ) {
+        ST >> AKey;
+        ST >> AValue;
+        MP[ AKey ] = AValue;
+      }
+    }
+
+    template< class TMap >
+    static void SaveMap( TMap &MP, QDataStream &ST )
+    {
+      // 1
+      ST << MP.size();
+      // 2
+      for ( typename TMap::iterator I = MP.begin(); I != MP.end(); ++I ) {
+        ST << (*I).first;
+        ST << (*I).second;
+      }
+    }
+
+    template< class TVector, class TValue >
+    static void LoadVector( TVector &VC, QDataStream &ST )
+    {
+      // 1
+      std::size_t L;
+      ST >> L;
+      // 2
+      TValue AValue;
+      for ( std::size_t I = 0; I < L; ++I ) {
+        ST >> AValue;
+        VC.push_back( AValue );
+      }
+    }
+
+    template< class TVector >
+    static void SaveVector( TVector &VC, QDataStream &ST )
+    {
+      // 1
+      ST << VC.size();
+      // 2
+      for ( typename TVector::iterator I = VC.begin(); I != VC.end(); ++I ) {
+        ST << (*I);
+      }
+    }
+
     static void PrepareComboBox( QComboBox *CB, int MaxCount );
-    bool LoadObject( QObject *O );
-    void SaveObject( QObject *O );
+
+    bool LoadObject( QObject *O, QPrabhupadaStorageKind AKind = QPrabhupadaStorageKind::File );
+    void SaveObject( QObject *O, QPrabhupadaStorageKind AKind = QPrabhupadaStorageKind::File );
     inline qint8 Version() { return m_Version; };
     inline void setVersion( qint8 Value ) { m_Version = Value; };
+    void LoadFromStream( QDataStream &ST ) override;
+    void SaveToStream( QDataStream &ST ) override;
+    inline void CheckDeleteQuery()
+    {
+      if ( m_Query != nullptr ) {
+        delete m_Query;
+        m_Query = nullptr;
+      }
+    };
   private:
     using inherited = QObject;
     bool m_Enabled = true;
-    QPrabhupadaStorageKind m_StorageKind = QPrabhupadaStorageKind::File;
     qint8 m_Version = 0;
-    QSqlDatabase *m_Database = nullptr;
+    QSqlDatabase* m_Database = nullptr;
+    QSqlQuery* m_Query = nullptr;
     QFile *m_File = nullptr;
     QSaveFile *m_SaveFile = nullptr;
     QDataStream *m_Stream = nullptr;
     QString m_FileName;
-    bool BeginLoad( QObject *O );
-    void EndLoad();
-    void BeginSave( QObject *O );
-    void EndSave();
+    QString m_Schema;
+    QMapMemoryStorage m_MapMemoryStorage;
+    bool BeginLoad( QObject *O, QPrabhupadaStorageKind AKind );
+    void EndLoad( QPrabhupadaStorageKind AKind );
+    void BeginSave( QObject *O, QPrabhupadaStorageKind AKind );
+    void EndSave( QPrabhupadaStorageKind AKind );
 };
 
 class QPrabhupadaDialog : public QDialog
@@ -50,11 +134,12 @@ class QPrabhupadaDialog : public QDialog
     QPrabhupadaDialog();
     ~QPrabhupadaDialog();
     inline QPrabhupadaStorage *PrabhupadaStorage() { return m_PrabhupadaStorage; };
-    inline void setPrabhupadaStorage( QPrabhupadaStorage *Value ) { m_PrabhupadaStorage = Value; };
+    inline void SetPrabhupadaStorage( QPrabhupadaStorage *Value ) { m_PrabhupadaStorage = Value; };
     void done( int result ) override;
   private:
     using inherited = QDialog;
-    QPrabhupadaStorage *m_PrabhupadaStorage = nullptr;
+  protected:
+    QPrabhupadaStorage *m_PrabhupadaStorage;
 };
 
 class QPrabhupadaMainWindow : public QMainWindow
@@ -65,11 +150,11 @@ class QPrabhupadaMainWindow : public QMainWindow
     QPrabhupadaMainWindow();
     ~QPrabhupadaMainWindow();
     inline QPrabhupadaStorage *PrabhupadaStorage() { return m_PrabhupadaStorage; };
-    inline void setPrabhupadaStorage( QPrabhupadaStorage *Value ) { m_PrabhupadaStorage = Value; };
+    inline void SetPrabhupadaStorage( QPrabhupadaStorage *Value ) { m_PrabhupadaStorage = Value; };
   private:
     using inherited = QMainWindow;
-    QPrabhupadaStorage *m_PrabhupadaStorage = nullptr;
   protected:
+    QPrabhupadaStorage *m_PrabhupadaStorage;
     void closeEvent( QCloseEvent *event ) override;
 };
 

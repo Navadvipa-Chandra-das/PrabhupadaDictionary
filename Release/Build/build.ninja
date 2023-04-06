@@ -142,10 +142,10 @@ build install/strip: phony CMakeFiles/install/strip.util
 #############################################
 # Order-only phony target for PrabhupadaDictionary
 
-build cmake_object_order_depends_target_PrabhupadaDictionary: phony || C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_CS-CZ.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_EN-US.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_ES-ES.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_PT-BR.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_RU-RU.qm src/qrc_PrabhupadaDictionary.cpp src/ui_QPrabhupadaDictionaryWindow.h src/ui_QPrabhupadaLoginWindow.h
+build cmake_object_order_depends_target_PrabhupadaDictionary: phony || C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_CS-CZ.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_EN-US.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_ES-ES.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_PT-BR.qm C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/resources/PrabhupadaDictionary_RU-RU.qm src/qrc_PrabhupadaDictionary.cpp src/ui_QPrabhupadaAboutWindow.h src/ui_QPrabhupadaDictionaryWindow.h src/ui_QPrabhupadaGoToLineWindow.h src/ui_QPrabhupadaLoginWindow.h
 
 build src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaMain.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/PrabhupadaMain.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\PrabhupadaMain.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -155,7 +155,7 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaMain.cpp.obj: CXX_COMPIL
   TARGET_PDB = bin\PrabhupadaDictionary.pdb
 
 build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaLoginWindow.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/QPrabhupadaLoginWindow.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\QPrabhupadaLoginWindow.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -165,7 +165,7 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaLoginWindow.cpp.obj: CX
   TARGET_PDB = bin\PrabhupadaDictionary.pdb
 
 build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionaryWindow.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/QPrabhupadaDictionaryWindow.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\QPrabhupadaDictionaryWindow.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -175,7 +175,7 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionaryWindow.cpp.ob
   TARGET_PDB = bin\PrabhupadaDictionary.pdb
 
 build src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaUtil.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/PrabhupadaUtil.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\PrabhupadaUtil.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -185,7 +185,7 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaUtil.cpp.obj: CXX_COMPIL
   TARGET_PDB = bin\PrabhupadaDictionary.pdb
 
 build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaStorage.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/QPrabhupadaStorage.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\QPrabhupadaStorage.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -195,7 +195,7 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaStorage.cpp.obj: CXX_CO
   TARGET_PDB = bin\PrabhupadaDictionary.pdb
 
 build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionary.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/QPrabhupadaDictionary.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\QPrabhupadaDictionary.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -204,8 +204,28 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionary.cpp.obj: CXX
   TARGET_COMPILE_PDB = src\CMakeFiles\PrabhupadaDictionary.dir\
   TARGET_PDB = bin\PrabhupadaDictionary.pdb
 
+build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaGoToLineWindow.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/QPrabhupadaGoToLineWindow.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\QPrabhupadaGoToLineWindow.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
+  INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
+  OBJECT_DIR = src\CMakeFiles\PrabhupadaDictionary.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\PrabhupadaDictionary.dir
+  TARGET_COMPILE_PDB = src\CMakeFiles\PrabhupadaDictionary.dir\
+  TARGET_PDB = bin\PrabhupadaDictionary.pdb
+
+build src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaAboutWindow.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/QPrabhupadaAboutWindow.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\QPrabhupadaAboutWindow.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
+  INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
+  OBJECT_DIR = src\CMakeFiles\PrabhupadaDictionary.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\PrabhupadaDictionary.dir
+  TARGET_COMPILE_PDB = src\CMakeFiles\PrabhupadaDictionary.dir\
+  TARGET_PDB = bin\PrabhupadaDictionary.pdb
+
 build src/CMakeFiles/PrabhupadaDictionary.dir/qrc_PrabhupadaDictionary.cpp.obj: CXX_COMPILER__PrabhupadaDictionary_Release C$:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src/qrc_PrabhupadaDictionary.cpp || cmake_object_order_depends_target_PrabhupadaDictionary
-  DEFINES = -DBUILD_DATE=\"17/02/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
+  DEFINES = -DBUILD_DATE=\"06/04/2023\" -DQT_NO_WEBKIT -DQT_OPENSSL -DQT_SSL
   DEP_FILE = src\CMakeFiles\PrabhupadaDictionary.dir\qrc_PrabhupadaDictionary.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -Werror -Wall -Wextra -Wpedantic -std=gnu++1z
   INCLUDES = -IC:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src -IC:/CopperSpice/Prg/PrabhupadaDictionary/Source/src -isystem C:/CopperSpice/Lib/Release/1.8.0/include -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtCore -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtGui -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtNetwork -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtOpenGL -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtScript -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSql -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtSvg -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXml -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtXmlPatterns -isystem C:/CopperSpice/Lib/Release/1.8.0/include/QtMultimedia
@@ -222,7 +242,7 @@ build src/CMakeFiles/PrabhupadaDictionary.dir/qrc_PrabhupadaDictionary.cpp.obj: 
 #############################################
 # Link the executable bin\PrabhupadaDictionary.exe
 
-build bin/PrabhupadaDictionary.exe: CXX_EXECUTABLE_LINKER__PrabhupadaDictionary_Release src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaMain.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaLoginWindow.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionaryWindow.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaUtil.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaStorage.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionary.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/qrc_PrabhupadaDictionary.cpp.obj | C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsScript1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsSql1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsSvg1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsXml1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsXmlPatterns1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsMultimedia1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsNetwork1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsOpenGL1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsGui1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsCore1.8.dll.a
+build bin/PrabhupadaDictionary.exe: CXX_EXECUTABLE_LINKER__PrabhupadaDictionary_Release src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaMain.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaLoginWindow.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionaryWindow.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/PrabhupadaUtil.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaStorage.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaDictionary.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaGoToLineWindow.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/QPrabhupadaAboutWindow.cpp.obj src/CMakeFiles/PrabhupadaDictionary.dir/qrc_PrabhupadaDictionary.cpp.obj | C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsScript1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsSql1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsSvg1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsXml1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsXmlPatterns1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsMultimedia1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsNetwork1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsOpenGL1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsGui1.8.dll.a C$:/CopperSpice/Lib/Release/1.8.0/lib/libCsCore1.8.dll.a
   FLAGS = -O3 -DNDEBUG
   LINK_FLAGS = -Wl,--no-undefined
   LINK_LIBRARIES = C:/CopperSpice/Lib/Release/1.8.0/lib/libCsScript1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsSql1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsSvg1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsXml1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsXmlPatterns1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsMultimedia1.8.dll.a  -lnetapi32  -lmpr  -mwindows  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsNetwork1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsOpenGL1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsGui1.8.dll.a  C:/CopperSpice/Lib/Release/1.8.0/lib/libCsCore1.8.dll.a  -lopengl32  -lgdi32  -lkernel32  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
@@ -340,6 +360,24 @@ build src/ui_QPrabhupadaLoginWindow.h | ${cmake_ninja_workdir}src/ui_QPrabhupada
 build src/ui_QPrabhupadaDictionaryWindow.h | ${cmake_ninja_workdir}src/ui_QPrabhupadaDictionaryWindow.h: CUSTOM_COMMAND C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/forms/QPrabhupadaDictionaryWindow.ui
   COMMAND = cmd.exe /C "cd /D C:\CopperSpice\Prg\PrabhupadaDictionary\Release\Build\src && C:\CopperSpice\Lib\Release\1.8.0\bin\uic.exe C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../forms/QPrabhupadaDictionaryWindow.ui -o C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src/ui_QPrabhupadaDictionaryWindow.h"
   DESC = Generating ui_QPrabhupadaDictionaryWindow.h
+  restat = 1
+
+
+#############################################
+# Custom command for src\ui_QPrabhupadaGoToLineWindow.h
+
+build src/ui_QPrabhupadaGoToLineWindow.h | ${cmake_ninja_workdir}src/ui_QPrabhupadaGoToLineWindow.h: CUSTOM_COMMAND C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/forms/QPrabhupadaGoToLineWindow.ui
+  COMMAND = cmd.exe /C "cd /D C:\CopperSpice\Prg\PrabhupadaDictionary\Release\Build\src && C:\CopperSpice\Lib\Release\1.8.0\bin\uic.exe C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../forms/QPrabhupadaGoToLineWindow.ui -o C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src/ui_QPrabhupadaGoToLineWindow.h"
+  DESC = Generating ui_QPrabhupadaGoToLineWindow.h
+  restat = 1
+
+
+#############################################
+# Custom command for src\ui_QPrabhupadaAboutWindow.h
+
+build src/ui_QPrabhupadaAboutWindow.h | ${cmake_ninja_workdir}src/ui_QPrabhupadaAboutWindow.h: CUSTOM_COMMAND C$:/CopperSpice/Prg/PrabhupadaDictionary/Source/forms/QPrabhupadaAboutWindow.ui
+  COMMAND = cmd.exe /C "cd /D C:\CopperSpice\Prg\PrabhupadaDictionary\Release\Build\src && C:\CopperSpice\Lib\Release\1.8.0\bin\uic.exe C:/CopperSpice/Prg/PrabhupadaDictionary/Source/src/../forms/QPrabhupadaAboutWindow.ui -o C:/CopperSpice/Prg/PrabhupadaDictionary/Release/Build/src/ui_QPrabhupadaAboutWindow.h"
+  DESC = Generating ui_QPrabhupadaAboutWindow.h
   restat = 1
 
 

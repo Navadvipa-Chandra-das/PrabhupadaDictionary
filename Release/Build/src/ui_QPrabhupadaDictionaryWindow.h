@@ -56,17 +56,21 @@ public:
     QAction *actionGo_to_bookmark_8;
     QAction *actionGo_to_bookmark_9;
     QAction *actionWhats_This_mode;
+    QAction *actionGoToRow;
+    QAction *actionAbout;
     QWidget *centralwidget;
     QVBoxLayout *vlPrabhuadaMain;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *horizontalLayoutLanguage;
     QSpinBox *sbFontSize;
     QComboBox *ComboBoxLanguage;
     QComboBox *ComboBoxLanguageUI;
+    QHBoxLayout *horizontalLayoutRow;
+    QLineEdit *lineEditRowIndicator;
     QVBoxLayout *vlDictionary;
     QTableView *tbvPrabhupadaDictionary;
     QSplitter *splSanskritTranslate;
-    QLineEdit *leSanskrit;
-    QLineEdit *leTranslate;
+    QComboBox *ComboBoxSanskrit;
+    QComboBox *ComboBoxTranslate;
     QMenuBar *mbPrabupadaDictionary;
     QMenu *menuAction;
     QMenu *menuSet_Bookmark;
@@ -154,45 +158,74 @@ public:
         QIcon icon6;
         icon6.addFile(QString::fromUtf8(":/ToolButton/resources/WhatsThis.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionWhats_This_mode->setProperty("icon", QVariant(icon6));
+        actionGoToRow = new QAction(QPrabhupadaDictionaryWindow);
+        actionGoToRow->setObjectName(QString::fromUtf8("actionGoToRow"));
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/ToolButton/resources/GoToRow.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionGoToRow->setProperty("icon", QVariant(icon7));
+        actionAbout = new QAction(QPrabhupadaDictionaryWindow);
+        actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/ToolButton/resources/About.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionAbout->setProperty("icon", QVariant(icon8));
         centralwidget = new QWidget(QPrabhupadaDictionaryWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         vlPrabhuadaMain = new QVBoxLayout(centralwidget);
         vlPrabhuadaMain->setObjectName(QString::fromUtf8("vlPrabhuadaMain"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayoutLanguage = new QHBoxLayout();
+        horizontalLayoutLanguage->setObjectName(QString::fromUtf8("horizontalLayoutLanguage"));
         sbFontSize = new QSpinBox(centralwidget);
         sbFontSize->setObjectName(QString::fromUtf8("sbFontSize"));
         sbFontSize->setProperty("value", QVariant(14));
         sbFontSize->setProperty("minimum", QVariant(14));
         sbFontSize->setProperty("maximum", QVariant(24));
         sbFontSize->setProperty("alignment", QVariant(Qt::AlignCenter));
+        sbFontSize->setProperty("focusPolicy", QVariant(Qt::WheelFocus));
 
-        horizontalLayout->addWidget(sbFontSize);
+        horizontalLayoutLanguage->addWidget(sbFontSize);
 
         ComboBoxLanguage = new QComboBox(centralwidget);
         ComboBoxLanguage->setObjectName(QString::fromUtf8("ComboBoxLanguage"));
+        ComboBoxLanguage->setProperty("focusPolicy", QVariant(Qt::WheelFocus));
 
-        horizontalLayout->addWidget(ComboBoxLanguage);
+        horizontalLayoutLanguage->addWidget(ComboBoxLanguage);
 
         ComboBoxLanguageUI = new QComboBox(centralwidget);
         ComboBoxLanguageUI->setObjectName(QString::fromUtf8("ComboBoxLanguageUI"));
+        ComboBoxLanguageUI->setProperty("focusPolicy", QVariant(Qt::WheelFocus));
 
-        horizontalLayout->addWidget(ComboBoxLanguageUI);
+        horizontalLayoutLanguage->addWidget(ComboBoxLanguageUI);
 
-        horizontalLayout->setStretch(0, 1);
-        horizontalLayout->setStretch(1, 3);
-        horizontalLayout->setStretch(2, 3);
+        horizontalLayoutLanguage->setStretch(0, 1);
+        horizontalLayoutLanguage->setStretch(1, 3);
+        horizontalLayoutLanguage->setStretch(2, 3);
 
-        vlPrabhuadaMain->addLayout(horizontalLayout);
+        vlPrabhuadaMain->addLayout(horizontalLayoutLanguage);
+
+        horizontalLayoutRow = new QHBoxLayout();
+        horizontalLayoutRow->setObjectName(QString::fromUtf8("horizontalLayoutRow"));
+        lineEditRowIndicator = new QLineEdit(centralwidget);
+        lineEditRowIndicator->setObjectName(QString::fromUtf8("lineEditRowIndicator"));
+        lineEditRowIndicator->setProperty("readOnly", QVariant(true));
+        lineEditRowIndicator->setProperty("alignment", QVariant(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter));
+        lineEditRowIndicator->setProperty("focusPolicy", QVariant(Qt::NoFocus));
+
+        horizontalLayoutRow->addWidget(lineEditRowIndicator);
+
+
+        vlPrabhuadaMain->addLayout(horizontalLayoutRow);
 
         vlDictionary = new QVBoxLayout();
         vlDictionary->setObjectName(QString::fromUtf8("vlDictionary"));
         tbvPrabhupadaDictionary = new QTableView(centralwidget);
         tbvPrabhupadaDictionary->setObjectName(QString::fromUtf8("tbvPrabhupadaDictionary"));
+        tbvPrabhupadaDictionary->setProperty("sortingEnabled", QVariant(true));
         QFont font;
         font.setFamily(QString::fromUtf8("Gaura Times"));
         font.setPointSize(14);
         tbvPrabhupadaDictionary->setProperty("font", QVariant(font));
+        tbvPrabhupadaDictionary->horizontalHeader()->setProperty("cascadingSectionResizes", QVariant(false));
+        tbvPrabhupadaDictionary->horizontalHeader()->setProperty("stretchLastSection", QVariant(false));
 
         vlDictionary->addWidget(tbvPrabhupadaDictionary);
 
@@ -200,14 +233,16 @@ public:
         splSanskritTranslate->setObjectName(QString::fromUtf8("splSanskritTranslate"));
         splSanskritTranslate->setProperty("orientation", QVariant(Qt::Horizontal));
         splSanskritTranslate->setProperty("childrenCollapsible", QVariant(false));
-        leSanskrit = new QLineEdit(splSanskritTranslate);
-        leSanskrit->setObjectName(QString::fromUtf8("leSanskrit"));
-        leSanskrit->setProperty("font", QVariant(font));
-        splSanskritTranslate->addWidget(leSanskrit);
-        leTranslate = new QLineEdit(splSanskritTranslate);
-        leTranslate->setObjectName(QString::fromUtf8("leTranslate"));
-        leTranslate->setProperty("font", QVariant(font));
-        splSanskritTranslate->addWidget(leTranslate);
+        ComboBoxSanskrit = new QComboBox(splSanskritTranslate);
+        ComboBoxSanskrit->setObjectName(QString::fromUtf8("ComboBoxSanskrit"));
+        ComboBoxSanskrit->setProperty("editable", QVariant(true));
+        ComboBoxSanskrit->setProperty("font", QVariant(font));
+        splSanskritTranslate->addWidget(ComboBoxSanskrit);
+        ComboBoxTranslate = new QComboBox(splSanskritTranslate);
+        ComboBoxTranslate->setObjectName(QString::fromUtf8("ComboBoxTranslate"));
+        ComboBoxTranslate->setProperty("editable", QVariant(true));
+        ComboBoxTranslate->setProperty("font", QVariant(font));
+        splSanskritTranslate->addWidget(ComboBoxTranslate);
 
         vlDictionary->addWidget(splSanskritTranslate);
 
@@ -238,9 +273,10 @@ public:
         QPrabhupadaDictionaryWindow->addToolBar(Qt::TopToolBarArea, tbPrabhupada);
         QWidget::setTabOrder(sbFontSize, ComboBoxLanguage);
         QWidget::setTabOrder(ComboBoxLanguage, ComboBoxLanguageUI);
-        QWidget::setTabOrder(ComboBoxLanguageUI, tbvPrabhupadaDictionary);
-        QWidget::setTabOrder(tbvPrabhupadaDictionary, leSanskrit);
-        QWidget::setTabOrder(leSanskrit, leTranslate);
+        QWidget::setTabOrder(ComboBoxLanguageUI, lineEditRowIndicator);
+        QWidget::setTabOrder(lineEditRowIndicator, tbvPrabhupadaDictionary);
+        QWidget::setTabOrder(tbvPrabhupadaDictionary, ComboBoxSanskrit);
+        QWidget::setTabOrder(ComboBoxSanskrit, ComboBoxTranslate);
 
         mbPrabupadaDictionary->addAction(menuAction->menuAction());
         mbPrabupadaDictionary->addAction(menuSet_Bookmark->menuAction());
@@ -251,6 +287,8 @@ public:
         menuAction->addAction(actionInsert);
         menuAction->addAction(actionRemove_Duplicates);
         menuAction->addAction(actionWhats_This_mode);
+        menuAction->addAction(actionGoToRow);
+        menuAction->addAction(actionAbout);
         menuSet_Bookmark->addAction(actionSet_Bookmark_0);
         menuSet_Bookmark->addAction(actionSet_Bookmark_1);
         menuSet_Bookmark->addAction(actionSet_Bookmark_2);
@@ -277,6 +315,8 @@ public:
         tbPrabhupada->addAction(actionWhats_This_mode);
         tbPrabhupada->addAction(actionCase_Sensitive);
         tbPrabhupada->addAction(actionRemove_Duplicates);
+        tbPrabhupada->addAction(actionGoToRow);
+        tbPrabhupada->addAction(actionAbout);
 
         retranslateUi(QPrabhupadaDictionaryWindow);
 
@@ -305,8 +345,8 @@ public:
         actionInsert->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\222\321\201\321\202\320\260\320\262\320\270\321\202\321\214", nullptr)));
         actionInsert->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Ins", nullptr)));
         actionInsert->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\222\321\201\321\202\320\260\320\262\320\270\321\202\321\214", nullptr)));
-        actionRemove_Duplicates->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214 \320\264\321\203\320\261\320\273\320\270\320\272\320\260\321\202\321\213", nullptr)));
-        actionRemove_Duplicates->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214 \320\264\321\203\320\261\320\273\320\270\320\272\320\260\321\202\321\213", nullptr)));
+        actionRemove_Duplicates->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214 &\320\264\321\203\320\261\320\273\320\270\320\272\320\260\321\202\321\213", nullptr)));
+        actionRemove_Duplicates->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214 &\320\264\321\203\320\261\320\273\320\270\320\272\320\260\321\202\321\213", nullptr)));
         actionSet_Bookmark_0->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &0", nullptr)));
         actionSet_Bookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+0", nullptr)));
         actionSet_Bookmark_1->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &1", nullptr)));
@@ -350,6 +390,11 @@ public:
         actionWhats_This_mode->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\265\320\266\320\270\320\274 \320\262\320\276\320\277\321\200\320\276\321\201\320\260", nullptr)));
         actionWhats_This_mode->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+F1", nullptr)));
         actionWhats_This_mode->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\265\320\266\320\270\320\274 \320\262\320\276\320\277\321\200\320\276\321\201\320\260", nullptr)));
+        actionGoToRow->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\237\320\265\321\200\320\265\320\271\321\202\320\270 \320\272 \321\201\321\202\321\200\320\276\320\272\320\265", nullptr)));
+        actionGoToRow->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+G", nullptr)));
+        actionAbout->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr)));
+        actionAbout->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "F1", nullptr)));
+        actionAbout->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr)));
 #ifndef QT_NO_TOOLTIP
         sbFontSize->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\240\320\260\320\267\320\274\320\265\321\200 \321\210\321\200\320\270\321\204\321\202\320\260", nullptr)));
 #endif
@@ -360,16 +405,22 @@ public:
         ComboBoxLanguageUI->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\257\320\267\321\213\320\272 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\213 \321\201\320\273\320\276\320\262\320\260\321\200\321\217<br/>\320\250\321\200\320\270\320\273\321\213 \320\237\321\200\320\260\320\261\321\205\321\203\320\277\320\260\320\264\321\213</p></body></html>", nullptr)));
 #endif
 #ifndef QT_NO_WHATSTHIS
-        leSanskrit->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \321\201\320\260\320\275\321\201\320\272\321\200\320\270\321\202\321\203!</p><p>\320\234\320\276\320\266\320\275\320\276 \320\270\321\201\320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\321\214 \321\200\320\265\320\263\321\203\320\273\321\217\321\200\320\275\321\213\320\265 \320\262\321\213\321\200\320\260\320\266\320\265\320\275\320\270\321\217!</p></body></html>", nullptr)));
+        lineEditRowIndicator->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\230\320\275\320\264\320\270\320\272\320\260\321\202\320\276\321\200, \320\272\320\276\321\202\320\276\321\200\321\213\320\271 \320\277\320\276\320\272\320\260\320\267\321\213\320\262\320\260\320\265\321\202 \320\275\320\276\320\274\320\265\321\200 \321\202\320\265\320\272\321\203\321\211\320\265\320\271 \321\201\321\202\321\200\320\276\320\272\320\270, \320\260 \321\202\320\260\320\272\320\266\320\265 \320\276\320\261\321\211\320\265\320\265 \320\272\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\321\200\320\276\320\272 \320\262 \321\202\320\260\320\261\320\273\320\270\321\206\320\265!</p></body></html>", nullptr)));
 #endif
 #ifndef QT_NO_TOOLTIP
-        leSanskrit->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \321\201\320\260\320\275\321\201\320\272\321\200\320\270\321\202\321\203!</p></body></html>", nullptr)));
+        lineEditRowIndicator->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\242\320\265\320\272\321\203\321\211\320\260\321\217 \321\201\321\202\321\200\320\276\320\272\320\260 / \320\262\321\201\320\265\320\263\320\276 \321\201\321\202\321\200\320\276\320\272", nullptr)));
 #endif
 #ifndef QT_NO_WHATSTHIS
-        leTranslate->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \320\277\320\265\321\200\320\265\320\262\320\276\320\264\321\203!</p><p>\320\234\320\276\320\266\320\275\320\276 \320\270\321\201\320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\321\214 \321\200\320\265\320\263\321\203\320\273\321\217\321\200\320\275\321\213\320\265 \320\262\321\213\321\200\320\260\320\266\320\265\320\275\320\270\321\217!</p></body></html>", nullptr)));
+        ComboBoxSanskrit->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \321\201\320\260\320\275\321\201\320\272\321\200\320\270\321\202\321\203!</p><p>\320\234\320\276\320\266\320\275\320\276 \320\270\321\201\320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\321\214 \321\200\320\265\320\263\321\203\320\273\321\217\321\200\320\275\321\213\320\265 \320\262\321\213\321\200\320\260\320\266\320\265\320\275\320\270\321\217!</p></body></html>", nullptr)));
 #endif
 #ifndef QT_NO_TOOLTIP
-        leTranslate->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \320\277\320\265\321\200\320\265\320\262\320\276\320\264\321\203!</p></body></html>", nullptr)));
+        ComboBoxSanskrit->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \321\201\320\260\320\275\321\201\320\272\321\200\320\270\321\202\321\203!</p></body></html>", nullptr)));
+#endif
+#ifndef QT_NO_WHATSTHIS
+        ComboBoxTranslate->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \320\277\320\265\321\200\320\265\320\262\320\276\320\264\321\203!</p><p>\320\234\320\276\320\266\320\275\320\276 \320\270\321\201\320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\321\214 \321\200\320\265\320\263\321\203\320\273\321\217\321\200\320\275\321\213\320\265 \320\262\321\213\321\200\320\260\320\266\320\265\320\275\320\270\321\217!</p></body></html>", nullptr)));
+#endif
+#ifndef QT_NO_TOOLTIP
+        ComboBoxTranslate->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "<html><head/><body><p>\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \320\277\320\265\321\200\320\265\320\262\320\276\320\264\321\203!</p></body></html>", nullptr)));
 #endif
         menuAction->setProperty("title", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\224\320\265\320\271\321\201\321\202\320\262\320\270\320\265", nullptr)));
         menuSet_Bookmark->setProperty("title", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203", nullptr)));

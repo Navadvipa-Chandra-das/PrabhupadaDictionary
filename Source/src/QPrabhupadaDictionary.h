@@ -46,17 +46,17 @@ class QFilterSlovar
     void LoadFromStream( QDataStream &ST );
     void SaveToStream( QDataStream &ST );
 
-    inline QString Sanskrit() { return m_Sanskrit; };
-    inline QString Translate() { return m_Translate; };
+    inline QString Sanskrit() const { return m_Sanskrit; };
+    inline QString Translate() const { return m_Translate; };
     void SetSanskrit( const QString &Value );
     void SetTranslate( const QString &Value );
-    inline QString SanskritWithoutDiakritik() { return m_SanskritWithoutDiakritik; };
-    inline QString TranslateWithoutDiakritik() { return m_TranslateWithoutDiakritik; };
+    inline QString SanskritWithoutDiakritik() const { return m_SanskritWithoutDiakritik; };
+    inline QString TranslateWithoutDiakritik() const { return m_TranslateWithoutDiakritik; };
     void SetSanskritWithoutDiakritik( const QString &Value );
     void SetTranslateWithoutDiakritik( const QString &Value );
-    inline bool IsEmpty() { return m_IsEmpty; };
+    inline bool IsEmpty() const { return m_IsEmpty; };
     inline void SetIsEmpty( bool Value ) { m_IsEmpty = Value; };
-    inline bool IsReset() { return m_IsReset; };
+    inline bool IsReset() const { return m_IsReset; };
     inline void SetIsReset( bool Value ) { m_IsReset = Value; };
 
     bool operator == ( const QFilterSlovar& F )
@@ -101,13 +101,23 @@ class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
     ~QPrabhupadaBukvary();
 };
 
-enum class QOrderBy : char
+enum class QOrderBy : qint8
 {
   SanskritVozrastanie
 , SanskritUbyvanie
 , PerevodVozrastanie
 , PerevodUbyvanie
 };
+
+inline QDataStream& operator << ( QDataStream &ST, const QOrderBy &OrderBy )
+{
+  return ST << (qint8)OrderBy;
+}
+
+inline QDataStream& operator >> ( QDataStream &ST, QOrderBy &OrderBy )
+{
+  return ST >> (qint8&)OrderBy;
+}
 
 class QSanskritTranslate
 {
@@ -186,76 +196,129 @@ class QYazykVector : public std::vector< QYazykInfo >
     void SaveToStream( QDataStream &ST );
 };
 
-class QLanguageIndex : public QObject
+template < class TValueType >
+class QPrabhupadaValue : public QObject
 {
-  CS_OBJECT( QLanguageIndex )
+  CS_OBJECT( QPrabhupadaValue )
   private:
     using inherited = QObject;
-    int m_Index = -1;
-    int m_Start = 0;
+    TValueType m_Value;
+    bool m_NeedMainWork = true;
+    int m_Stop = 0;
   public:
-    QLanguageIndex() = delete;
-    QLanguageIndex( QYazykVector &AYazykVector );
-    ~QLanguageIndex();
-    static const int RussianIndex = 4;
-    QYazykVector &m_YazykVector;
+    QPrabhupadaValue() = delete;
+    QPrabhupadaValue( TValueType Value )
+      : inherited()
+      , m_Value( Value ) {};
+    ~QPrabhupadaValue() {};
 
-    CS_SIGNAL_1( Public, void SignalIndexChanged( int Value ) )
-    CS_SIGNAL_2( SignalIndexChanged, Value )
+    CS_SIGNAL_1( Public, void SignalValueChanged( TValueType Value ) )
+    CS_SIGNAL_2( SignalValueChanged, Value )
 
-    inline int Index() { return m_Index; };
-    void SetIndex( int Value );
-    inline void IncStart() { ++m_Start; };
-    inline void DecStart() { --m_Start; };
-    inline int Start() { return m_Start; };
+    inline TValueType Value() const { return m_Value; };
+    void SetValue( TValueType Value )
+    {
+      if ( Stop() == 0 && m_Value != Value ) {
+        m_Value = Value;
+        m_NeedMainWork = true;
+        emit SignalValueChanged( m_Value );
+      }
+    };
+    inline void IncStop() { ++m_Stop; };
+    inline void DecStop() { --m_Stop; };
+    inline int Stop() { return m_Stop; };
+    inline int NeedMainWork() { return m_NeedMainWork; };
+    inline void SetNeedMainWork( bool Value ) { m_NeedMainWork = Value; };
 
-    void IndexChanged( int Value );
-    void PrepareComboBox( QComboBox *CB );
-    void LoadFromStream( QDataStream &ST ) override;
-    void SaveToStream( QDataStream &ST ) override;
+    void LoadFromStream( QDataStream &ST ) override
+    {
+      inherited::LoadFromStream( ST );
+      TValueType N;
+      ST >> N;
+      SetValue( N );
+    };
+    void SaveToStream( QDataStream &ST ) override
+    {
+      inherited::SaveToStream( ST );
+      ST << m_Value;
+    };
+    inline void EmitValueChanged( bool ANeedResetMainWork = false )
+    {
+      if ( ANeedResetMainWork ) {
+        m_NeedMainWork = true;
+      }
+      emit SignalValueChanged( m_Value );
+      m_NeedMainWork = false;
+    };
   protected:
 };
 
-class QPrabhupadaDictionary : public QObject
+using QFontSize        = QPrabhupadaValue< int >;
+using QPrabhupadaOrder = QPrabhupadaValue< QOrderBy >;
+using QPrabhupadaBool  = QPrabhupadaValue< bool >;
+
+class QLanguageIndex : public QPrabhupadaValue< int >
+{
+  private:
+    using inherited = QPrabhupadaValue< int >;
+  public:
+    QLanguageIndex() = delete;
+    QLanguageIndex( int Value
+                  , QYazykVector &AYazykVector );
+    ~QLanguageIndex();
+    static const int RussianIndex = 4;
+    QYazykVector& m_YazykVector;
+    void PrepareComboBox( QComboBox *CB );
+    void ComboBoxAddItem( QComboBox *CB, const QString &S );
+    inline QYazykInfo& YazykInfo() { return m_YazykVector[ Value() ]; };
+  protected:
+};
+
+class QPrabhupadaDictionary : public QAbstractTableModel
 {
   CS_OBJECT( QPrabhupadaDictionary )
   private:
-    using inherited = QObject;
-    //int m_LanguageUI_Index = -1;
-    //int m_LanguageUI_Start = 0;
+    using inherited = QAbstractTableModel;
   public:
-    QPrabhupadaDictionary();
+    QPrabhupadaDictionary( QObject *parent = nullptr );
     ~QPrabhupadaDictionary();
     QSqlDatabase *m_DB = nullptr;
     inline QSqlDatabase *DB() { return m_DB; };
     QYazykVector m_YazykVector;
-    QLanguageIndex m_LanguageIndex   = QLanguageIndex( m_YazykVector );
-    QLanguageIndex m_LanguageUIIndex = QLanguageIndex( m_YazykVector );
+    QLanguageIndex m_LanguageIndex   = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
+    QLanguageIndex m_LanguageUIIndex = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
+    QFontSize m_FontSize = QFontSize( 14 );
+    QPrabhupadaOrder m_PrabhupadaOrder = QPrabhupadaOrder( QOrderBy::SanskritVozrastanie );
+    QPrabhupadaBool m_CaseSensitive = QPrabhupadaBool( false );
     int m_MaxID;
     QString m_Schema;
     QTranslator m_Translator;
+    QPrabhupadaSlovarVector m_PrabhupadaSlovarVector;
 
     void LanguageIndexChanged( int Value );
     void LanguageUIIndexChanged( int Value );
-    //CS_SIGNAL_1( Public, void SignalLanguageUI_IndexChanged( int Value ) )
-    //CS_SIGNAL_2( SignalLanguageUI_IndexChanged, Value )
+    void PrepareYazykAndMaxID();
+    void PreparePrabhupadaSlovarVector();
 
-    //inline int LanguageUI_Index() { return m_LanguageUI_Index; };
-    //void SetLanguageUI_Index( int Value );
-    //inline void IncLanguageUI_Start() { ++m_LanguageUI_Start; };
-    //inline void DecLanguageUI_Start() { --m_LanguageUI_Start; };
-    //inline int LanguageUI_Start() { return m_LanguageUI_Start; };
     static const QString PrabhupadaDictionaryFiles;
     static QPrabhupadaBukvary PrabhupadaBukvary;
     static void PreparePrabhupadaBukvary();
-    void PrepareYazykAndMaxID();
     static QString RemoveDiacritics( const QString& S );
     static bool PrabhupadaComareLess( const QString& A, const QString& B );
     static bool PrabhupadaComareMore( const QString& A, const QString& B );
-    void Language_IndexChanged( int Value );
-    void LanguageUI_IndexChanged( int Value );
+
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;
+
+    int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
+    int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
+    QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+    QVariant headerData( int section, Qt::Orientation orientation, int role ) const override;
+
+    inline const QFilterSlovar& GetFilterSlovar() const { return m_YazykVector[ m_LanguageIndex.Value() ].m_FilterSlovar; };
+    void sortByColumn( int column, Qt::SortOrder order );
+    void DoOrderBy( QOrderBy Value );
+    void DoCaseSensitive( bool Value );
   protected:
 };
 

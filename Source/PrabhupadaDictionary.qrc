@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="ToolButton">
+    <file>resources/About.png</file>
+    <file>resources/GoToRow.png</file>
     <file alias="RU-RU/Case_Sensitive.png">resources/Case_Sensitive_RU-RU.png</file>
     <file>resources/RemoveDuplicates.png</file>
     <file>resources/Case_Sensitive.png</file>

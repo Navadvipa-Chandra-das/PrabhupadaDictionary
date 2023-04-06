@@ -25,5 +25,6 @@
 void PrabhupadaMessage( const QString &msg );
 void PrabhupadaMessage( QString msg, int value );
 void PrabhupadaMessage( QWidget *parent, const QString &title, const QString &msg );
+void PrabhupadaLog( const QString &AFileName, const QString &msg );
 
 #endif

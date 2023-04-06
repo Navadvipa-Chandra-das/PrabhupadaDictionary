@@ -1,4 +1,4 @@
-C:\PostgreSQL\15\bin\pg_dump.exe -d PrabhupadaDictionary -U "Navadvipa Chandra das" -W -b -c --column-inserts --inserts --disable-triggers --if-exists --no-unlogged-table-data -S "Navadvipa Chandra das" -f C:\C\PrabhupadaDictionary\SQL\PrabhupadaDictionary.sql
+rem C:\PostgreSQL\15\bin\pg_dump.exe -d PrabhupadaDictionary -U "Navadvipa Chandra das" -W -b -c --column-inserts --inserts --disable-triggers --if-exists --no-unlogged-table-data -S "Navadvipa Chandra das" -f C:\C\PrabhupadaDictionary\SQL\PrabhupadaDictionary.sql
 set now=%TIME:~0,-3%
 set now=%now::=.%
 set now=%now: =0%

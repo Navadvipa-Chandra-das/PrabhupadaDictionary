@@ -15,14 +15,23 @@
 #include <PrabhupadaUtil.h>
 #include <QPrabhupadaStorage.h>
 
-QPrabhupadaLoginWindow::QPrabhupadaLoginWindow( QPrabhupadaStorage *APrabhupadaStorage
-                                              , QPrabhupadaDictionary *APrabhupadaDictionary )
+QPrabhupadaLoginWindow::QPrabhupadaLoginWindow( QPrabhupadaDictionary *APrabhupadaDictionary )
   : inherited()
-, m_PrabhupadaStorage( APrabhupadaStorage )
-, m_PrabhupadaDictionary( APrabhupadaDictionary )
+  , m_PrabhupadaDictionary( APrabhupadaDictionary )
 {
   m_ui->setupUi( this );
 
+  Connects();
+  Emits();
+}
+
+QPrabhupadaLoginWindow::~QPrabhupadaLoginWindow()
+{
+  delete m_ui;
+}
+
+void QPrabhupadaLoginWindow::Connects()
+{
   QObject::connect( m_ui->radioButtonSQLite
                   , &QAbstractButton::toggled
                   , this
@@ -32,55 +41,76 @@ QPrabhupadaLoginWindow::QPrabhupadaLoginWindow( QPrabhupadaStorage *APrabhupadaS
   QObject::connect( m_ui->ComboBoxLanguageUI
                   , ( void ( QComboBox::* )( int ) )( QComboBox::currentIndexChanged )
                   , &m_PrabhupadaDictionary->m_LanguageUIIndex
-                  , &QLanguageIndex::IndexChanged );
+                  , &QLanguageIndex::SetValue );
   QObject::connect( &m_PrabhupadaDictionary->m_LanguageUIIndex
-                  , &QLanguageIndex::SignalIndexChanged
+                  , &QLanguageIndex::SignalValueChanged
                   , this
                   , &QPrabhupadaLoginWindow::LanguageUI_IndexChanged );
+  QObject::connect( m_ui->pushButtonOK
+                  , &QPushButton::clicked
+                  , this
+                  , &QPrabhupadaLoginWindow::pushButtonOKClicked );
+  QObject::connect( m_ui->pushButtonCancel
+                  , &QPushButton::clicked
+                  , this
+                  , &QPrabhupadaLoginWindow::pushButtonCancelClicked );
 }
 
-QPrabhupadaLoginWindow::~QPrabhupadaLoginWindow()
+void QPrabhupadaLoginWindow::Emits()
 {
-  delete m_ui;
+  m_PrabhupadaDictionary->m_LanguageUIIndex.EmitValueChanged();
 }
 
 void QPrabhupadaLoginWindow::LoadFromStream( QDataStream &ST )
 {
   inherited::LoadFromStream( ST );
-
+  // 1
   QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxUserName, ST );
+  // 2
   QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxDatabaseName, ST );
+  // 3
   QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxHostName, ST );
+  // 4
   QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxPort, ST );
+  // 5
   QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxSchema, ST );
+  // 6
   bool B;
   ST >> B;
-  if ( B )
+  if ( B ) {
     m_ui->radioButtonSQLite->setChecked( true );
-  else
+  } else {
     m_ui->radioButtonPostgreSQL->setChecked( true );
-  //QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxLanguageUI, ST );
+  }
 }
 
 void QPrabhupadaLoginWindow::SaveToStream( QDataStream &ST )
 {
   inherited::SaveToStream( ST );
 
+  // 1
   QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxUserName, ST );
+  // 2
   QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxDatabaseName, ST );
+  // 3
   QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxHostName, ST );
+  // 4
   QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxPort, ST );
+  // 5
   QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxSchema, ST );
+  // 6
   ST << m_ui->radioButtonSQLite->isChecked();
-  //QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxLanguageUI, ST );
 }
 
-// void QPrabhupadaLoginWindow::addYazykSlovo( QString &AYazykSlovo )
-// {
-//   if ( m_NeedAddYazykSlovo ) {
-//     m_ui->ComboBoxLanguageUI->addItem( AYazykSlovo );
-//   }
-// }
+void QPrabhupadaLoginWindow::pushButtonOKClicked()
+{
+  accept();
+}
+
+void QPrabhupadaLoginWindow::pushButtonCancelClicked()
+{
+  reject();
+}
 
 void QPrabhupadaLoginWindow::changeEvent( QEvent *event )
 {
@@ -103,10 +133,11 @@ void QPrabhupadaLoginWindow::WidgetToDatabase( QSqlDatabase *DB )
 {
   DB->setUserName( m_ui->ComboBoxUserName->currentText() );
   DB->setPassword( m_ui->LineEditPassword->text() );
-  if ( m_ui->radioButtonSQLite->isChecked() )
+  if ( m_ui->radioButtonSQLite->isChecked() ) {
     DB->setDatabaseName( "./resources/PrabhupadaDictionaryFiles/Sanskrit.db" );
-  else
+  } else {
     DB->setDatabaseName( m_ui->ComboBoxDatabaseName->currentText() );
+  }
   DB->setHostName( m_ui->ComboBoxHostName->currentText() );
   DB->setPort( QStringParser::toInteger< int >( m_ui->ComboBoxPort->currentText() ) );
 }
@@ -140,12 +171,6 @@ bool QPrabhupadaLoginWindow::Connect( QSqlDatabase *DB )
 {
   WidgetToDatabase( DB );
   bool B = DB->open();
-  // if ( B && m_ui->ComboBoxLanguageUI->count() == 1 ) {
-  //   m_PrabhupadaDictionary->IncLanguageUI_Start();
-  //   m_ui->ComboBoxLanguageUI->clear();
-  //   m_PrabhupadaDictionary->DecLanguageUI_Start();
-  //   m_NeedAddYazykSlovo = true;
-  // }
   return B;
 }
 

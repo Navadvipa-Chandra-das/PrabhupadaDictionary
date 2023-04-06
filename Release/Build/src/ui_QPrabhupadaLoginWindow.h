@@ -16,13 +16,14 @@
 #include <QtGui/QCheckBox>
 #include <QtGui/QComboBox>
 #include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
 #include <QtGui/QFormLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
+#include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
+#include <QtGui/QSpacerItem>
 #include <QtGui/QVBoxLayout>
 
 class Ui_QPrabhupadaLoginWindow
@@ -43,12 +44,16 @@ public:
     QComboBox *ComboBoxHostName;
     QLabel *LabelPort;
     QComboBox *ComboBoxPort;
-    QCheckBox *CheckBoxResetSettings;
-    QComboBox *ComboBoxSchema;
     QLabel *LabelSchema;
+    QComboBox *ComboBoxSchema;
+    QCheckBox *CheckBoxResetSettings;
     QLabel *LabelLanguageUI;
     QComboBox *ComboBoxLanguageUI;
-    QDialogButtonBox *buttonBox;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *pushButtonOK;
+    QPushButton *pushButtonCancel;
+    QSpacerItem *horizontalSpacer_2;
 
     void setupUi(QDialog *QPrabhupadaLoginWindow)
     {
@@ -60,7 +65,7 @@ public:
         icon.addFile(QString::fromUtf8(":/Icon/resources/PrabhupadaDictionary.ico"), QSize(), QIcon::Normal, QIcon::Off);
         QPrabhupadaLoginWindow->setProperty("windowIcon", QVariant(icon));
         QPrabhupadaLoginWindow->setProperty("mouseTracking", QVariant(false));
-        QPrabhupadaLoginWindow->resize(263, 273);
+        QPrabhupadaLoginWindow->resize(263, 285);
         LayoutPrabhupadaLogin = new QVBoxLayout(QPrabhupadaLoginWindow);
         LayoutPrabhupadaLogin->setObjectName(QString::fromUtf8("LayoutPrabhupadaLogin"));
         LayoutSQL = new QHBoxLayout();
@@ -136,10 +141,10 @@ public:
 
         LayoutConnection->setWidget(4, QFormLayout::FieldRole, ComboBoxPort);
 
-        CheckBoxResetSettings = new QCheckBox(QPrabhupadaLoginWindow);
-        CheckBoxResetSettings->setObjectName(QString::fromUtf8("CheckBoxResetSettings"));
+        LabelSchema = new QLabel(QPrabhupadaLoginWindow);
+        LabelSchema->setObjectName(QString::fromUtf8("LabelSchema"));
 
-        LayoutConnection->setWidget(6, QFormLayout::FieldRole, CheckBoxResetSettings);
+        LayoutConnection->setWidget(5, QFormLayout::LabelRole, LabelSchema);
 
         ComboBoxSchema = new QComboBox(QPrabhupadaLoginWindow);
         ComboBoxSchema->setObjectName(QString::fromUtf8("ComboBoxSchema"));
@@ -147,10 +152,10 @@ public:
 
         LayoutConnection->setWidget(5, QFormLayout::FieldRole, ComboBoxSchema);
 
-        LabelSchema = new QLabel(QPrabhupadaLoginWindow);
-        LabelSchema->setObjectName(QString::fromUtf8("LabelSchema"));
+        CheckBoxResetSettings = new QCheckBox(QPrabhupadaLoginWindow);
+        CheckBoxResetSettings->setObjectName(QString::fromUtf8("CheckBoxResetSettings"));
 
-        LayoutConnection->setWidget(5, QFormLayout::LabelRole, LabelSchema);
+        LayoutConnection->setWidget(6, QFormLayout::FieldRole, CheckBoxResetSettings);
 
         LabelLanguageUI = new QLabel(QPrabhupadaLoginWindow);
         LabelLanguageUI->setObjectName(QString::fromUtf8("LabelLanguageUI"));
@@ -165,12 +170,30 @@ public:
 
         LayoutPrabhupadaLogin->addLayout(LayoutConnection);
 
-        buttonBox = new QDialogButtonBox(QPrabhupadaLoginWindow);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setProperty("standardButtons", QVariant(QDialogButtonBox::Cancel|QDialogButtonBox::FirstButton|QDialogButtonBox::Ok));
-        buttonBox->setProperty("orientation", QVariant(Qt::Horizontal));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        LayoutPrabhupadaLogin->addWidget(buttonBox);
+        horizontalLayout->addItem(horizontalSpacer);
+
+        pushButtonOK = new QPushButton(QPrabhupadaLoginWindow);
+        pushButtonOK->setObjectName(QString::fromUtf8("pushButtonOK"));
+        pushButtonOK->setProperty("default", QVariant(true));
+
+        horizontalLayout->addWidget(pushButtonOK);
+
+        pushButtonCancel = new QPushButton(QPrabhupadaLoginWindow);
+        pushButtonCancel->setObjectName(QString::fromUtf8("pushButtonCancel"));
+        pushButtonCancel->setProperty("autoDefault", QVariant(true));
+
+        horizontalLayout->addWidget(pushButtonCancel);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_2);
+
+
+        LayoutPrabhupadaLogin->addLayout(horizontalLayout);
 
         QWidget::setTabOrder(radioButtonSQLite, radioButtonPostgreSQL);
         QWidget::setTabOrder(radioButtonPostgreSQL, ComboBoxUserName);
@@ -182,8 +205,6 @@ public:
         QWidget::setTabOrder(ComboBoxSchema, CheckBoxResetSettings);
 
         retranslateUi(QPrabhupadaLoginWindow);
-        QObject::connect(buttonBox, SIGNAL(accepted()), QPrabhupadaLoginWindow, SLOT(accept()));
-        QObject::connect(buttonBox, SIGNAL(rejected()), QPrabhupadaLoginWindow, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(QPrabhupadaLoginWindow);
     }  // setupUi
@@ -198,12 +219,14 @@ public:
         LabelDatabaseName->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\230\320\274\321\217 \320\261\320\260\320\267\321\213 \320\264\320\260\320\275\320\275\321\213\321\205", nullptr)));
         LabelHostName->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\320\265\321\200\320\262\320\265\321\200", nullptr)));
         LabelPort->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\237\320\276\321\200\321\202", nullptr)));
+        LabelSchema->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\321\205\320\265\320\274\320\260", nullptr)));
         CheckBoxResetSettings->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\320\261\321\200\320\276\321\201\320\270\321\202\321\214 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr)));
 #ifndef QT_NO_WHATSTHIS
         CheckBoxResetSettings->setProperty("whatsThis", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "<html><head/><body><p>\320\255\321\202\320\276\321\202 \321\204\320\273\320\260\320\263 \321\201\320\261\321\200\320\260\321\201\321\213\320\262\320\260\320\265\321\202 \320\262\321\201\320\265 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217 \320\277\320\276\321\201\320\273\320\265 \320\262\321\205\320\276\320\264\320\260 \320\262 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\203!</p></body></html>", nullptr)));
 #endif
-        LabelSchema->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\241\321\205\320\265\320\274\320\260", nullptr)));
         LabelLanguageUI->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\257\320\267\321\213\320\272 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\213", nullptr)));
+        pushButtonOK->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\237\320\276\320\265\321\205\320\260\320\273\320\270!", nullptr)));
+        pushButtonCancel->setProperty("text", QVariant(QApplication::translate("QPrabhupadaLoginWindow", "\320\227\320\260\320\264\320\275\320\270\320\271 \321\205\320\276\320\264!", nullptr)));
     }  // retranslateUi
 
 };

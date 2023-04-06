@@ -26,25 +26,26 @@ class QPrabhupadaLoginWindow : public QPrabhupadaDialog
 
   public:
     QPrabhupadaLoginWindow() = delete;
-    QPrabhupadaLoginWindow( QPrabhupadaStorage *APrabhupadaStorage
-                          , QPrabhupadaDictionary *APrabhupadaDictionary );
+    QPrabhupadaLoginWindow( QPrabhupadaDictionary *APrabhupadaDictionary );
     ~QPrabhupadaLoginWindow();
     Ui::QPrabhupadaLoginWindow *m_ui = new Ui::QPrabhupadaLoginWindow;
-    QPrabhupadaStorage *m_PrabhupadaStorage;
-    QPrabhupadaDictionary *m_PrabhupadaDictionary;
+    QPrabhupadaDictionary *m_PrabhupadaDictionary = nullptr;
     bool Connect( QSqlDatabase *DB );
     inline QString DriverName() { return m_DriverName; };
     inline QString Schema() { return m_Schema; };
-    //void addYazykSlovo( QString &AYazykSlovo );
-    //bool m_NeedAddYazykSlovo = false;
+    inline void SetPrabhupadaDictionary( QPrabhupadaDictionary *Value ) { m_PrabhupadaDictionary = Value; };
   private:
     using inherited = QPrabhupadaDialog;
     QString m_DriverName;
     QString m_Schema;
+    void Connects();
+    void Emits();
     void SQLRadioButton( bool checked );
     void DatabaseToWidget( QSqlDatabase *DB );
     void WidgetToDatabase( QSqlDatabase *DB );
     void LanguageUI_IndexChanged( int Value );
+    void pushButtonOKClicked();
+    void pushButtonCancelClicked();
   protected:
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;
