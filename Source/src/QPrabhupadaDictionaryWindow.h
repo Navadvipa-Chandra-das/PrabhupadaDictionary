@@ -25,13 +25,11 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
 
   public:
     QPrabhupadaDictionaryWindow() = delete;
-    QPrabhupadaDictionaryWindow( QPrabhupadaDictionary *APrabhupadaDictionary
-                               , QPrabhupadaStorage *APrabhupadaStorage );
+    QPrabhupadaDictionaryWindow( QPrabhupadaDictionary *APrabhupadaDictionary );
     ~QPrabhupadaDictionaryWindow();
     Ui::QPrabhupadaDictionaryWindow *m_ui = new Ui::QPrabhupadaDictionaryWindow;
     QPrabhupadaDictionary *m_PrabhupadaDictionary;
-    QPrabhupadaStorage *m_PrabhupadaStorage;
-    void PrepareDictionary( QSqlDatabase *DB );
+    void PrepareDictionary();
     inline void SetStartResize( bool Value ) { m_StartResize = Value; };
     inline void SetPrabhupadaDictionary( QPrabhupadaDictionary *Value ) { m_PrabhupadaDictionary = Value; };
     void FirstShow();
@@ -50,9 +48,11 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
     void actionWhats_This_mode();
     void actionGoToRow();
     void actionAbout();
+    void ActionSaveYazykVectorToFile();
+    void ActionSaveAllBukvaToFile();
     void PrepareLanguages();
     void SetFilterSlovar( QFilterSlovar Value );
-    inline QSqlDatabase *DB() { return m_PrabhupadaDictionary->m_DB; };
+    //inline QSqlDatabase *DB() { return m_PrabhupadaDictionary->DB(); };
     void Language_IndexChanged( int Value );
     void LanguageUI_IndexChanged( int Value );
     void DoOrderBy( QOrderBy Value );

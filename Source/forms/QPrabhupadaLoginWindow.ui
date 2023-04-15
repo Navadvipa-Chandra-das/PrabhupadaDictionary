@@ -141,7 +141,7 @@
         <string>Сбросить настройки</string>
        </property>
        <property name="whatsThis" stdset="0">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу! Но только те из них, которые хранятся в базе данных! Настройки, хранящиеся в файлах &amp;quot;ini&amp;quot; сбрасывайте простым удалением этих файлов!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>

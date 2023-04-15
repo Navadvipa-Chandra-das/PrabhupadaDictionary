@@ -18,11 +18,9 @@
 #include <QPrabhupadaStorage.h>
 #include <QSaveFile>
 
-QPrabhupadaDictionaryWindow::QPrabhupadaDictionaryWindow( QPrabhupadaDictionary *APrabhupadaDictionary
-                                                        , QPrabhupadaStorage *APrabhupadaStorage )
+QPrabhupadaDictionaryWindow::QPrabhupadaDictionaryWindow( QPrabhupadaDictionary *APrabhupadaDictionary )
   : inherited()
   , m_PrabhupadaDictionary( APrabhupadaDictionary )
-  , m_PrabhupadaStorage( APrabhupadaStorage )
 {
   m_ui->setupUi( this );
   m_ui->tbvPrabhupadaDictionary->verticalHeader()->hide();
@@ -68,6 +66,14 @@ void QPrabhupadaDictionaryWindow::Connects()
                   , &QAction::triggered
                   , this
                   , &QPrabhupadaDictionaryWindow::actionAbout );
+  QObject::connect( m_ui->ActionSaveYazykVectorToFile
+                  , &QAction::triggered
+                  , this
+                  , &QPrabhupadaDictionaryWindow::ActionSaveYazykVectorToFile );
+  QObject::connect( m_ui->ActionSaveAllBukvaToFile
+                  , &QAction::triggered
+                  , this
+                  , &QPrabhupadaDictionaryWindow::ActionSaveAllBukvaToFile );
   QObject::connect( m_ui->sbFontSize
                   , ( void ( QSpinBox::* )( int ) )( QSpinBox::valueChanged )
                   , this
@@ -151,7 +157,8 @@ void QPrabhupadaDictionaryWindow::FontSizeChanged( int Value )
 
 void QPrabhupadaDictionaryWindow::actionFind()
 {
-  //FilterSlovar = QFilterSlovar( edSanskrit->Text, edPerevod->Text );
+  m_PrabhupadaDictionary->m_PrabhupadaFilterSlovar.SetValue( QFilterSlovar( m_ui->ComboBoxSanskrit->currentText()
+                                                                          , m_ui->ComboBoxTranslate->currentText() ) );
 }
 
 void QPrabhupadaDictionaryWindow::actionCase_Sensitive( bool Value )
@@ -188,17 +195,27 @@ void QPrabhupadaDictionaryWindow::actionGoToRow()
                   , this
                   , &DoGoToLine );
 
-  m_PrabhupadaStorage->LoadObject( &PrabhupadaGoToLineWindow, QPrabhupadaStorageKind::ByteArray );
+  m_PrabhupadaStorage->LoadObject( &PrabhupadaGoToLineWindow, QPrabhupadaStorageKind::Memory );
   PrabhupadaGoToLineWindow.exec();
-  m_PrabhupadaStorage->SaveObject( &PrabhupadaGoToLineWindow, QPrabhupadaStorageKind::ByteArray );
+  m_PrabhupadaStorage->SaveObject( &PrabhupadaGoToLineWindow, QPrabhupadaStorageKind::Memory );
 }
 
 void QPrabhupadaDictionaryWindow::actionAbout()
 {
   QPrabhupadaAboutWindow PrabhupadaAboutWindow( m_PrabhupadaStorage );
-  m_PrabhupadaStorage->LoadObject( &PrabhupadaAboutWindow, QPrabhupadaStorageKind::ByteArray );
+  m_PrabhupadaStorage->LoadObject( &PrabhupadaAboutWindow, QPrabhupadaStorageKind::DB );
   PrabhupadaAboutWindow.exec();
-  m_PrabhupadaStorage->SaveObject( &PrabhupadaAboutWindow, QPrabhupadaStorageKind::ByteArray );
+  m_PrabhupadaStorage->SaveObject( &PrabhupadaAboutWindow, QPrabhupadaStorageKind::DB );
+}
+
+void QPrabhupadaDictionaryWindow::ActionSaveYazykVectorToFile()
+{
+  m_PrabhupadaDictionary->SaveYazykVectorToFile();
+}
+
+void QPrabhupadaDictionaryWindow::ActionSaveAllBukvaToFile()
+{
+  PrabhupadaMessage( "ActionSaveAllBukvaToFile" );
 }
 
 void QPrabhupadaDictionaryWindow::changeEvent( QEvent *event )
@@ -212,14 +229,15 @@ void QPrabhupadaDictionaryWindow::changeEvent( QEvent *event )
 
 void QPrabhupadaDictionaryWindow::closeEvent( QCloseEvent *event )
 {
-  m_PrabhupadaStorage->SaveObject( m_PrabhupadaDictionary );
+  m_PrabhupadaStorage->SaveObject( m_PrabhupadaDictionary, QPrabhupadaStorageKind::DB );
+  m_PrabhupadaStorage->SaveObject( &m_PrabhupadaDictionary->m_LanguageUIIndex, QPrabhupadaStorageKind::File );
 
   inherited::closeEvent( event );
 }
 
 void QPrabhupadaDictionaryWindow::actionExit_Program()
 {
-   close();
+  close();
 }
 
 void QPrabhupadaDictionaryWindow::LoadFromStream( QDataStream &ST )
@@ -247,9 +265,8 @@ void QPrabhupadaDictionaryWindow::SaveToStream( QDataStream &ST )
   m_PrabhupadaStorage->SaveToStream( ST );
 }
 
-void QPrabhupadaDictionaryWindow::PrepareDictionary( QSqlDatabase *DB )
+void QPrabhupadaDictionaryWindow::PrepareDictionary()
 {
-  m_PrabhupadaDictionary->m_DB = DB;
   m_PrabhupadaDictionary->PrepareYazykAndMaxID();
   PrepareLanguages();
 

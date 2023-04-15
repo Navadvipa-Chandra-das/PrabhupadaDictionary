@@ -58,6 +58,8 @@ public:
     QAction *actionWhats_This_mode;
     QAction *actionGoToRow;
     QAction *actionAbout;
+    QAction *ActionSaveYazykVectorToFile;
+    QAction *ActionSaveAllBukvaToFile;
     QWidget *centralwidget;
     QVBoxLayout *vlPrabhuadaMain;
     QHBoxLayout *horizontalLayoutLanguage;
@@ -168,6 +170,16 @@ public:
         QIcon icon8;
         icon8.addFile(QString::fromUtf8(":/ToolButton/resources/About.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionAbout->setProperty("icon", QVariant(icon8));
+        ActionSaveYazykVectorToFile = new QAction(QPrabhupadaDictionaryWindow);
+        ActionSaveYazykVectorToFile->setObjectName(QString::fromUtf8("ActionSaveYazykVectorToFile"));
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/ToolButton/resources/SaveLang.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ActionSaveYazykVectorToFile->setProperty("icon", QVariant(icon9));
+        ActionSaveAllBukvaToFile = new QAction(QPrabhupadaDictionaryWindow);
+        ActionSaveAllBukvaToFile->setObjectName(QString::fromUtf8("ActionSaveAllBukvaToFile"));
+        QIcon icon10;
+        icon10.addFile(QString::fromUtf8(":/ToolButton/resources/SaveBukva.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ActionSaveAllBukvaToFile->setProperty("icon", QVariant(icon10));
         centralwidget = new QWidget(QPrabhupadaDictionaryWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         vlPrabhuadaMain = new QVBoxLayout(centralwidget);
@@ -289,6 +301,8 @@ public:
         menuAction->addAction(actionWhats_This_mode);
         menuAction->addAction(actionGoToRow);
         menuAction->addAction(actionAbout);
+        menuAction->addAction(ActionSaveYazykVectorToFile);
+        menuAction->addAction(ActionSaveAllBukvaToFile);
         menuSet_Bookmark->addAction(actionSet_Bookmark_0);
         menuSet_Bookmark->addAction(actionSet_Bookmark_1);
         menuSet_Bookmark->addAction(actionSet_Bookmark_2);
@@ -395,6 +409,8 @@ public:
         actionAbout->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr)));
         actionAbout->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "F1", nullptr)));
         actionAbout->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr)));
+        ActionSaveYazykVectorToFile->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \321\217\320\267\321\213\320\272\320\270 \320\262 \321\204\320\260\320\271\320\273", nullptr)));
+        ActionSaveAllBukvaToFile->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\261\321\203\320\272\320\262\321\213 \320\262 \321\204\320\260\320\271\320\273", nullptr)));
 #ifndef QT_NO_TOOLTIP
         sbFontSize->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\240\320\260\320\267\320\274\320\265\321\200 \321\210\321\200\320\270\321\204\321\202\320\260", nullptr)));
 #endif

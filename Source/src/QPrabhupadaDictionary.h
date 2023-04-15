@@ -7,99 +7,7 @@
 #include <vector>
 #include <map>
 #include <set>
-
-class QStringMap : public std::map< QString, QString >
-{
-  private:
-    using inherited = std::map< QString, QString >;
-  public:
-    QStringMap();
-    ~QStringMap();
-};
-
-class QStringSet : public std::set< QString >
-{
-  private:
-    using inherited = std::set< QString >;
-  public:
-    QStringSet();
-    ~QStringSet();
-};
-
-class QFilterSlovar
-{
-  private:
-    QString m_Sanskrit;
-    QString m_Translate;
-    QString m_SanskritWithoutDiakritik;
-    QString m_TranslateWithoutDiakritik;
-    bool m_IsEmpty = true;
-    bool m_IsReset = true;
-  public:
-    QFilterSlovar();
-    QFilterSlovar( const QFilterSlovar &A );
-    QFilterSlovar( const QString &ASanskrit
-                 , const QString &APerevod );
-    ~QFilterSlovar();
-    QFilterSlovar& operator = ( const QFilterSlovar & a );
-
-    void LoadFromStream( QDataStream &ST );
-    void SaveToStream( QDataStream &ST );
-
-    inline QString Sanskrit() const { return m_Sanskrit; };
-    inline QString Translate() const { return m_Translate; };
-    void SetSanskrit( const QString &Value );
-    void SetTranslate( const QString &Value );
-    inline QString SanskritWithoutDiakritik() const { return m_SanskritWithoutDiakritik; };
-    inline QString TranslateWithoutDiakritik() const { return m_TranslateWithoutDiakritik; };
-    void SetSanskritWithoutDiakritik( const QString &Value );
-    void SetTranslateWithoutDiakritik( const QString &Value );
-    inline bool IsEmpty() const { return m_IsEmpty; };
-    inline void SetIsEmpty( bool Value ) { m_IsEmpty = Value; };
-    inline bool IsReset() const { return m_IsReset; };
-    inline void SetIsReset( bool Value ) { m_IsReset = Value; };
-
-    bool operator == ( const QFilterSlovar& F )
-    {
-      return ( m_Sanskrit == F.m_Sanskrit ) && ( m_Translate == F.m_Translate );
-    }
-    bool operator != ( const QFilterSlovar& F )
-    {
-      return ( ( m_Sanskrit != F.m_Sanskrit ) || ( m_Translate != F.m_Translate ) );
-    }
-    bool GetIsEmpty() const
-    {
-      return m_Sanskrit.empty() && m_Translate.empty();
-    }
-    void Clear()
-    {
-      m_Sanskrit  = "";
-      m_Translate = "";
-    }
-};
-
-class QPrabhupadaBukva
-{
-  private:
-    QChar32 m_Bukva;
-    int m_Ves;
-  public:
-    QPrabhupadaBukva();
-    ~QPrabhupadaBukva();
-    inline QChar32 Bukva() { return m_Bukva; };
-    inline void SetBukva( QChar32 Value ) { m_Bukva = Value; };
-    inline int Ves() { return m_Ves; };
-    inline void SetVes( int Value ) { m_Ves = Value; };
-};
-
-class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
-{
-  private:
-    using inherited = std::map< QChar32, QPrabhupadaBukva >;
-  public:
-    QPrabhupadaBukvary();
-    ~QPrabhupadaBukvary();
-};
+#include <QPrabhupadaStorage.h>
 
 enum class QOrderBy : qint8
 {
@@ -107,93 +15,6 @@ enum class QOrderBy : qint8
 , SanskritUbyvanie
 , PerevodVozrastanie
 , PerevodUbyvanie
-};
-
-inline QDataStream& operator << ( QDataStream &ST, const QOrderBy &OrderBy )
-{
-  return ST << (qint8)OrderBy;
-}
-
-inline QDataStream& operator >> ( QDataStream &ST, QOrderBy &OrderBy )
-{
-  return ST >> (qint8&)OrderBy;
-}
-
-class QSanskritTranslate
-{
-  public:
-    int m_ID;
-    QString m_Sanskrit;
-    QString m_Perevod;
-    QString m_SanskritWithoutDiakritik;
-    QString m_PerevodWithoutDiakritik;
-    int m_SearchIndex;
-    QSanskritTranslate();
-    ~QSanskritTranslate();
-};
-
-class QPrabhupadaSlovarVector : public std::vector< QSanskritTranslate* >
-{
-  private:
-    using inherited = std::vector< QSanskritTranslate* >;
-  public:
-    QPrabhupadaSlovarVector();
-    ~QPrabhupadaSlovarVector();
-    int m_SearchCount = 0;
-};
-
-class QPrabhupadaZakladka
-{
-  public:
-    QPrabhupadaZakladka();
-    QPrabhupadaZakladka( int ARowNum
-                      , QFilterSlovar AFilterSlovar );
-    ~QPrabhupadaZakladka();
-
-    int m_RowNum;
-    QFilterSlovar m_FilterSlovar;
-
-    void LoadFromStream( QDataStream &ST );
-    void SaveToStream( QDataStream &ST );
-};
-
-class QPrabhupadaZakladkaMap : public std::map< unsigned short, QPrabhupadaZakladka >
-{
-  private:
-    using inherited = std::map< unsigned short, QPrabhupadaZakladka >;
-  public:
-    QPrabhupadaZakladkaMap();
-    ~QPrabhupadaZakladkaMap();
-    void LoadFromStream( QDataStream &ST );
-    void SaveToStream( QDataStream &ST );
-};
-
-class QYazykInfo
-{
-  public:
-    QYazykInfo();
-    QYazykInfo( const QYazykInfo &A );
-    ~QYazykInfo();
-
-    int m_ID;
-    QString m_Yazyk;
-    QString m_YazykSlovo;
-    int m_CurrentRow = 0;
-    QFilterSlovar m_FilterSlovar;
-    QPrabhupadaZakladkaMap m_PrabhupadaZakladkaMap;
-};
-
-class QYazykVector : public std::vector< QYazykInfo >
-{
-  private:
-    using inherited = std::vector< QYazykInfo >;
-  public:
-    QYazykVector();
-    ~QYazykVector();
-    bool m_LoadSuccess = false;
-    int FindYazyk( const QString &S );
-    void LoadFromStream( QDataStream &ST );
-    void SaveToStream( QDataStream &ST );
 };
 
 template < class TValueType >
@@ -257,6 +78,190 @@ using QFontSize        = QPrabhupadaValue< int >;
 using QPrabhupadaOrder = QPrabhupadaValue< QOrderBy >;
 using QPrabhupadaBool  = QPrabhupadaValue< bool >;
 
+class QStringMap : public std::map< QString, QString >
+{
+  private:
+    using inherited = std::map< QString, QString >;
+  public:
+    QStringMap();
+    ~QStringMap();
+};
+
+class QStringSet : public std::set< QString >
+{
+  private:
+    using inherited = std::set< QString >;
+  public:
+    QStringSet();
+    ~QStringSet();
+};
+
+class QFilterSlovar
+{
+  private:
+    QString m_Sanskrit;
+    QString m_Translate;
+    QString m_SanskritWithoutDiakritik;
+    QString m_TranslateWithoutDiakritik;
+    bool m_IsEmpty = true;
+    bool m_IsReset = true;
+  public:
+    QFilterSlovar();
+    QFilterSlovar( const QFilterSlovar &A );
+    QFilterSlovar( const QString &ASanskrit
+                 , const QString &APerevod );
+    ~QFilterSlovar();
+    QFilterSlovar& operator = ( const QFilterSlovar& a );
+
+    void LoadFromStream( QDataStream &ST );
+    void SaveToStream( QDataStream &ST );
+
+    inline QString Sanskrit() const { return m_Sanskrit; };
+    inline QString Translate() const { return m_Translate; };
+    void SetSanskrit( const QString &Value );
+    void SetTranslate( const QString &Value );
+    inline QString SanskritWithoutDiakritik() const { return m_SanskritWithoutDiakritik; };
+    inline QString TranslateWithoutDiakritik() const { return m_TranslateWithoutDiakritik; };
+    void SetSanskritWithoutDiakritik( const QString &Value );
+    void SetTranslateWithoutDiakritik( const QString &Value );
+    inline bool IsEmpty() const { return m_IsEmpty; };
+    inline void SetIsEmpty( bool Value ) { m_IsEmpty = Value; };
+    inline bool IsReset() const { return m_IsReset; };
+    inline void SetIsReset( bool Value ) { m_IsReset = Value; };
+
+    bool operator == ( const QFilterSlovar& F )
+    {
+      return ( m_Sanskrit == F.m_Sanskrit ) && ( m_Translate == F.m_Translate );
+    }
+    bool operator != ( const QFilterSlovar& F )
+    {
+      return ( ( m_Sanskrit != F.m_Sanskrit ) || ( m_Translate != F.m_Translate ) );
+    }
+    bool GetIsEmpty() const
+    {
+      return m_Sanskrit.empty() && m_Translate.empty();
+    }
+    void Clear()
+    {
+      m_Sanskrit  = "";
+      m_Translate = "";
+    }
+};
+
+using QPrabhupadaFilterSlovar = QPrabhupadaValue< QFilterSlovar >;
+
+class QPrabhupadaBukva
+{
+  private:
+    QChar32 m_Bukva;
+    int m_Ves;
+  public:
+    QPrabhupadaBukva();
+    ~QPrabhupadaBukva();
+    inline QChar32 Bukva() { return m_Bukva; };
+    inline void SetBukva( QChar32 Value ) { m_Bukva = Value; };
+    inline int Ves() { return m_Ves; };
+    inline void SetVes( int Value ) { m_Ves = Value; };
+};
+
+class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
+{
+  private:
+    using inherited = std::map< QChar32, QPrabhupadaBukva >;
+  public:
+    QPrabhupadaBukvary();
+    ~QPrabhupadaBukvary();
+};
+
+inline QDataStream& operator << ( QDataStream &ST, const QOrderBy &OrderBy )
+{
+  return ST << (qint8)OrderBy;
+}
+
+inline QDataStream& operator >> ( QDataStream &ST, QOrderBy &OrderBy )
+{
+  return ST >> (qint8&)OrderBy;
+}
+
+class QSanskritTranslate
+{
+  public:
+    int m_ID;
+    QString m_Sanskrit;
+    QString m_Perevod;
+    QString m_SanskritWithoutDiakritik;
+    QString m_PerevodWithoutDiakritik;
+    int m_SearchIndex;
+    QSanskritTranslate();
+    ~QSanskritTranslate();
+};
+
+class QPrabhupadaSlovarVector : public std::vector< QSanskritTranslate* >
+{
+  private:
+    using inherited = std::vector< QSanskritTranslate* >;
+  public:
+    QPrabhupadaSlovarVector();
+    ~QPrabhupadaSlovarVector();
+    int m_SearchCount = 0;
+};
+
+class QPrabhupadaZakladka
+{
+  public:
+    QPrabhupadaZakladka();
+    QPrabhupadaZakladka( int ARowNum
+                       , QFilterSlovar AFilterSlovar );
+    ~QPrabhupadaZakladka();
+
+    int m_RowNum;
+    QFilterSlovar m_FilterSlovar;
+
+    void LoadFromStream( QDataStream &ST );
+    void SaveToStream( QDataStream &ST );
+};
+
+class QPrabhupadaZakladkaMap : public std::map< unsigned short, QPrabhupadaZakladka >
+{
+  private:
+    using inherited = std::map< unsigned short, QPrabhupadaZakladka >;
+  public:
+    QPrabhupadaZakladkaMap();
+    ~QPrabhupadaZakladkaMap();
+    void LoadFromStream( QDataStream &ST );
+    void SaveToStream( QDataStream &ST );
+};
+
+class QYazykInfo
+{
+  public:
+    QYazykInfo();
+    QYazykInfo( const QYazykInfo &A );
+    ~QYazykInfo();
+
+    int m_ID;
+    QString m_Yazyk;
+    QString m_YazykSlovo;
+    int m_CurrentRow = 0;
+    QFilterSlovar m_FilterSlovar;
+    QPrabhupadaZakladkaMap m_PrabhupadaZakladkaMap;
+};
+
+class QYazykVector : public std::vector< QYazykInfo >, public QObject
+{
+  CS_OBJECT( QYazykVector )
+  private:
+    using inherited_v = std::vector< QYazykInfo >;
+    using inherited_o = QObject;
+  public:
+    QYazykVector();
+    ~QYazykVector();
+    bool m_LoadSuccess = false;
+    int FindYazyk( const QString &S );
+    void LoadFromStream( QDataStream &ST ) override;
+    void SaveToStream( QDataStream &ST ) override;
+};
+
 class QLanguageIndex : public QPrabhupadaValue< int >
 {
   private:
@@ -279,20 +284,25 @@ class QPrabhupadaDictionary : public QAbstractTableModel
   CS_OBJECT( QPrabhupadaDictionary )
   private:
     using inherited = QAbstractTableModel;
+    QSqlDatabase *m_DB = nullptr;
+    QPrabhupadaStorage* m_PrabhupadaStorage;
   public:
     QPrabhupadaDictionary( QObject *parent = nullptr );
     ~QPrabhupadaDictionary();
-    QSqlDatabase *m_DB = nullptr;
-    inline QSqlDatabase *DB() { return m_DB; };
+    QTranslator m_Translator;
     QYazykVector m_YazykVector;
+    inline QPrabhupadaStorage* PrabhupadaStorage() { return m_PrabhupadaStorage; };
+    inline void SetPrabhupadaStorage( QPrabhupadaStorage* APrabhupadaStorage ) { m_PrabhupadaStorage = APrabhupadaStorage; };
+    inline QSqlDatabase* DB() { return m_DB; };
+    inline void SetDB( QSqlDatabase* ADB ) { m_DB = ADB; };
     QLanguageIndex m_LanguageIndex   = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
     QLanguageIndex m_LanguageUIIndex = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
     QFontSize m_FontSize = QFontSize( 14 );
     QPrabhupadaOrder m_PrabhupadaOrder = QPrabhupadaOrder( QOrderBy::SanskritVozrastanie );
     QPrabhupadaBool m_CaseSensitive = QPrabhupadaBool( false );
+    QPrabhupadaFilterSlovar m_PrabhupadaFilterSlovar = QPrabhupadaFilterSlovar( QFilterSlovar( "", "" ) );
     int m_MaxID;
     QString m_Schema;
-    QTranslator m_Translator;
     QPrabhupadaSlovarVector m_PrabhupadaSlovarVector;
 
     void LanguageIndexChanged( int Value );
@@ -304,8 +314,8 @@ class QPrabhupadaDictionary : public QAbstractTableModel
     static QPrabhupadaBukvary PrabhupadaBukvary;
     static void PreparePrabhupadaBukvary();
     static QString RemoveDiacritics( const QString& S );
-    static bool PrabhupadaComareLess( const QString& A, const QString& B );
-    static bool PrabhupadaComareMore( const QString& A, const QString& B );
+    static bool PrabhupadaCompareLess( const QString& A, const QString& B );
+    static bool PrabhupadaCompareMore( const QString& A, const QString& B );
 
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;
@@ -319,6 +329,7 @@ class QPrabhupadaDictionary : public QAbstractTableModel
     void sortByColumn( int column, Qt::SortOrder order );
     void DoOrderBy( QOrderBy Value );
     void DoCaseSensitive( bool Value );
+    void SaveYazykVectorToFile();
   protected:
 };
 

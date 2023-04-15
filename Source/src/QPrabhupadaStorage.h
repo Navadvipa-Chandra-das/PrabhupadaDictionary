@@ -7,9 +7,7 @@
 #include <map>
 #include <memory>
 
-enum class QPrabhupadaStorageKind : quint8 { File, DB, ByteArray };
-
-//using QMapMemoryStorage = std::map< QString, std::unique_ptr< QDataStream > >;
+enum class QPrabhupadaStorageKind : quint8 { File, DB, Memory };
 
 class QMapMemoryStorage : public std::map< QString, std::unique_ptr< QDataStream > >
 {
@@ -35,7 +33,9 @@ class QPrabhupadaStorage : public QObject
     inline QString Schema() { return m_Schema; };
     void setEnabled( bool Value );
     inline bool Enabled() { return m_Enabled; };
-    static QString KeyStorage( QObject *O );
+    QString PrefixKeyStorage();
+    QString KeyStorage( QObject *O, QPrabhupadaStorageKind AStorageKind );
+    void ResetSettings();
 
     static void LoadFromStream( QComboBox *CB, QDataStream &ST, bool LoadCurrentIndex = true );
     static void SaveToStream( QComboBox *CB, QDataStream &ST, bool SaveCurrentIndex = true );
@@ -95,8 +95,8 @@ class QPrabhupadaStorage : public QObject
 
     static void PrepareComboBox( QComboBox *CB, int MaxCount );
 
-    bool LoadObject( QObject *O, QPrabhupadaStorageKind AKind = QPrabhupadaStorageKind::File );
-    void SaveObject( QObject *O, QPrabhupadaStorageKind AKind = QPrabhupadaStorageKind::File );
+    bool LoadObject( QObject *O, QPrabhupadaStorageKind AStorageKind );
+    void SaveObject( QObject *O, QPrabhupadaStorageKind AStorageKind );
     inline qint8 Version() { return m_Version; };
     inline void setVersion( qint8 Value ) { m_Version = Value; };
     void LoadFromStream( QDataStream &ST ) override;
@@ -119,11 +119,13 @@ class QPrabhupadaStorage : public QObject
     QDataStream *m_Stream = nullptr;
     QString m_FileName;
     QString m_Schema;
+    QByteArray *m_ByteArray;
+    QString m_SQL;
     QMapMemoryStorage m_MapMemoryStorage;
-    bool BeginLoad( QObject *O, QPrabhupadaStorageKind AKind );
-    void EndLoad( QPrabhupadaStorageKind AKind );
-    void BeginSave( QObject *O, QPrabhupadaStorageKind AKind );
-    void EndSave( QPrabhupadaStorageKind AKind );
+    bool BeginLoad( QObject *O, QPrabhupadaStorageKind AStorageKind );
+    void EndLoad( QPrabhupadaStorageKind AStorageKind );
+    void BeginSave( QObject *O, QPrabhupadaStorageKind AStorageKind );
+    void EndSave( QPrabhupadaStorageKind AStorageKind );
 };
 
 class QPrabhupadaDialog : public QDialog
@@ -151,10 +153,15 @@ class QPrabhupadaMainWindow : public QMainWindow
     ~QPrabhupadaMainWindow();
     inline QPrabhupadaStorage *PrabhupadaStorage() { return m_PrabhupadaStorage; };
     inline void SetPrabhupadaStorage( QPrabhupadaStorage *Value ) { m_PrabhupadaStorage = Value; };
+    bool LoadMainWindow( QPrabhupadaStorageKind AStorageKind );
+    inline void SaveMainWindow() { m_PrabhupadaStorage->SaveObject( this, m_StorageKind ); };
+    inline QPrabhupadaStorageKind StorageKind() { return m_StorageKind; };
+    inline void SetStorageKind( QPrabhupadaStorageKind Value ) { m_StorageKind = Value; };
   private:
     using inherited = QMainWindow;
+    QPrabhupadaStorageKind m_StorageKind = QPrabhupadaStorageKind::File;
   protected:
-    QPrabhupadaStorage *m_PrabhupadaStorage;
+    QPrabhupadaStorage *m_PrabhupadaStorage = nullptr;
     void closeEvent( QCloseEvent *event ) override;
 };
 

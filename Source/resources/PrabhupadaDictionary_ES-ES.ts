@@ -9,6 +9,45 @@
     </message>
 </context>
 <context>
+    <name>QPrabhupadaAboutWindow</name>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="6"/>
+        <source>О программе!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="24"/>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="37"/>
+        <source>Номер строки</source>
+        <translation type="unfinished">Número de línea</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="34"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите номер строки и нажмите Enter для перехода к ней!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt;Introduzca el número de línea y pulse Intro para saltar a ella!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="63"/>
+        <source>Поехали!</source>
+        <translation type="unfinished">¡Vamos!</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="66"/>
+        <source>Return</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="73"/>
+        <source>Задний ход!</source>
+        <translation type="unfinished">¡Atrás!</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="76"/>
+        <source>Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QPrabhupadaDictionary</name>
     <message>
         <location filename="../src/QPrabhupadaDictionary.cpp" line="550"/>
@@ -489,9 +528,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Restablecer configuración</translation>
     </message>
     <message>
-        <location filename="../forms/QPrabhupadaLoginWindow.ui" line="144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html &gt; &lt; head/&gt;&lt;body&gt;&lt;p &gt; ¡esta bandera restablece todos los ajustes del usuario después de iniciar sesión en el programa!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html &gt; &lt; head/&gt;&lt;body&gt;&lt;p &gt; ¡esta bandera restablece todos los ajustes del usuario después de iniciar sesión en el programa!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="181"/>
@@ -507,6 +545,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="127"/>
         <source>Схема</source>
         <translation type="unfinished">Esquema</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaLoginWindow.ui" line="144"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу! Но только те из них, которые хранятся в базе данных! Настройки, хранящиеся в файлах &amp;quot;ini&amp;quot; сбрасывайте простым удалением этих файлов!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html &gt; &lt; head/&gt;&lt;body&gt;&lt;p &gt; ¡esta bandera restablece todos los ajustes del usuario después de iniciar sesión en el programa! Pero sólo los que se almacenan en la base de datos! Ajustes almacenados en archivos &amp; quot; ini &amp; quot; ¡restablezca simplemente eliminando estos archivos!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="151"/>

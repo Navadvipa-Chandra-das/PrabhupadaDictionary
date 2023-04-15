@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="ToolButton">
+    <file>resources/SaveBukva.png</file>
+    <file>resources/SaveLang.png</file>
     <file>resources/About.png</file>
     <file>resources/GoToRow.png</file>
     <file alias="RU-RU/Case_Sensitive.png">resources/Case_Sensitive_RU-RU.png</file>

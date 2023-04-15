@@ -70,25 +70,33 @@ void QPrabhupadaStorage::SetDatabase( QSqlDatabase *Value )
   }
 }
 
-bool QPrabhupadaStorage::BeginLoad( QObject *O, QPrabhupadaStorageKind AKind )
+bool QPrabhupadaStorage::BeginLoad( QObject *O, QPrabhupadaStorageKind AStorageKind )
 {
-  switch ( AKind ) {
+  m_FileName = KeyStorage( O, AStorageKind );
+  switch ( AStorageKind ) {
     case QPrabhupadaStorageKind::File :
-      m_FileName = KeyStorage( O );
       m_File     = new QFile( m_FileName );
       m_Stream   = new QDataStream( m_File );
       return m_File->open( QIODevice::ReadOnly );
     case QPrabhupadaStorageKind::DB :
-      m_FileName = KeyStorage( O );
-      m_Query->exec( QString( "select\n"
-                              "  a.\"UserRegKey\"\n"
-                              ", a.\"UserData\"\n"
-                              "from\n"
-                              "    %1\"UserReg\" a\n"
-                              "where a.\"UserRegKey\" = :AUserRegKey;" ).formatArg( Schema() ) );
-      return true;
-    case QPrabhupadaStorageKind::ByteArray :
-      m_FileName = KeyStorage( O );
+      if ( m_Query != nullptr ) {
+        m_Query->prepare( QString( "select\n"
+                                  "  a.\"UserRegKey\"\n"
+                                  ", a.\"UserData\"\n"
+                                  "from\n"
+                                  "    %1\"UserReg\" a\n"
+                                  "where a.\"UserRegKey\" = :UserRegKey;" ).formatArg( Schema() ) );
+        m_Query->bindValue( ":UserRegKey", m_FileName );
+        m_Query->exec();
+        if ( m_Query->next() ) {
+          m_Stream = new QDataStream( m_Query->value( 1 ).toByteArray() );
+          return true;
+        } else {
+          return false;
+        }
+      }
+      break;
+    case QPrabhupadaStorageKind::Memory :
       QMapMemoryStorage::iterator I = m_MapMemoryStorage.find( m_FileName );
       if ( I != m_MapMemoryStorage.end() ) {
         m_Stream = m_MapMemoryStorage[ m_FileName ].get();
@@ -101,36 +109,65 @@ bool QPrabhupadaStorage::BeginLoad( QObject *O, QPrabhupadaStorageKind AKind )
   return false;
 }
 
-void QPrabhupadaStorage::EndLoad( QPrabhupadaStorageKind AKind )
+void QPrabhupadaStorage::EndLoad( QPrabhupadaStorageKind AStorageKind )
 {
-  switch ( AKind ) {
+  switch ( AStorageKind ) {
     case QPrabhupadaStorageKind::File :
       m_File->close();
       delete m_Stream;
       delete m_File;
-      m_Stream = nullptr;
       m_File   = nullptr;
       break;
     case QPrabhupadaStorageKind::DB :
+      delete m_Stream;
+      m_Query->clear();
       break;
-    case QPrabhupadaStorageKind::ByteArray :
+    case QPrabhupadaStorageKind::Memory :
       break;
   }
+  m_Stream = nullptr;
 }
 
-void QPrabhupadaStorage::BeginSave( QObject *O, QPrabhupadaStorageKind AKind )
+void QPrabhupadaStorage::BeginSave( QObject *O, QPrabhupadaStorageKind AStorageKind )
 {
-  switch ( AKind ) {
+  QBuffer *BU;
+  m_FileName = KeyStorage( O, AStorageKind );
+  switch ( AStorageKind ) {
     case QPrabhupadaStorageKind::File :
-      m_FileName = KeyStorage( O );
       m_SaveFile = new QSaveFile( m_FileName );
-      m_Stream   = new QDataStream( m_SaveFile );
-      m_SaveFile->open( QIODevice::WriteOnly );
+      if ( m_SaveFile->open( QIODevice::WriteOnly ) ) {
+        m_Stream = new QDataStream( m_SaveFile );
+      }
       break;
     case QPrabhupadaStorageKind::DB :
+      if ( m_Query != nullptr ) {
+        m_Query->prepare( QString( "select\n"
+                                  "  a.\"UserRegKey\"\n"
+                                  "from\n"
+                                  "    %1\"UserReg\" a\n"
+                                  "where a.\"UserRegKey\" = :UserRegKey;" ).formatArg( Schema() ) );
+        m_Query->bindValue( ":UserRegKey", m_FileName );
+        m_Query->exec();
+        m_ByteArray = new QByteArray();
+        BU = new QBuffer( m_ByteArray );
+        if ( BU->open( QIODevice::ReadWrite ) ) {
+          m_Stream = new QDataStream( BU );
+          if ( m_Query->next() ) {
+            m_SQL = QString( "update %1\"UserReg\"\n"
+                            "set\n"
+                            "  \"UserData\" = :UserData\n"
+                            "where\n"
+                            "    \"UserRegKey\" = :UserRegKey;" ).formatArg( Schema() );
+          } else {
+            m_SQL = QString( "insert into %1\"UserReg\"\n"
+                            "( \"UserRegKey\", \"UserData\" )\n"
+                            "values\n"
+                            "( :UserRegKey, :UserData );" ).formatArg( Schema() );
+          }
+        }
+      }
       break;
-    case QPrabhupadaStorageKind::ByteArray :
-      m_FileName = KeyStorage( O );
+    case QPrabhupadaStorageKind::Memory :
       QMapMemoryStorage::iterator I = m_MapMemoryStorage.find( m_FileName );
       QByteArray *BA;
       QBuffer    *BU;
@@ -152,59 +189,93 @@ void QPrabhupadaStorage::BeginSave( QObject *O, QPrabhupadaStorageKind AKind )
   }
 }
 
-void QPrabhupadaStorage::EndSave( QPrabhupadaStorageKind AKind )
+void QPrabhupadaStorage::EndSave( QPrabhupadaStorageKind AStorageKind )
 {
-  switch ( AKind ) {
+  switch ( AStorageKind ) {
     case QPrabhupadaStorageKind::File :
       m_SaveFile->commit();
       delete m_Stream;
       delete m_SaveFile;
-      m_Stream   = nullptr;
       m_SaveFile = nullptr;
       break;
     case QPrabhupadaStorageKind::DB :
+      m_Query->clear();
+      m_Query->prepare( m_SQL );
+      m_Query->bindValue( ":UserRegKey", m_FileName );
+      m_Query->bindValue( ":UserData", *m_ByteArray, QSql::In | QSql::Binary );
+      m_Query->exec();
+
+      delete m_Stream;
       break;
-    case QPrabhupadaStorageKind::ByteArray :
+    case QPrabhupadaStorageKind::Memory :
       break;
   }
+  m_Stream = nullptr;
 }
 
-bool QPrabhupadaStorage::LoadObject( QObject *O, QPrabhupadaStorageKind AKind )
+bool QPrabhupadaStorage::LoadObject( QObject *O, QPrabhupadaStorageKind AStorageKind )
 {
   bool LoadSuccess = false;
   if ( m_Enabled ) {
 
-    if ( BeginLoad( O, AKind ) ) {
-      qint8 V;
-      *m_Stream >> V;
-      if ( V == Version() ) {
-        O->LoadFromStream( *m_Stream );
+    if ( BeginLoad( O, AStorageKind ) ) {
+      if ( m_Stream != nullptr ) {
+        qint8 V;
         *m_Stream >> V;
         if ( V == Version() ) {
-          LoadSuccess = true;
+          O->LoadFromStream( *m_Stream );
+          *m_Stream >> V;
+          if ( V == Version() ) {
+            LoadSuccess = true;
+          }
         }
       }
     }
-    EndLoad( AKind );
+    EndLoad( AStorageKind );
   }
   return LoadSuccess;
 }
 
-void QPrabhupadaStorage::SaveObject( QObject *O, QPrabhupadaStorageKind AKind )
+void QPrabhupadaStorage::SaveObject( QObject *O, QPrabhupadaStorageKind AStorageKind )
 {
   if ( m_Enabled ) {
-    BeginSave( O, AKind );
-    *m_Stream << Version();
-    O->SaveToStream( *m_Stream );
-    *m_Stream << Version();
-    EndSave( AKind );
+    BeginSave( O, AStorageKind );
+    if ( m_Stream != nullptr ) {
+      *m_Stream << Version();
+      O->SaveToStream( *m_Stream );
+      *m_Stream << Version();
+      EndSave( AStorageKind );
+    }
   }
 }
 
-QString QPrabhupadaStorage::KeyStorage( QObject *O )
+QString QPrabhupadaStorage::PrefixKeyStorage()
 {
-  QString R, S;
+  QString APrefix, AUserName;
+
+  APrefix = qApp->objectName();
+  if ( !APrefix.empty() ) {
+    APrefix += "-";
+  }
+  if ( m_Database != nullptr ) {
+    AUserName = m_Database->userName();
+    if ( !AUserName.empty() ) {
+      APrefix += AUserName + "-";
+    }
+  }
+
+  return APrefix;
+}
+
+QString QPrabhupadaStorage::KeyStorage( QObject *O, QPrabhupadaStorageKind AStorageKind )
+{
+  QString R, S, APrefix;
   int i = 0;
+
+  if ( AStorageKind == QPrabhupadaStorageKind::DB ) {
+    APrefix = PrefixKeyStorage();
+  }
+
   while ( O != nullptr ) {
     S = O->objectName();
     if ( !S.empty() ) {
@@ -217,10 +288,22 @@ QString QPrabhupadaStorage::KeyStorage( QObject *O )
     O = O->parent();
     ++i;
   }
+
   if ( !R.empty() )
     R += ".ini";
 
+  if ( !APrefix.empty() )
+    R = APrefix + R;
+
   return R;
+}
+
+void QPrabhupadaStorage::ResetSettings()
+{
+  m_Query->clear();
+  m_Query->prepare( QString( "delete from %1\"UserReg\" where \"UserRegKey\" like :APrefix || '%';" ).formatArg( Schema() ) );
+  m_Query->bindValue( ":APrefix", PrefixKeyStorage() );
+  m_Query->exec();
 }
 
 void QPrabhupadaStorage::PrepareComboBox( QComboBox *CB, int MaxCount )
@@ -310,10 +393,17 @@ QPrabhupadaMainWindow::~QPrabhupadaMainWindow()
 {
 }
 
+bool QPrabhupadaMainWindow::LoadMainWindow( QPrabhupadaStorageKind AStorageKind )
+{
+  m_StorageKind = AStorageKind;
+  return m_PrabhupadaStorage->LoadObject( this, m_StorageKind );
+}
+
 void QPrabhupadaMainWindow::closeEvent( QCloseEvent *event )
 {
-  if ( m_PrabhupadaStorage )
-    m_PrabhupadaStorage->SaveObject( this );
+  if ( m_PrabhupadaStorage ) {
+    SaveMainWindow();
+  }
 
   inherited::closeEvent( event );
 }

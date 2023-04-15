@@ -198,6 +198,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionWhats_This_mode"/>
     <addaction name="actionGoToRow"/>
     <addaction name="actionAbout"/>
+    <addaction name="ActionSaveYazykVectorToFile"/>
+    <addaction name="ActionSaveAllBukvaToFile"/>
    </widget>
    <widget class="QMenu" name="menuSet_Bookmark">
     <property name="title" stdset="0">
@@ -543,6 +545,26 @@ p, li { white-space: pre-wrap; }
    <property name="icon" stdset="0">
     <iconset>
      <normaloff>:/ToolButton/resources/About.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="ActionSaveYazykVectorToFile">
+   <property name="text" stdset="0">
+    <string>Сохранить языки в файл</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/SaveLang.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="ActionSaveAllBukvaToFile">
+   <property name="text" stdset="0">
+    <string>Сохранить буквы в файл</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/SaveBukva.png</normaloff>
     </iconset>
    </property>
   </action>

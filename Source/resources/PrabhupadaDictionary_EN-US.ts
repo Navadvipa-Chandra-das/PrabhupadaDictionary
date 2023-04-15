@@ -9,6 +9,45 @@
     </message>
 </context>
 <context>
+    <name>QPrabhupadaAboutWindow</name>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="6"/>
+        <source>О программе!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="24"/>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="37"/>
+        <source>Номер строки</source>
+        <translation type="unfinished">Line number</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="34"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите номер строки и нажмите Enter для перехода к ней!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the line number and press Enter to go to it!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="63"/>
+        <source>Поехали!</source>
+        <translation type="unfinished">Let&apos;s go!</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="66"/>
+        <source>Return</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="73"/>
+        <source>Задний ход!</source>
+        <translation type="unfinished">Reverse gear!</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="76"/>
+        <source>Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QPrabhupadaDictionary</name>
     <message>
         <location filename="../src/QPrabhupadaDictionary.cpp" line="550"/>
@@ -489,9 +528,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Reset settings</translation>
     </message>
     <message>
-        <location filename="../forms/QPrabhupadaLoginWindow.ui" line="144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This flag resets all user settings after logging into the program!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This flag resets all user settings after logging into the program!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="181"/>
@@ -507,6 +545,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="127"/>
         <source>Схема</source>
         <translation type="unfinished">Schema</translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaLoginWindow.ui" line="144"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу! Но только те из них, которые хранятся в базе данных! Настройки, хранящиеся в файлах &amp;quot;ini&amp;quot; сбрасывайте простым удалением этих файлов!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This flag resets all user settings after logging into the program! But only those of them that are stored in the database! Reset the settings stored in the &quot;ini&quot; files by simply deleting these files!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="151"/>

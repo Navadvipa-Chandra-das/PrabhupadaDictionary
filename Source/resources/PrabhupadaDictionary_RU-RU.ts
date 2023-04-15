@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU" sourcelanguage="ru_RU">
 <context>
+    <name>QPrabhupadaAboutWindow</name>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="6"/>
+        <source>О программе!</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="24"/>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="37"/>
+        <source>Номер строки</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="34"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите номер строки и нажмите Enter для перехода к ней!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="63"/>
+        <source>Поехали!</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="66"/>
+        <source>Return</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="73"/>
+        <source>Задний ход!</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaAboutWindow.ui" line="76"/>
+        <source>Esc</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>QPrabhupadaDictionary</name>
     <message>
         <location filename="../src/QPrabhupadaDictionary.cpp" line="550"/>
@@ -470,11 +509,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/QPrabhupadaLoginWindow.ui" line="144"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="181"/>
         <source>Поехали!</source>
         <translation></translation>
@@ -487,6 +521,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/QPrabhupadaLoginWindow.ui" line="127"/>
         <source>Схема</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/QPrabhupadaLoginWindow.ui" line="144"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот флаг сбрасывает все настройки пользователя после входа в программу! Но только те из них, которые хранятся в базе данных! Настройки, хранящиеся в файлах &amp;quot;ini&amp;quot; сбрасывайте простым удалением этих файлов!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>

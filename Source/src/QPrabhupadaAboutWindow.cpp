@@ -31,14 +31,14 @@ void QPrabhupadaAboutWindow::LoadFromStream( QDataStream &ST )
 {
   inherited::LoadFromStream( ST );
 
-  //QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxRowNumber, ST );
+  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxRowNumber, ST );
 }
 
 void QPrabhupadaAboutWindow::SaveToStream( QDataStream &ST )
 {
   inherited::SaveToStream( ST );
 
-  //QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxRowNumber, ST );
+  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxRowNumber, ST );
 }
 
 void QPrabhupadaAboutWindow::changeEvent( QEvent *event )

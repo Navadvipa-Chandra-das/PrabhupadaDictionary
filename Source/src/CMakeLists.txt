@@ -134,6 +134,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/PrabhupadaBukvary.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Letter.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Help.txt DESTINATION ./resources/PrabhupadaDictionaryFiles)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/m_YazykVector.ini DESTINATION .)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/Start.bat DESTINATION .)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../resources/PrabhupadaDictionaryFiles/Fonts/gtb.ttf DESTINATION ./resources/PrabhupadaDictionaryFiles/Fonts)
