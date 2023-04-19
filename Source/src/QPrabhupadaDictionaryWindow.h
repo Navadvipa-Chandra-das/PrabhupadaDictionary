@@ -36,7 +36,7 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
   private:
     using inherited = QPrabhupadaMainWindow;
     int m_SanskitHeaderSize = 50;
-    int m_PerevodHeaderSize = 50;
+    int m_TranslateHeaderSize = 50;
     bool m_StartResize = false;
 
     void actionExit_Program();
@@ -51,12 +51,11 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
     void ActionSaveYazykVectorToFile();
     void ActionSaveAllBukvaToFile();
     void PrepareLanguages();
-    void SetFilterSlovar( QFilterSlovar Value );
-    //inline QSqlDatabase *DB() { return m_PrabhupadaDictionary->DB(); };
     void Language_IndexChanged( int Value );
     void LanguageUI_IndexChanged( int Value );
     void DoOrderBy( QOrderBy Value );
     void DoCaseSensitive( bool Value );
+    void PrabhupadaFilterSlovarChanged( QFilterSlovar Value );
     void DoGoToLine( int Value );
     void Connects();
     void Emits();

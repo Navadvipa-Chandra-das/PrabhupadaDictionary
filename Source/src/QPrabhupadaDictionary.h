@@ -13,8 +13,8 @@ enum class QOrderBy : qint8
 {
   SanskritVozrastanie
 , SanskritUbyvanie
-, PerevodVozrastanie
-, PerevodUbyvanie
+, TranslateVozrastanie
+, TranslateUbyvanie
 };
 
 template < class TValueType >
@@ -103,32 +103,27 @@ class QFilterSlovar
     QString m_Translate;
     QString m_SanskritWithoutDiakritik;
     QString m_TranslateWithoutDiakritik;
-    bool m_IsEmpty = true;
-    bool m_IsReset = true;
   public:
     QFilterSlovar();
-    QFilterSlovar( const QFilterSlovar &A );
+    QFilterSlovar( const QFilterSlovar& A );
+    QFilterSlovar( QFilterSlovar&& A );
     QFilterSlovar( const QString &ASanskrit
-                 , const QString &APerevod );
+                 , const QString &ATranslate );
     ~QFilterSlovar();
-    QFilterSlovar& operator = ( const QFilterSlovar& a );
+
+    inline QString Sanskrit()  const { return m_Sanskrit; };
+    inline QString Translate() const { return m_Translate; };
+    void SetSanskrit( const QString &Value );
+    void SetTranslate( const QString &Value );
+    inline QString SanskritWithoutDiakritik()  const { return m_SanskritWithoutDiakritik; };
+    inline QString TranslateWithoutDiakritik() const { return m_TranslateWithoutDiakritik; };
+    void SetSanskritWithoutDiakritik( const QString &Value );
+    void SetTranslateWithoutDiakritik( const QString &Value );
 
     void LoadFromStream( QDataStream &ST );
     void SaveToStream( QDataStream &ST );
 
-    inline QString Sanskrit() const { return m_Sanskrit; };
-    inline QString Translate() const { return m_Translate; };
-    void SetSanskrit( const QString &Value );
-    void SetTranslate( const QString &Value );
-    inline QString SanskritWithoutDiakritik() const { return m_SanskritWithoutDiakritik; };
-    inline QString TranslateWithoutDiakritik() const { return m_TranslateWithoutDiakritik; };
-    void SetSanskritWithoutDiakritik( const QString &Value );
-    void SetTranslateWithoutDiakritik( const QString &Value );
-    inline bool IsEmpty() const { return m_IsEmpty; };
-    inline void SetIsEmpty( bool Value ) { m_IsEmpty = Value; };
-    inline bool IsReset() const { return m_IsReset; };
-    inline void SetIsReset( bool Value ) { m_IsReset = Value; };
-
+    QFilterSlovar& operator = ( const QFilterSlovar& a );
     bool operator == ( const QFilterSlovar& F )
     {
       return ( m_Sanskrit == F.m_Sanskrit ) && ( m_Translate == F.m_Translate );
@@ -139,14 +134,31 @@ class QFilterSlovar
     }
     bool GetIsEmpty() const
     {
-      return m_Sanskrit.empty() && m_Translate.empty();
+      return m_SanskritWithoutDiakritik.empty() && m_TranslateWithoutDiakritik.empty();
     }
     void Clear()
     {
       m_Sanskrit  = "";
       m_Translate = "";
+      m_SanskritWithoutDiakritik  = "";
+      m_TranslateWithoutDiakritik = "";
     }
 };
+
+inline QDataStream& operator << ( QDataStream &ST, const QFilterSlovar &FilterSlovar )
+{
+  return ST << FilterSlovar.Sanskrit() << FilterSlovar.Translate();
+}
+
+inline QDataStream& operator >> ( QDataStream &ST, QFilterSlovar &FilterSlovar )
+{
+  QString S;
+  ST >> S;
+  FilterSlovar.SetSanskrit( S );
+  ST >> S;
+  FilterSlovar.SetTranslate( S );
+  return ST;
+}
 
 using QPrabhupadaFilterSlovar = QPrabhupadaValue< QFilterSlovar >;
 
@@ -188,9 +200,9 @@ class QSanskritTranslate
   public:
     int m_ID;
     QString m_Sanskrit;
-    QString m_Perevod;
+    QString m_Translate;
     QString m_SanskritWithoutDiakritik;
-    QString m_PerevodWithoutDiakritik;
+    QString m_TranslateWithoutDiakritik;
     int m_SearchIndex;
     QSanskritTranslate();
     ~QSanskritTranslate();
@@ -286,11 +298,13 @@ class QPrabhupadaDictionary : public QAbstractTableModel
     using inherited = QAbstractTableModel;
     QSqlDatabase *m_DB = nullptr;
     QPrabhupadaStorage* m_PrabhupadaStorage;
+    bool m_FilterSlovarIsEmpty = true;
   public:
     QPrabhupadaDictionary( QObject *parent = nullptr );
     ~QPrabhupadaDictionary();
     QTranslator m_Translator;
     QYazykVector m_YazykVector;
+    inline bool FilterSlovarIsEmpty() { return m_FilterSlovarIsEmpty; };
     inline QPrabhupadaStorage* PrabhupadaStorage() { return m_PrabhupadaStorage; };
     inline void SetPrabhupadaStorage( QPrabhupadaStorage* APrabhupadaStorage ) { m_PrabhupadaStorage = APrabhupadaStorage; };
     inline QSqlDatabase* DB() { return m_DB; };
@@ -307,6 +321,7 @@ class QPrabhupadaDictionary : public QAbstractTableModel
 
     void LanguageIndexChanged( int Value );
     void LanguageUIIndexChanged( int Value );
+    void FilterSlovarChanged( QFilterSlovar Value );
     void PrepareYazykAndMaxID();
     void PreparePrabhupadaSlovarVector();
 
@@ -327,8 +342,8 @@ class QPrabhupadaDictionary : public QAbstractTableModel
 
     inline const QFilterSlovar& GetFilterSlovar() const { return m_YazykVector[ m_LanguageIndex.Value() ].m_FilterSlovar; };
     void sortByColumn( int column, Qt::SortOrder order );
-    void DoOrderBy( QOrderBy Value );
-    void DoCaseSensitive( bool Value );
+    void OrderByChanged( QOrderBy Value );
+    void CaseSensitiveChanged( bool Value );
     void SaveYazykVectorToFile();
   protected:
 };

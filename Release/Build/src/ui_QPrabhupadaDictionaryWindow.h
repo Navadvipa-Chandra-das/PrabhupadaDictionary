@@ -232,6 +232,7 @@ public:
         tbvPrabhupadaDictionary = new QTableView(centralwidget);
         tbvPrabhupadaDictionary->setObjectName(QString::fromUtf8("tbvPrabhupadaDictionary"));
         tbvPrabhupadaDictionary->setProperty("sortingEnabled", QVariant(true));
+        tbvPrabhupadaDictionary->setProperty("tabKeyNavigation", QVariant(false));
         QFont font;
         font.setFamily(QString::fromUtf8("Gaura Times"));
         font.setPointSize(14);

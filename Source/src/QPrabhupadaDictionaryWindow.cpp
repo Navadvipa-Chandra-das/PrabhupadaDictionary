@@ -110,6 +110,10 @@ void QPrabhupadaDictionaryWindow::Connects()
                   , &QPrabhupadaBool::SignalValueChanged
                   , this
                   , &DoCaseSensitive );
+  QObject::connect( &m_PrabhupadaDictionary->m_PrabhupadaFilterSlovar
+                  , &QPrabhupadaFilterSlovar::SignalValueChanged
+                  , this
+                  , &PrabhupadaFilterSlovarChanged );
   QObject::connect( m_ui->tbvPrabhupadaDictionary->selectionModel()
                   , &QItemSelectionModel::currentRowChanged
                   , this
@@ -157,8 +161,11 @@ void QPrabhupadaDictionaryWindow::FontSizeChanged( int Value )
 
 void QPrabhupadaDictionaryWindow::actionFind()
 {
-  m_PrabhupadaDictionary->m_PrabhupadaFilterSlovar.SetValue( QFilterSlovar( m_ui->ComboBoxSanskrit->currentText()
-                                                                          , m_ui->ComboBoxTranslate->currentText() ) );
+  QFilterSlovar& FS = m_PrabhupadaDictionary->m_YazykVector[ m_PrabhupadaDictionary->m_LanguageIndex.Value() ].m_FilterSlovar;
+  FS.SetSanskrit ( m_ui->ComboBoxSanskrit ->currentText() );
+  FS.SetTranslate( m_ui->ComboBoxTranslate->currentText() );
+
+  m_PrabhupadaDictionary->m_PrabhupadaFilterSlovar.SetValue( FS );
 }
 
 void QPrabhupadaDictionaryWindow::actionCase_Sensitive( bool Value )
@@ -280,29 +287,29 @@ void QPrabhupadaDictionaryWindow::PrepareLanguages()
   m_PrabhupadaDictionary->m_LanguageUIIndex.PrepareComboBox( m_ui->ComboBoxLanguageUI );
 }
 
-void QPrabhupadaDictionaryWindow::SetFilterSlovar( QFilterSlovar Value )
-{
-  if ( Value.IsEmpty() )
-    PrabhupadaMessage( "Харе Кришна!" );
-  // if ( !SetFilterStart )
-  //   return;
-  //
-  // QFilterSlovar &FS = YazykVector[ YazykIndex ].FilterSlovar;
-  // if ( FS != Value || Value.IsReset ) {
-  //   FS = Value;
-  //
-  //   bool SIsReset = FS.IsReset;
-  //   FS.IsReset = false;
-  //   // В дальнейшем мы можем повысить скорость, еспользуя простое свойство IsEmpty вместо функции GetIsEmpty()!
-  //   FS.IsEmpty = FS.GetIsEmpty();
-  //
-  //   PreparePrabhupadaSearchVector();
-  //   RefreshPrabhupadaSlovar( SIsReset ? YazykVector[ YazykIndex ].CurrentRow : 0, PrabhupadaSlovarVector.SearchCount );
-  //
-  //   edSanskrit->Text = FS.Sanskrit;
-  //   edPerevod->Text  = FS.Perevod;
-  // }
-}
+// void QPrabhupadaDictionaryWindow::SetFilterSlovar( QFilterSlovar Value )
+// {
+//   if ( Value.IsEmpty() )
+//     PrabhupadaMessage( "Харе Кришна!" );
+//   // if ( !SetFilterStart )
+//   //   return;
+//   //
+//   // QFilterSlovar &FS = YazykVector[ YazykIndex ].FilterSlovar;
+//   // if ( FS != Value || Value.IsReset ) {
+//   //   FS = Value;
+//   //
+//   //   bool SIsReset = FS.IsReset;
+//   //   FS.IsReset = false;
+//   //   // В дальнейшем мы можем повысить скорость, еспользуя простое свойство IsEmpty вместо функции GetIsEmpty()!
+//   //   FS.IsEmpty = FS.GetIsEmpty();
+//   //
+//   //   PreparePrabhupadaSearchVector();
+//   //   RefreshPrabhupadaSlovar( SIsReset ? YazykVector[ YazykIndex ].CurrentRow : 0, PrabhupadaSlovarVector.SearchCount );
+//   //
+//   //   edSanskrit->Text = FS.Sanskrit;
+//   //   edTranslate->Text  = FS.Translate;
+//   // }
+// }
 
 void QPrabhupadaDictionaryWindow::Language_IndexChanged( int Value )
 {
@@ -324,10 +331,10 @@ void QPrabhupadaDictionaryWindow::DoOrderBy( QOrderBy Value )
     case QOrderBy::SanskritUbyvanie :
       HV->setSortIndicator( 0, Qt::DescendingOrder );
       break;
-    case QOrderBy::PerevodVozrastanie :
+    case QOrderBy::TranslateVozrastanie :
       HV->setSortIndicator( 1, Qt::AscendingOrder );
       break;
-    case QOrderBy::PerevodUbyvanie :
+    case QOrderBy::TranslateUbyvanie :
       HV->setSortIndicator( 1, Qt::DescendingOrder );
       break;
   }
@@ -336,6 +343,20 @@ void QPrabhupadaDictionaryWindow::DoOrderBy( QOrderBy Value )
 void QPrabhupadaDictionaryWindow::DoCaseSensitive( bool Value )
 {
   m_ui->actionCase_Sensitive->setChecked( Value );
+}
+
+void QPrabhupadaDictionaryWindow::PrabhupadaFilterSlovarChanged( QFilterSlovar Value )
+{
+  if ( Value.Sanskrit() != m_ui->ComboBoxSanskrit->currentText() ) {
+    m_ui->ComboBoxSanskrit ->setCurrentText( Value.Sanskrit() );
+  }
+  if ( Value.Translate() != m_ui->ComboBoxTranslate->currentText() ) {
+    m_ui->ComboBoxTranslate->setCurrentText( Value.Translate() );
+  }
+  // QModelIndex I = m_PrabhupadaDictionary->index( 0, m_ui->tbvPrabhupadaDictionary->currentIndex().column() );
+  // m_ui->tbvPrabhupadaDictionary->setCurrentIndex( I );
+  QModelIndex I = m_ui->tbvPrabhupadaDictionary->selectionModel()->currentIndex();
+  emit m_ui->tbvPrabhupadaDictionary->selectionModel()->currentRowChanged( I, I );
 }
 
 void QPrabhupadaDictionaryWindow::DoGoToLine( int Value )
@@ -348,7 +369,12 @@ void QPrabhupadaDictionaryWindow::DoGoToLine( int Value )
 void QPrabhupadaDictionaryWindow::TablePrabhupadaCurrentRowChanged( const QModelIndex &current, const QModelIndex &/*previous*/ )
 {
   int R = current.row() + 1;
-  std::size_t A = m_PrabhupadaDictionary->m_PrabhupadaSlovarVector.size();
+  std::size_t A;
+  if ( m_PrabhupadaDictionary->FilterSlovarIsEmpty() ) {
+    A = m_PrabhupadaDictionary->m_PrabhupadaSlovarVector.size();
+  } else {
+    A = m_PrabhupadaDictionary->m_PrabhupadaSlovarVector.m_SearchCount;
+  }
   QString S = QString::number( R ) + " / " + QString::number( A );
   m_ui->lineEditRowIndicator->setText( S );
 }
@@ -364,13 +390,13 @@ void QPrabhupadaDictionaryWindow::PrabhupadaTableResized()
   }
 
   int WidthNew = TV->width()
-    , WidthOld = m_SanskitHeaderSize + m_PerevodHeaderSize;
+    , WidthOld = m_SanskitHeaderSize + m_TranslateHeaderSize;
 
   if ( WidthNew > SBW )
     WidthNew -= SBW;
 
   TV->setColumnWidth( 0, m_SanskitHeaderSize * WidthNew / WidthOld );
-  TV->setColumnWidth( 1, m_PerevodHeaderSize * WidthNew / WidthOld );
+  TV->setColumnWidth( 1, m_TranslateHeaderSize * WidthNew / WidthOld );
 }
 
 void QPrabhupadaDictionaryWindow::resizeEvent( QResizeEvent *event )
@@ -387,8 +413,8 @@ void QPrabhupadaDictionaryWindow::TablePrabhupadaHeaderSectionResized( int /*log
     QHeaderView *HV = m_ui->tbvPrabhupadaDictionary->horizontalHeader();
 
     m_SanskitHeaderSize = HV->sectionSize( 0 );
-    m_PerevodHeaderSize = HV->sectionSize( 1 );
-    //PrabhupadaLog( "log.txt", QString( "%1 : %2" ).formatArgs( m_SanskitHeaderSize, m_PerevodHeaderSize ) );
+    m_TranslateHeaderSize = HV->sectionSize( 1 );
+    //PrabhupadaLog( "log.txt", QString( "%1 : %2" ).formatArgs( m_SanskitHeaderSize, m_TranslateHeaderSize ) );
   }
 }
 
