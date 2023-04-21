@@ -216,6 +216,7 @@ class QPrabhupadaSlovarVector : public std::vector< QSanskritTranslate* >
     QPrabhupadaSlovarVector();
     ~QPrabhupadaSlovarVector();
     int m_SearchCount = 0;
+    void Clear();
 };
 
 class QPrabhupadaZakladka

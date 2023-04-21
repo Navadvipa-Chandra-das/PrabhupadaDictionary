@@ -205,8 +205,15 @@ QPrabhupadaSlovarVector::QPrabhupadaSlovarVector()
 
 QPrabhupadaSlovarVector::~QPrabhupadaSlovarVector()
 {
+  Clear();
+}
+
+void QPrabhupadaSlovarVector::Clear()
+{
   for ( QPrabhupadaSlovarVector::iterator I = begin(); I != end(); ++I )
     delete *I;
+  clear();
+  m_SearchCount = 0;
 }
 
 QSanskritTranslate::QSanskritTranslate()
@@ -489,21 +496,21 @@ void QPrabhupadaDictionary::PreparePrabhupadaSlovarVector()
     qu.exec();
     QSanskritTranslate *ST;
 
-    m_PrabhupadaSlovarVector.clear();
+    m_PrabhupadaSlovarVector.Clear();
+
     while ( qu.next() ) {
       ST = new QSanskritTranslate();
 
-      ST->m_ID                       = qu.value( 0 ).toInt();
-      ST->m_Sanskrit                 = qu.value( 1 ).toString();
-      ST->m_Translate                  = qu.value( 2 ).toString();
-      ST->m_SanskritWithoutDiakritik = QPrabhupadaDictionary::RemoveDiacritics( ST->m_Sanskrit );
-      ST->m_TranslateWithoutDiakritik  = QPrabhupadaDictionary::RemoveDiacritics( ST->m_Translate  );
-
+      ST->m_ID                        = qu.value( 0 ).toInt();
+      ST->m_Sanskrit                  = qu.value( 1 ).toString();
+      ST->m_Translate                 = qu.value( 2 ).toString();
+      ST->m_SanskritWithoutDiakritik  = QPrabhupadaDictionary::RemoveDiacritics( ST->m_Sanskrit );
+      ST->m_TranslateWithoutDiakritik = QPrabhupadaDictionary::RemoveDiacritics( ST->m_Translate  );
       m_PrabhupadaSlovarVector.push_back( ST );
     }
     PrabhupadaMessage( "Загрузка словаря Шрилы Прабхупады из базы данных " + m_LanguageIndex.YazykInfo().m_Yazyk );
+    //m_CaseSensitive.EmitValueChanged( true );
     m_PrabhupadaOrder.EmitValueChanged( true );
-    m_CaseSensitive.EmitValueChanged( true );
     emit modelReset();
     m_LanguageIndex.SetNeedMainWork( false );
   }
@@ -543,6 +550,7 @@ void QPrabhupadaDictionary::LanguageIndexChanged( int Value )
     int L = m_YazykVector.size();
     if ( Value > -1 && L > Value ) {
       PreparePrabhupadaSlovarVector();
+      m_PrabhupadaFilterSlovar.SetValue( m_YazykVector[ m_LanguageIndex.Value() ].m_FilterSlovar );
     }
   }
 }
@@ -555,7 +563,7 @@ void QPrabhupadaDictionary::LanguageUIIndexChanged( int Value )
       QString AFileTranslate = "PrabhupadaDictionary_" + m_YazykVector[ Value ].m_Yazyk + ".qm";
       if ( m_Translator.load( AFileTranslate, PrabhupadaDictionaryFiles ) ) {
         qApp->installTranslator( &m_Translator );
-        QApplication::setApplicationDisplayName( tr( "Словарь Шрилы Прабхупады!" ) );
+        QApplication::setApplicationDisplayName( tr( "B Шрилы Прабхупады!" ) );
         m_LanguageUIIndex.SetNeedMainWork( false );
         PrabhupadaMessage( "Устанавливается язык программы " + m_YazykVector[ Value ].m_Yazyk );
       } else {
@@ -570,6 +578,7 @@ void QPrabhupadaDictionary::FilterSlovarChanged( QFilterSlovar Value )
   if ( m_PrabhupadaFilterSlovar.NeedMainWork() ) {
 
     m_FilterSlovarIsEmpty = Value.GetIsEmpty();
+    m_PrabhupadaSlovarVector.m_SearchCount = 0;
 
     if ( !m_FilterSlovarIsEmpty ) {
       int ActualIndex = -1;

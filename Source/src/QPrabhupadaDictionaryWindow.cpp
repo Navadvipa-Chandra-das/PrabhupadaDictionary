@@ -131,6 +131,7 @@ void QPrabhupadaDictionaryWindow::Emits()
   m_PrabhupadaDictionary->m_FontSize.EmitValueChanged();
   m_PrabhupadaDictionary->m_PrabhupadaOrder.EmitValueChanged();
   m_PrabhupadaDictionary->m_CaseSensitive.EmitValueChanged();
+  m_PrabhupadaDictionary->m_PrabhupadaFilterSlovar.EmitValueChanged();
   m_ui->tbvPrabhupadaDictionary->setFocus( Qt::ActiveWindowFocusReason );
 }
 
@@ -238,6 +239,7 @@ void QPrabhupadaDictionaryWindow::closeEvent( QCloseEvent *event )
 {
   m_PrabhupadaStorage->SaveObject( m_PrabhupadaDictionary, QPrabhupadaStorageKind::DB );
   m_PrabhupadaStorage->SaveObject( &m_PrabhupadaDictionary->m_LanguageUIIndex, QPrabhupadaStorageKind::File );
+  m_PrabhupadaStorage->SaveYazykVectorToFile();
 
   inherited::closeEvent( event );
 }
@@ -276,9 +278,6 @@ void QPrabhupadaDictionaryWindow::PrepareDictionary()
 {
   m_PrabhupadaDictionary->PrepareYazykAndMaxID();
   PrepareLanguages();
-
-//   SetFilterStart = true;
-//   FilterSlovar   = FilterSlovar;
 }
 
 void QPrabhupadaDictionaryWindow::PrepareLanguages()
@@ -286,30 +285,6 @@ void QPrabhupadaDictionaryWindow::PrepareLanguages()
   m_PrabhupadaDictionary->m_LanguageIndex.PrepareComboBox( m_ui->ComboBoxLanguage   );
   m_PrabhupadaDictionary->m_LanguageUIIndex.PrepareComboBox( m_ui->ComboBoxLanguageUI );
 }
-
-// void QPrabhupadaDictionaryWindow::SetFilterSlovar( QFilterSlovar Value )
-// {
-//   if ( Value.IsEmpty() )
-//     PrabhupadaMessage( "Харе Кришна!" );
-//   // if ( !SetFilterStart )
-//   //   return;
-//   //
-//   // QFilterSlovar &FS = YazykVector[ YazykIndex ].FilterSlovar;
-//   // if ( FS != Value || Value.IsReset ) {
-//   //   FS = Value;
-//   //
-//   //   bool SIsReset = FS.IsReset;
-//   //   FS.IsReset = false;
-//   //   // В дальнейшем мы можем повысить скорость, еспользуя простое свойство IsEmpty вместо функции GetIsEmpty()!
-//   //   FS.IsEmpty = FS.GetIsEmpty();
-//   //
-//   //   PreparePrabhupadaSearchVector();
-//   //   RefreshPrabhupadaSlovar( SIsReset ? YazykVector[ YazykIndex ].CurrentRow : 0, PrabhupadaSlovarVector.SearchCount );
-//   //
-//   //   edSanskrit->Text = FS.Sanskrit;
-//   //   edTranslate->Text  = FS.Translate;
-//   // }
-// }
 
 void QPrabhupadaDictionaryWindow::Language_IndexChanged( int Value )
 {
