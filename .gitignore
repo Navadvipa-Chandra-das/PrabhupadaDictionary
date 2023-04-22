@@ -31,6 +31,8 @@
 *.out
 *.app
 
-NewNavadvipa.sql
-Release\*.*
-Arhive\*.*
+
+/Release/*.*
+/Arhive/*.*
+/SQL/NewNavadvipa.sql
+/SQL/Pamyatka.sql

@@ -239,7 +239,7 @@ void QPrabhupadaDictionaryWindow::closeEvent( QCloseEvent *event )
 {
   m_PrabhupadaStorage->SaveObject( m_PrabhupadaDictionary, QPrabhupadaStorageKind::DB );
   m_PrabhupadaStorage->SaveObject( &m_PrabhupadaDictionary->m_LanguageUIIndex, QPrabhupadaStorageKind::File );
-  m_PrabhupadaStorage->SaveYazykVectorToFile();
+  m_PrabhupadaDictionary->SaveYazykVectorToFile();
 
   inherited::closeEvent( event );
 }
