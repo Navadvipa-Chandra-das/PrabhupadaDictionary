@@ -3,7 +3,7 @@ list(APPEND PrabhupadaDictionary_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaLoginWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionaryWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.h
+  #${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaGoToLineWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaAboutWindow.h
@@ -14,7 +14,7 @@ list(APPEND PrabhupadaDictionary_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaLoginWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionaryWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.cpp
+  #${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaGoToLineWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaAboutWindow.cpp
@@ -89,6 +89,7 @@ target_link_libraries(PrabhupadaDictionary
   CopperSpice::CsSvg
   CopperSpice::CsXml
   CopperSpice::CsXmlPatterns
+  CopperSpice::CsPrabhupada
 )
 
 if("Multimedia" IN_LIST COPPERSPICE_COMPONENTS)
@@ -157,6 +158,7 @@ cs_copy_library(CsSql)
 cs_copy_library(CsSvg)
 cs_copy_library(CsXml)
 cs_copy_library(CsXmlPatterns)
+cs_copy_library(CsPrabhupada)
 
 if("Multimedia" IN_LIST COPPERSPICE_COMPONENTS)
   cs_copy_library(CsMultimedia)

@@ -9,7 +9,7 @@
 #include <set>
 #include <QPrabhupadaStorage.h>
 
-enum class QOrderBy : qint8
+enum class QPrabhupadaDictionaryOrderBy : qint8
 {
   SanskritVozrastanie
 , SanskritUbyvanie
@@ -17,66 +17,7 @@ enum class QOrderBy : qint8
 , TranslateUbyvanie
 };
 
-template < class TValueType >
-class QPrabhupadaValue : public QObject
-{
-  CS_OBJECT( QPrabhupadaValue )
-  private:
-    using inherited = QObject;
-    TValueType m_Value;
-    bool m_NeedMainWork = true;
-    int m_Stop = 0;
-  public:
-    QPrabhupadaValue() = delete;
-    QPrabhupadaValue( TValueType Value )
-      : inherited()
-      , m_Value( Value ) {};
-    ~QPrabhupadaValue() {};
-
-    CS_SIGNAL_1( Public, void SignalValueChanged( TValueType Value ) )
-    CS_SIGNAL_2( SignalValueChanged, Value )
-
-    inline TValueType Value() const { return m_Value; };
-    void SetValue( TValueType Value )
-    {
-      if ( Stop() == 0 && m_Value != Value ) {
-        m_Value = Value;
-        m_NeedMainWork = true;
-        emit SignalValueChanged( m_Value );
-      }
-    };
-    inline void IncStop() { ++m_Stop; };
-    inline void DecStop() { --m_Stop; };
-    inline int Stop() { return m_Stop; };
-    inline int NeedMainWork() { return m_NeedMainWork; };
-    inline void SetNeedMainWork( bool Value ) { m_NeedMainWork = Value; };
-
-    void LoadFromStream( QDataStream &ST ) override
-    {
-      inherited::LoadFromStream( ST );
-      TValueType N;
-      ST >> N;
-      SetValue( N );
-    };
-    void SaveToStream( QDataStream &ST ) override
-    {
-      inherited::SaveToStream( ST );
-      ST << m_Value;
-    };
-    inline void EmitValueChanged( bool ANeedResetMainWork = false )
-    {
-      if ( ANeedResetMainWork ) {
-        m_NeedMainWork = true;
-      }
-      emit SignalValueChanged( m_Value );
-      m_NeedMainWork = false;
-    };
-  protected:
-};
-
-using QFontSize        = QPrabhupadaValue< int >;
-using QPrabhupadaOrder = QPrabhupadaValue< QOrderBy >;
-using QPrabhupadaBool  = QPrabhupadaValue< bool >;
+using QPrabhupadaOrder = QPrabhupadaValue< QPrabhupadaDictionaryOrderBy >;
 
 class QStringMap : public std::map< QString, QString >
 {
@@ -96,41 +37,96 @@ class QStringSet : public std::set< QString >
     ~QStringSet();
 };
 
+class QPrabhupadaFindOptions
+{
+  public:
+    QPrabhupadaFindOptions();
+    QPrabhupadaFindOptions( bool ACaseSensitive
+                          , bool ARegularExpression
+                          , bool AAutoPercentBegin
+                          , bool AAutoPercentEnd );
+    QPrabhupadaFindOptions( const QPrabhupadaFindOptions& A );
+    QPrabhupadaFindOptions( QPrabhupadaFindOptions&& A );
+    ~QPrabhupadaFindOptions();
+
+    bool m_CaseSensitive     = true;
+    bool m_RegularExpression = false;
+    bool m_AutoPercentBegin  = true;
+    bool m_AutoPercentEnd    = true;
+
+    void LoadFromStream( QDataStream &ST );
+    void SaveToStream  ( QDataStream &ST );
+    QPrabhupadaFindOptions& operator = ( const QPrabhupadaFindOptions&  A );
+    QPrabhupadaFindOptions& operator = (       QPrabhupadaFindOptions&& A );
+    bool operator == ( const QPrabhupadaFindOptions& A )
+    {
+      return m_CaseSensitive     == A.m_CaseSensitive &&
+             m_RegularExpression == A.m_RegularExpression &&
+             m_AutoPercentBegin  == A.m_AutoPercentBegin &&
+             m_AutoPercentEnd    == A.m_AutoPercentEnd;
+    }
+    bool operator != ( const QPrabhupadaFindOptions& A )
+    {
+      return m_CaseSensitive     != A.m_CaseSensitive ||
+             m_RegularExpression != A.m_RegularExpression ||
+             m_AutoPercentBegin  != A.m_AutoPercentBegin ||
+             m_AutoPercentEnd    != A.m_AutoPercentEnd;
+    }
+};
+
+inline QDataStream& operator << ( QDataStream &ST, QPrabhupadaFindOptions &PrabhupadaFindOptions )
+{
+  return ST << PrabhupadaFindOptions.m_CaseSensitive
+            << PrabhupadaFindOptions.m_RegularExpression
+            << PrabhupadaFindOptions.m_AutoPercentBegin
+            << PrabhupadaFindOptions.m_AutoPercentEnd;
+}
+
+inline QDataStream& operator >> ( QDataStream &ST, QPrabhupadaFindOptions &PrabhupadaFindOptions )
+{
+  return ST >> PrabhupadaFindOptions.m_CaseSensitive
+            >> PrabhupadaFindOptions.m_RegularExpression
+            >> PrabhupadaFindOptions.m_AutoPercentBegin
+            >> PrabhupadaFindOptions.m_AutoPercentEnd;
+}
+
 class QFilterSlovar
 {
-  private:
+  public:
+    QPrabhupadaFindOptions m_PrabhupadaFindOptions;
     QString m_Sanskrit;
     QString m_Translate;
     QString m_SanskritWithoutDiakritik;
     QString m_TranslateWithoutDiakritik;
-  public:
     QFilterSlovar();
     QFilterSlovar( const QFilterSlovar& A );
     QFilterSlovar( QFilterSlovar&& A );
-    QFilterSlovar( const QString &ASanskrit
+    QFilterSlovar( QPrabhupadaFindOptions APrabhupadaFindOptions
+                 , const QString &ASanskrit
                  , const QString &ATranslate );
     ~QFilterSlovar();
 
-    inline QString Sanskrit()  const { return m_Sanskrit; };
-    inline QString Translate() const { return m_Translate; };
     void SetSanskrit( const QString &Value );
     void SetTranslate( const QString &Value );
-    inline QString SanskritWithoutDiakritik()  const { return m_SanskritWithoutDiakritik; };
-    inline QString TranslateWithoutDiakritik() const { return m_TranslateWithoutDiakritik; };
-    void SetSanskritWithoutDiakritik( const QString &Value );
-    void SetTranslateWithoutDiakritik( const QString &Value );
+    void SetSanskritWithoutDiakritik( const QString& Value );
+    void SetTranslateWithoutDiakritik( const QString& Value );
 
     void LoadFromStream( QDataStream &ST );
     void SaveToStream( QDataStream &ST );
 
-    QFilterSlovar& operator = ( const QFilterSlovar& a );
-    bool operator == ( const QFilterSlovar& F )
+    QFilterSlovar& operator = ( const QFilterSlovar& A );
+    QFilterSlovar& operator = ( QFilterSlovar&& A );
+    bool operator == ( const QFilterSlovar& A )
     {
-      return ( m_Sanskrit == F.m_Sanskrit ) && ( m_Translate == F.m_Translate );
+      return m_PrabhupadaFindOptions == A.m_PrabhupadaFindOptions &&
+             m_Sanskrit              == A.m_Sanskrit &&
+             m_Translate             == A.m_Translate;
     }
-    bool operator != ( const QFilterSlovar& F )
+    bool operator != ( const QFilterSlovar& A )
     {
-      return ( ( m_Sanskrit != F.m_Sanskrit ) || ( m_Translate != F.m_Translate ) );
+      return m_PrabhupadaFindOptions != A.m_PrabhupadaFindOptions ||
+             m_Sanskrit              != A.m_Sanskrit ||
+             m_Translate             != A.m_Translate;
     }
     bool GetIsEmpty() const
     {
@@ -147,7 +143,7 @@ class QFilterSlovar
 
 inline QDataStream& operator << ( QDataStream &ST, const QFilterSlovar &FilterSlovar )
 {
-  return ST << FilterSlovar.Sanskrit() << FilterSlovar.Translate();
+  return ST << FilterSlovar.m_Sanskrit << FilterSlovar.m_Translate;
 }
 
 inline QDataStream& operator >> ( QDataStream &ST, QFilterSlovar &FilterSlovar )
@@ -164,16 +160,11 @@ using QPrabhupadaFilterSlovar = QPrabhupadaValue< QFilterSlovar >;
 
 class QPrabhupadaBukva
 {
-  private:
+  public:
     QChar32 m_Bukva;
     int m_Ves;
-  public:
     QPrabhupadaBukva();
     ~QPrabhupadaBukva();
-    inline QChar32 Bukva() { return m_Bukva; };
-    inline void SetBukva( QChar32 Value ) { m_Bukva = Value; };
-    inline int Ves() { return m_Ves; };
-    inline void SetVes( int Value ) { m_Ves = Value; };
 };
 
 class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
@@ -185,12 +176,12 @@ class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
     ~QPrabhupadaBukvary();
 };
 
-inline QDataStream& operator << ( QDataStream &ST, const QOrderBy &OrderBy )
+inline QDataStream& operator << ( QDataStream &ST, const QPrabhupadaDictionaryOrderBy &OrderBy )
 {
   return ST << (qint8)OrderBy;
 }
 
-inline QDataStream& operator >> ( QDataStream &ST, QOrderBy &OrderBy )
+inline QDataStream& operator >> ( QDataStream &ST, QPrabhupadaDictionaryOrderBy &OrderBy )
 {
   return ST >> (qint8&)OrderBy;
 }
@@ -224,14 +215,28 @@ class QPrabhupadaZakladka
   public:
     QPrabhupadaZakladka();
     QPrabhupadaZakladka( int ARowNum
+                       , int AColumnNum
                        , QFilterSlovar AFilterSlovar );
+    QPrabhupadaZakladka( const QPrabhupadaZakladka& A );
+    QPrabhupadaZakladka( QPrabhupadaZakladka&& A );
     ~QPrabhupadaZakladka();
 
     int m_RowNum;
+    int m_ColumnNum;
     QFilterSlovar m_FilterSlovar;
 
     void LoadFromStream( QDataStream &ST );
     void SaveToStream( QDataStream &ST );
+    QPrabhupadaZakladka& operator = ( const QPrabhupadaZakladka& A );
+    QPrabhupadaZakladka& operator = ( QPrabhupadaZakladka&& A );
+    bool operator == ( const QPrabhupadaZakladka& A )
+    {
+      return m_RowNum == A.m_RowNum && m_ColumnNum == A.m_ColumnNum && m_FilterSlovar == A.m_FilterSlovar;
+    }
+    bool operator != ( const QPrabhupadaZakladka& A )
+    {
+      return m_RowNum != A.m_RowNum || m_ColumnNum != A.m_ColumnNum || m_FilterSlovar != A.m_FilterSlovar;
+    }
 };
 
 class QPrabhupadaZakladkaMap : public std::map< unsigned short, QPrabhupadaZakladka >
@@ -288,34 +293,33 @@ class QLanguageIndex : public QPrabhupadaValue< int >
     QYazykVector& m_YazykVector;
     void PrepareComboBox( QComboBox *CB );
     void ComboBoxAddItem( QComboBox *CB, const QString &S );
-    inline QYazykInfo& YazykInfo() { return m_YazykVector[ Value() ]; };
+    inline QYazykInfo& YazykInfo() { return m_YazykVector[ m_Value ]; };
   protected:
 };
 
 class QPrabhupadaDictionary : public QAbstractTableModel
 {
   CS_OBJECT( QPrabhupadaDictionary )
-  private:
+  public:
     using inherited = QAbstractTableModel;
     QSqlDatabase *m_DB = nullptr;
     QPrabhupadaStorage* m_PrabhupadaStorage;
     bool m_FilterSlovarIsEmpty = true;
-  public:
     QPrabhupadaDictionary( QObject *parent = nullptr );
     ~QPrabhupadaDictionary();
     QTranslator m_Translator;
     QYazykVector m_YazykVector;
-    inline bool FilterSlovarIsEmpty() { return m_FilterSlovarIsEmpty; };
-    inline QPrabhupadaStorage* PrabhupadaStorage() { return m_PrabhupadaStorage; };
-    inline void SetPrabhupadaStorage( QPrabhupadaStorage* APrabhupadaStorage ) { m_PrabhupadaStorage = APrabhupadaStorage; };
-    inline QSqlDatabase* DB() { return m_DB; };
-    inline void SetDB( QSqlDatabase* ADB ) { m_DB = ADB; };
     QLanguageIndex m_LanguageIndex   = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
     QLanguageIndex m_LanguageUIIndex = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
     QFontSize m_FontSize = QFontSize( 14 );
-    QPrabhupadaOrder m_PrabhupadaOrder = QPrabhupadaOrder( QOrderBy::SanskritVozrastanie );
-    QPrabhupadaBool m_CaseSensitive = QPrabhupadaBool( false );
-    QPrabhupadaFilterSlovar m_PrabhupadaFilterSlovar = QPrabhupadaFilterSlovar( QFilterSlovar( "", "" ) );
+    QPrabhupadaOrder m_PrabhupadaOrder = QPrabhupadaOrder( QPrabhupadaDictionaryOrderBy::SanskritVozrastanie );
+
+    QPrabhupadaBool m_CaseSensitive     = QPrabhupadaBool( true );
+    QPrabhupadaBool m_RegularExpression = QPrabhupadaBool( false );
+    QPrabhupadaBool m_AutoPercentBegin  = QPrabhupadaBool( true );
+    QPrabhupadaBool m_AutoPercentEnd    = QPrabhupadaBool( true );
+
+    QPrabhupadaFilterSlovar m_PrabhupadaFilterSlovar = QPrabhupadaFilterSlovar( QFilterSlovar( QPrabhupadaFindOptions(), "", "" ) );
     int m_MaxID;
     QString m_Schema;
     QPrabhupadaSlovarVector m_PrabhupadaSlovarVector;
@@ -341,10 +345,13 @@ class QPrabhupadaDictionary : public QAbstractTableModel
     QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
     QVariant headerData( int section, Qt::Orientation orientation, int role ) const override;
 
-    inline const QFilterSlovar& GetFilterSlovar() const { return m_YazykVector[ m_LanguageIndex.Value() ].m_FilterSlovar; };
+    inline const QFilterSlovar& GetFilterSlovar() const { return m_YazykVector[ m_LanguageIndex.m_Value ].m_FilterSlovar; };
     void sortByColumn( int column, Qt::SortOrder order );
-    void OrderByChanged( QOrderBy Value );
+    void OrderByChanged( QPrabhupadaDictionaryOrderBy Value );
     void CaseSensitiveChanged( bool Value );
+    void RegularExpressionChanged( bool Value );
+    void AutoPercentBeginChanged( bool Value );
+    void AutoPercentEndChanged( bool Value );
     void SaveYazykVectorToFile();
   protected:
 };

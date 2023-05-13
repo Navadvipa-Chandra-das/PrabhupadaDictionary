@@ -131,7 +131,7 @@ void QPrabhupadaLoginWindow::DatabaseToWidget( QSqlDatabase *DB )
 
 void QPrabhupadaLoginWindow::WidgetToDatabase( QSqlDatabase *DB )
 {
-  DB->setUserName( m_ui->ComboBoxUserName->currentText() );
+  DB->setUserName( m_ui->ComboBoxUserName->currentText () );
   DB->setPassword( m_ui->LineEditPassword->text() );
   if ( m_ui->radioButtonSQLite->isChecked() ) {
     DB->setDatabaseName( "./resources/PrabhupadaDictionaryFiles/Sanskrit.db" );

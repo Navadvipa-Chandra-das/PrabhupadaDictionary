@@ -24,37 +24,66 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
   CS_OBJECT( QPrabhupadaDictionaryWindow )
 
   public:
+    int m_SanskitHeaderSize = 50;
+    int m_TranslateHeaderSize = 50;
+    bool m_StartResize = false;
+
     QPrabhupadaDictionaryWindow() = delete;
     QPrabhupadaDictionaryWindow( QPrabhupadaDictionary *APrabhupadaDictionary );
     ~QPrabhupadaDictionaryWindow();
     Ui::QPrabhupadaDictionaryWindow *m_ui = new Ui::QPrabhupadaDictionaryWindow;
     QPrabhupadaDictionary *m_PrabhupadaDictionary;
     void PrepareDictionary();
-    inline void SetStartResize( bool Value ) { m_StartResize = Value; };
-    inline void SetPrabhupadaDictionary( QPrabhupadaDictionary *Value ) { m_PrabhupadaDictionary = Value; };
     void FirstShow();
   private:
     using inherited = QPrabhupadaMainWindow;
-    int m_SanskitHeaderSize = 50;
-    int m_TranslateHeaderSize = 50;
-    bool m_StartResize = false;
 
     void actionExit_Program();
     void actionFind();
-    void actionCase_Sensitive( bool Value );
+    void actionCaseSensitive( bool Value );
+    void actionRegularExpression( bool Value );
+    void actionAutoPercentBegin( bool Value );
+    void actionAutoPercentEnd( bool Value );
     void actionDelete();
     void actionInsert();
     void actionRemove_Duplicates();
     void actionWhats_This_mode();
     void actionGoToRow();
     void actionAbout();
-    void ActionSaveYazykVectorToFile();
+    void actionDeleteAllBookmarks();
     void ActionSaveAllBukvaToFile();
+    void actionSet_Bookmark( unsigned short B );
+    void actionSet_Bookmark_0();
+    void actionSet_Bookmark_1();
+    void actionSet_Bookmark_2();
+    void actionSet_Bookmark_3();
+    void actionSet_Bookmark_4();
+    void actionSet_Bookmark_5();
+    void actionSet_Bookmark_6();
+    void actionSet_Bookmark_7();
+    void actionSet_Bookmark_8();
+    void actionSet_Bookmark_9();
+    void actionGo_to_bookmark( unsigned short B );
+    void actionGo_to_bookmark_0();
+    void actionGo_to_bookmark_1();
+    void actionGo_to_bookmark_2();
+    void actionGo_to_bookmark_3();
+    void actionGo_to_bookmark_4();
+    void actionGo_to_bookmark_5();
+    void actionGo_to_bookmark_6();
+    void actionGo_to_bookmark_7();
+    void actionGo_to_bookmark_8();
+    void actionGo_to_bookmark_9();
     void PrepareLanguages();
     void Language_IndexChanged( int Value );
     void LanguageUI_IndexChanged( int Value );
-    void DoOrderBy( QOrderBy Value );
-    void DoCaseSensitive( bool Value );
+    void DoOrderBy( QPrabhupadaDictionaryOrderBy Value );
+
+    void CaseSensitiveChanged( bool Value );
+    void RegularExpressionChanged( bool Value );
+    void AutoPercentBeginChanged( bool Value );
+    void AutoPercentEndChanged( bool Value );
+
     void PrabhupadaFilterSlovarChanged( QFilterSlovar Value );
     void DoGoToLine( int Value );
     void Connects();

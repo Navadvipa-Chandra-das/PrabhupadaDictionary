@@ -25,21 +25,8 @@ void PrabhupadaMessage( const QString &msg )
    QMessageBox msgB;
 
    msgB.setWindowTitle( "Jaya Shrila Prabhupada!" );
-   msgB.setWindowIcon( QIcon( "://resources/PrabhupadaDictionary.ico" ) );
+   msgB.setWindowIcon( QIcon( ":/Icon/resources/PrabhupadaDictionary.ico" ) );
    msgB.setIcon( QMessageBox::Information );
-
-   msgB.setText( msg );
-   msgB.exec();
-}
-
-void PrabhupadaMessage( QString msg, int value )
-{
-   msg = msg + "   " + QString::number(value);
-
-   QMessageBox msgB;
-
-   msgB.setWindowTitle( "General Information" );
-   msgB.setWindowIcon( QIcon( "://resources/PrabhupadaDictionary.ico" ) );
 
    msgB.setText( msg );
    msgB.exec();
@@ -54,7 +41,8 @@ void PrabhupadaMessage( QWidget *parent, const QString &title, const QString &ms
 
 
    msgB.setWindowTitle( title );
-   msgB.setWindowIcon( QIcon( "://resources/PrabhupadaDictionary.ico" ) );
+   msgB.setWindowIcon( QIcon( ":/Icon/resources/PrabhupadaDictionary.ico" ) );
+   msgB.setIcon( QMessageBox::Information );
 
    msgB.setText( msg );
    msgB.exec();
@@ -63,10 +51,11 @@ void PrabhupadaMessage( QWidget *parent, const QString &title, const QString &ms
 void PrabhupadaLog( const QString &AFileName, const QString &msg )
 {
   QSaveFile ASaveFile = QSaveFile( AFileName );
-  QDataStream AStream = QDataStream( &ASaveFile );
-  ASaveFile.open( QIODevice::WriteOnly/* | QIODevice::Append*/ );
+  QDataStream  AStream = QDataStream( &ASaveFile );
+  ASaveFile.open( QIODevice::WriteOnly /*| QIODevice::Append*/ );
 
-  QString S = QDateTime::currentDateTime().toString( "dd/MM/yyyy hh:mm:ss " ) + msg + "\n";
+  QString S = QDateTime::currentDateTime().toString( "dd/MM/yyyy hh:mm:ss:zzz " ) + msg + "\n";
+  ASaveFile.seek( ASaveFile.size() );
   AStream << S;
 
   ASaveFile.commit();

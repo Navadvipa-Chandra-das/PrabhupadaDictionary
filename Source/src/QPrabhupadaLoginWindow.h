@@ -29,15 +29,12 @@ class QPrabhupadaLoginWindow : public QPrabhupadaDialog
     QPrabhupadaLoginWindow( QPrabhupadaDictionary *APrabhupadaDictionary );
     ~QPrabhupadaLoginWindow();
     Ui::QPrabhupadaLoginWindow *m_ui = new Ui::QPrabhupadaLoginWindow;
-    QPrabhupadaDictionary *m_PrabhupadaDictionary = nullptr;
-    bool Connect( QSqlDatabase *DB );
-    inline QString DriverName() { return m_DriverName; };
-    inline QString Schema() { return m_Schema; };
-    inline void SetPrabhupadaDictionary( QPrabhupadaDictionary *Value ) { m_PrabhupadaDictionary = Value; };
-  private:
-    using inherited = QPrabhupadaDialog;
     QString m_DriverName;
     QString m_Schema;
+    QPrabhupadaDictionary *m_PrabhupadaDictionary = nullptr;
+    bool Connect( QSqlDatabase *DB );
+  private:
+    using inherited = QPrabhupadaDialog;
     void Connects();
     void Emits();
     void SQLRadioButton( bool checked );

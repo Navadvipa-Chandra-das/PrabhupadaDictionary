@@ -194,15 +194,17 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Действие</string>
     </property>
     <addaction name="actionFind"/>
-    <addaction name="actionCase_Sensitive"/>
+    <addaction name="actionCaseSensitive"/>
     <addaction name="actionDelete"/>
     <addaction name="actionInsert"/>
     <addaction name="actionRemove_Duplicates"/>
     <addaction name="actionWhats_This_mode"/>
     <addaction name="actionGoToRow"/>
     <addaction name="actionAbout"/>
-    <addaction name="ActionSaveYazykVectorToFile"/>
     <addaction name="ActionSaveAllBukvaToFile"/>
+    <addaction name="actionRegularExpression"/>
+    <addaction name="actionAutoPercentBegin"/>
+    <addaction name="actionAutoPercentEnd"/>
    </widget>
    <widget class="QMenu" name="menuSet_Bookmark">
     <property name="title" stdset="0">
@@ -218,12 +220,13 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionSet_Bookmark_7"/>
     <addaction name="actionSet_Bookmark_8"/>
     <addaction name="actionSet_Bookmark_9"/>
+    <addaction name="actionDeleteAllBookmarks"/>
    </widget>
    <widget class="QMenu" name="menuGo_Bookmarks">
     <property name="title" stdset="0">
      <string>&amp;К закладке</string>
     </property>
-    <addaction name="actionGo_to_ookmark_0"/>
+    <addaction name="actionGo_to_bookmark_0"/>
     <addaction name="actionGo_to_bookmark_1"/>
     <addaction name="actionGo_to_bookmark_2"/>
     <addaction name="actionGo_to_bookmark_3"/>
@@ -261,17 +264,21 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionFind"/>
    <addaction name="actionInsert"/>
    <addaction name="actionWhats_This_mode"/>
-   <addaction name="actionCase_Sensitive"/>
+   <addaction name="actionCaseSensitive"/>
    <addaction name="actionRemove_Duplicates"/>
    <addaction name="actionGoToRow"/>
    <addaction name="actionAbout"/>
+   <addaction name="actionRegularExpression"/>
+   <addaction name="actionAutoPercentBegin"/>
+   <addaction name="actionAutoPercentEnd"/>
+   <addaction name="actionDeleteAllBookmarks"/>
   </widget>
   <action name="actionFind">
    <property name="text" stdset="0">
     <string>&amp;Найти</string>
    </property>
    <property name="shortcut" stdset="0">
-    <string>Ctrl+Return</string>
+    <string>Return</string>
    </property>
    <property name="iconVisibleInMenu" stdset="0">
     <bool>true</bool>
@@ -285,7 +292,7 @@ p, li { white-space: pre-wrap; }
     </iconset>
    </property>
   </action>
-  <action name="actionCase_Sensitive">
+  <action name="actionCaseSensitive">
    <property name="text" stdset="0">
     <string>&amp;Различать регистр</string>
    </property>
@@ -294,7 +301,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon" stdset="0">
     <iconset>
-     <normaloff>:/ToolButton/resources/Case_Sensitive.png</normaloff>
+     <normaloff>:/ToolButton/resources/CaseSensitive.png</normaloff>
     </iconset>
    </property>
    <property name="checkable" stdset="0">
@@ -426,7 +433,7 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+9</string>
    </property>
   </action>
-  <action name="actionGo_to_ookmark_0">
+  <action name="actionGo_to_bookmark_0">
    <property name="text" stdset="0">
     <string>К закладке &amp;0</string>
    </property>
@@ -551,16 +558,6 @@ p, li { white-space: pre-wrap; }
     </iconset>
    </property>
   </action>
-  <action name="ActionSaveYazykVectorToFile">
-   <property name="text" stdset="0">
-    <string>Сохранить языки в файл</string>
-   </property>
-   <property name="icon" stdset="0">
-    <iconset>
-     <normaloff>:/ToolButton/resources/SaveLang.png</normaloff>
-    </iconset>
-   </property>
-  </action>
   <action name="ActionSaveAllBukvaToFile">
    <property name="text" stdset="0">
     <string>Сохранить буквы в файл</string>
@@ -569,6 +566,67 @@ p, li { white-space: pre-wrap; }
     <iconset>
      <normaloff>:/ToolButton/resources/SaveBukva.png</normaloff>
     </iconset>
+   </property>
+  </action>
+  <action name="actionDeleteAllBookmarks">
+   <property name="text" stdset="0">
+    <string>&amp;Удалить все закладки</string>
+   </property>
+   <property name="shortcut" stdset="0">
+    <string>Ctrl+Alt+0</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/DeleteAllBookmarks.png</normaloff>
+    </iconset>
+   </property>
+  </action>
+  <action name="actionRegularExpression">
+   <property name="text" stdset="0">
+    <string>Регулярные выра&amp;жения</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>Регулярные выражения</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/RegularExpression.png</normaloff>
+    </iconset>
+   </property>
+   <property name="checkable" stdset="0">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionAutoPercentBegin">
+   <property name="text" stdset="0">
+    <string>Авто % в на&amp;чале</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>Авто % в начале</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/AutoPercentBegin.png</normaloff>
+    </iconset>
+   </property>
+   <property name="checkable" stdset="0">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionAutoPercentEnd">
+   <property name="text" stdset="0">
+    <string>Авто % в кон&amp;це</string>
+   </property>
+   <property name="iconText" stdset="0">
+    <string>Авто % в конце</string>
+   </property>
+   <property name="icon" stdset="0">
+    <iconset>
+     <normaloff>:/ToolButton/resources/AutoPercentEnd.png</normaloff>
+    </iconset>
+   </property>
+   <property name="checkable" stdset="0">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

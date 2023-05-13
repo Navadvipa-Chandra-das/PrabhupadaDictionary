@@ -1,12 +1,15 @@
 <RCC>
   <qresource prefix="ToolButton">
+    <file>resources/AutoPercentBegin.png</file>
+    <file>resources/AutoPercentEnd.png</file>
+    <file>resources/RegularExpression.png</file>
+    <file>resources/DeleteAllBookmarks.png</file>
     <file>resources/SaveBukva.png</file>
-    <file>resources/SaveLang.png</file>
     <file>resources/About.png</file>
     <file>resources/GoToRow.png</file>
-    <file alias="RU-RU/Case_Sensitive.png">resources/Case_Sensitive_RU-RU.png</file>
+    <file alias="RU-RU/CaseSensitive.png">resources/CaseSensitive_RU-RU.png</file>
     <file>resources/RemoveDuplicates.png</file>
-    <file>resources/Case_Sensitive.png</file>
+    <file>resources/CaseSensitive.png</file>
     <file>resources/Find.png</file>
     <file>resources/Delete.png</file>
     <file>resources/Insert.png</file>

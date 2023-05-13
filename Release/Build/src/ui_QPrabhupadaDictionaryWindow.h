@@ -31,7 +31,7 @@ class Ui_QPrabhupadaDictionaryWindow
 {
 public:
     QAction *actionFind;
-    QAction *actionCase_Sensitive;
+    QAction *actionCaseSensitive;
     QAction *actionDelete;
     QAction *actionInsert;
     QAction *actionRemove_Duplicates;
@@ -45,7 +45,7 @@ public:
     QAction *actionSet_Bookmark_7;
     QAction *actionSet_Bookmark_8;
     QAction *actionSet_Bookmark_9;
-    QAction *actionGo_to_ookmark_0;
+    QAction *actionGo_to_bookmark_0;
     QAction *actionGo_to_bookmark_1;
     QAction *actionGo_to_bookmark_2;
     QAction *actionGo_to_bookmark_3;
@@ -58,8 +58,11 @@ public:
     QAction *actionWhats_This_mode;
     QAction *actionGoToRow;
     QAction *actionAbout;
-    QAction *ActionSaveYazykVectorToFile;
     QAction *ActionSaveAllBukvaToFile;
+    QAction *actionDeleteAllBookmarks;
+    QAction *actionRegularExpression;
+    QAction *actionAutoPercentBegin;
+    QAction *actionAutoPercentEnd;
     QWidget *centralwidget;
     QVBoxLayout *vlPrabhuadaMain;
     QHBoxLayout *horizontalLayoutLanguage;
@@ -94,12 +97,12 @@ public:
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/ToolButton/resources/Find.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionFind->setProperty("icon", QVariant(icon1));
-        actionCase_Sensitive = new QAction(QPrabhupadaDictionaryWindow);
-        actionCase_Sensitive->setObjectName(QString::fromUtf8("actionCase_Sensitive"));
+        actionCaseSensitive = new QAction(QPrabhupadaDictionaryWindow);
+        actionCaseSensitive->setObjectName(QString::fromUtf8("actionCaseSensitive"));
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/ToolButton/resources/Case_Sensitive.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionCase_Sensitive->setProperty("icon", QVariant(icon2));
-        actionCase_Sensitive->setProperty("checkable", QVariant(true));
+        icon2.addFile(QString::fromUtf8(":/ToolButton/resources/CaseSensitive.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionCaseSensitive->setProperty("icon", QVariant(icon2));
+        actionCaseSensitive->setProperty("checkable", QVariant(true));
         actionDelete = new QAction(QPrabhupadaDictionaryWindow);
         actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
         QIcon icon3;
@@ -135,8 +138,8 @@ public:
         actionSet_Bookmark_8->setObjectName(QString::fromUtf8("actionSet_Bookmark_8"));
         actionSet_Bookmark_9 = new QAction(QPrabhupadaDictionaryWindow);
         actionSet_Bookmark_9->setObjectName(QString::fromUtf8("actionSet_Bookmark_9"));
-        actionGo_to_ookmark_0 = new QAction(QPrabhupadaDictionaryWindow);
-        actionGo_to_ookmark_0->setObjectName(QString::fromUtf8("actionGo_to_ookmark_0"));
+        actionGo_to_bookmark_0 = new QAction(QPrabhupadaDictionaryWindow);
+        actionGo_to_bookmark_0->setObjectName(QString::fromUtf8("actionGo_to_bookmark_0"));
         actionGo_to_bookmark_1 = new QAction(QPrabhupadaDictionaryWindow);
         actionGo_to_bookmark_1->setObjectName(QString::fromUtf8("actionGo_to_bookmark_1"));
         actionGo_to_bookmark_2 = new QAction(QPrabhupadaDictionaryWindow);
@@ -170,16 +173,34 @@ public:
         QIcon icon8;
         icon8.addFile(QString::fromUtf8(":/ToolButton/resources/About.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionAbout->setProperty("icon", QVariant(icon8));
-        ActionSaveYazykVectorToFile = new QAction(QPrabhupadaDictionaryWindow);
-        ActionSaveYazykVectorToFile->setObjectName(QString::fromUtf8("ActionSaveYazykVectorToFile"));
-        QIcon icon9;
-        icon9.addFile(QString::fromUtf8(":/ToolButton/resources/SaveLang.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ActionSaveYazykVectorToFile->setProperty("icon", QVariant(icon9));
         ActionSaveAllBukvaToFile = new QAction(QPrabhupadaDictionaryWindow);
         ActionSaveAllBukvaToFile->setObjectName(QString::fromUtf8("ActionSaveAllBukvaToFile"));
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/ToolButton/resources/SaveBukva.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ActionSaveAllBukvaToFile->setProperty("icon", QVariant(icon9));
+        actionDeleteAllBookmarks = new QAction(QPrabhupadaDictionaryWindow);
+        actionDeleteAllBookmarks->setObjectName(QString::fromUtf8("actionDeleteAllBookmarks"));
         QIcon icon10;
-        icon10.addFile(QString::fromUtf8(":/ToolButton/resources/SaveBukva.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ActionSaveAllBukvaToFile->setProperty("icon", QVariant(icon10));
+        icon10.addFile(QString::fromUtf8(":/ToolButton/resources/DeleteAllBookmarks.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDeleteAllBookmarks->setProperty("icon", QVariant(icon10));
+        actionRegularExpression = new QAction(QPrabhupadaDictionaryWindow);
+        actionRegularExpression->setObjectName(QString::fromUtf8("actionRegularExpression"));
+        QIcon icon11;
+        icon11.addFile(QString::fromUtf8(":/ToolButton/resources/RegularExpression.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRegularExpression->setProperty("icon", QVariant(icon11));
+        actionRegularExpression->setProperty("checkable", QVariant(true));
+        actionAutoPercentBegin = new QAction(QPrabhupadaDictionaryWindow);
+        actionAutoPercentBegin->setObjectName(QString::fromUtf8("actionAutoPercentBegin"));
+        QIcon icon12;
+        icon12.addFile(QString::fromUtf8(":/ToolButton/resources/AutoPercentBegin.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionAutoPercentBegin->setProperty("icon", QVariant(icon12));
+        actionAutoPercentBegin->setProperty("checkable", QVariant(true));
+        actionAutoPercentEnd = new QAction(QPrabhupadaDictionaryWindow);
+        actionAutoPercentEnd->setObjectName(QString::fromUtf8("actionAutoPercentEnd"));
+        QIcon icon13;
+        icon13.addFile(QString::fromUtf8(":/ToolButton/resources/AutoPercentEnd.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionAutoPercentEnd->setProperty("icon", QVariant(icon13));
+        actionAutoPercentEnd->setProperty("checkable", QVariant(true));
         centralwidget = new QWidget(QPrabhupadaDictionaryWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         vlPrabhuadaMain = new QVBoxLayout(centralwidget);
@@ -295,15 +316,17 @@ public:
         mbPrabupadaDictionary->addAction(menuSet_Bookmark->menuAction());
         mbPrabupadaDictionary->addAction(menuGo_Bookmarks->menuAction());
         menuAction->addAction(actionFind);
-        menuAction->addAction(actionCase_Sensitive);
+        menuAction->addAction(actionCaseSensitive);
         menuAction->addAction(actionDelete);
         menuAction->addAction(actionInsert);
         menuAction->addAction(actionRemove_Duplicates);
         menuAction->addAction(actionWhats_This_mode);
         menuAction->addAction(actionGoToRow);
         menuAction->addAction(actionAbout);
-        menuAction->addAction(ActionSaveYazykVectorToFile);
         menuAction->addAction(ActionSaveAllBukvaToFile);
+        menuAction->addAction(actionRegularExpression);
+        menuAction->addAction(actionAutoPercentBegin);
+        menuAction->addAction(actionAutoPercentEnd);
         menuSet_Bookmark->addAction(actionSet_Bookmark_0);
         menuSet_Bookmark->addAction(actionSet_Bookmark_1);
         menuSet_Bookmark->addAction(actionSet_Bookmark_2);
@@ -314,7 +337,8 @@ public:
         menuSet_Bookmark->addAction(actionSet_Bookmark_7);
         menuSet_Bookmark->addAction(actionSet_Bookmark_8);
         menuSet_Bookmark->addAction(actionSet_Bookmark_9);
-        menuGo_Bookmarks->addAction(actionGo_to_ookmark_0);
+        menuSet_Bookmark->addAction(actionDeleteAllBookmarks);
+        menuGo_Bookmarks->addAction(actionGo_to_bookmark_0);
         menuGo_Bookmarks->addAction(actionGo_to_bookmark_1);
         menuGo_Bookmarks->addAction(actionGo_to_bookmark_2);
         menuGo_Bookmarks->addAction(actionGo_to_bookmark_3);
@@ -328,10 +352,14 @@ public:
         tbPrabhupada->addAction(actionFind);
         tbPrabhupada->addAction(actionInsert);
         tbPrabhupada->addAction(actionWhats_This_mode);
-        tbPrabhupada->addAction(actionCase_Sensitive);
+        tbPrabhupada->addAction(actionCaseSensitive);
         tbPrabhupada->addAction(actionRemove_Duplicates);
         tbPrabhupada->addAction(actionGoToRow);
         tbPrabhupada->addAction(actionAbout);
+        tbPrabhupada->addAction(actionRegularExpression);
+        tbPrabhupada->addAction(actionAutoPercentBegin);
+        tbPrabhupada->addAction(actionAutoPercentEnd);
+        tbPrabhupada->addAction(actionDeleteAllBookmarks);
 
         retranslateUi(QPrabhupadaDictionaryWindow);
 
@@ -350,10 +378,10 @@ public:
                         "\267\320\275\320\260\320\275\320\270\321\217 \320\232\321\200\320\270\321\210\320\275\321\213 \320\250\321\200\320\270 \320\250\321\200\320\270\320\274\320\260\320\264 \320\220\320\261\321\205\320\260\321\217 \320\247\320\260\321\200\320\260\320\275\320\260\321\200\320\260\320\262\320\270\320\264\320\275\321\213 \320\221\321\205\320\260\320\272\321\202\320\270\320\262\320\265\320\264\320\260\320\275\321\202\321\213 \320\241\320\262\320\260\320\274\320\270 \320\237\321\200\320\260\320\261\321\205\321\203\320\277\320\260\320\264\321\213!<br />\320\237\320\276\320\267\320\275\320\260\320\272\320\276\320\274\320\270\321\202\321\214\321\201\321\217 \321\201 \320\265\320\263\320\276 \320\272\320\275\320\270\320\263\320\260\320\274\320\270 \320\274\320\276\320\266\320\275\320\276 \320\275\320\260 \321\201\320\260\320\271\321\202\320\265 <a href=\"https://vedabase.io\"><span style=\" text-decoration: underline; color:#0000ff;\">https://vedabase.io!</span></a></p></body></html>", nullptr)));
 #endif
         actionFind->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\235\320\260\320\271\321\202\320\270", nullptr)));
-        actionFind->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Return", nullptr)));
+        actionFind->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Return", nullptr)));
         actionFind->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\235\320\260\320\271\321\202\320\270", nullptr)));
-        actionCase_Sensitive->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\260\320\267\320\273\320\270\321\207\320\260\321\202\321\214 \321\200\320\265\320\263\320\270\321\201\321\202\321\200", nullptr)));
-        actionCase_Sensitive->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\260\320\267\320\273\320\270\321\207\320\260\321\202\321\214 \321\200\320\265\320\263\320\270\321\201\321\202\321\200", nullptr)));
+        actionCaseSensitive->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\260\320\267\320\273\320\270\321\207\320\260\321\202\321\214 \321\200\320\265\320\263\320\270\321\201\321\202\321\200", nullptr)));
+        actionCaseSensitive->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\240\320\260\320\267\320\273\320\270\321\207\320\260\321\202\321\214 \321\200\320\265\320\263\320\270\321\201\321\202\321\200", nullptr)));
         actionDelete->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214", nullptr)));
         actionDelete->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Del", nullptr)));
         actionDelete->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214", nullptr)));
@@ -382,8 +410,8 @@ public:
         actionSet_Bookmark_8->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+8", nullptr)));
         actionSet_Bookmark_9->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\243\321\201\321\202\320\260\320\275\320\276\320\262\320\270\321\202\321\214 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\321\203 &9", nullptr)));
         actionSet_Bookmark_9->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+9", nullptr)));
-        actionGo_to_ookmark_0->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &0", nullptr)));
-        actionGo_to_ookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+0", nullptr)));
+        actionGo_to_bookmark_0->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &0", nullptr)));
+        actionGo_to_bookmark_0->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+0", nullptr)));
         actionGo_to_bookmark_1->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &1", nullptr)));
         actionGo_to_bookmark_1->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Alt+1", nullptr)));
         actionGo_to_bookmark_2->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\232 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\265 &2", nullptr)));
@@ -410,8 +438,15 @@ public:
         actionAbout->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr)));
         actionAbout->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "F1", nullptr)));
         actionAbout->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr)));
-        ActionSaveYazykVectorToFile->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \321\217\320\267\321\213\320\272\320\270 \320\262 \321\204\320\260\320\271\320\273", nullptr)));
         ActionSaveAllBukvaToFile->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\261\321\203\320\272\320\262\321\213 \320\262 \321\204\320\260\320\271\320\273", nullptr)));
+        actionDeleteAllBookmarks->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "&\320\243\320\264\320\260\320\273\320\270\321\202\321\214 \320\262\321\201\320\265 \320\267\320\260\320\272\320\273\320\260\320\264\320\272\320\270", nullptr)));
+        actionDeleteAllBookmarks->setProperty("shortcut", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "Ctrl+Alt+0", nullptr)));
+        actionRegularExpression->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\240\320\265\320\263\321\203\320\273\321\217\321\200\320\275\321\213\320\265 \320\262\321\213\321\200\320\260&\320\266\320\265\320\275\320\270\321\217", nullptr)));
+        actionRegularExpression->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\240\320\265\320\263\321\203\320\273\321\217\321\200\320\275\321\213\320\265 \320\262\321\213\321\200\320\260\320\266\320\265\320\275\320\270\321\217", nullptr)));
+        actionAutoPercentBegin->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\220\320\262\321\202\320\276 % \320\262 \320\275\320\260&\321\207\320\260\320\273\320\265", nullptr)));
+        actionAutoPercentBegin->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\220\320\262\321\202\320\276 % \320\262 \320\275\320\260\321\207\320\260\320\273\320\265", nullptr)));
+        actionAutoPercentEnd->setProperty("text", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\220\320\262\321\202\320\276 % \320\262 \320\272\320\276\320\275&\321\206\320\265", nullptr)));
+        actionAutoPercentEnd->setProperty("iconText", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\220\320\262\321\202\320\276 % \320\262 \320\272\320\276\320\275\321\206\320\265", nullptr)));
 #ifndef QT_NO_TOOLTIP
         sbFontSize->setProperty("toolTip", QVariant(QApplication::translate("QPrabhupadaDictionaryWindow", "\320\240\320\260\320\267\320\274\320\265\321\200 \321\210\321\200\320\270\321\204\321\202\320\260", nullptr)));
 #endif
