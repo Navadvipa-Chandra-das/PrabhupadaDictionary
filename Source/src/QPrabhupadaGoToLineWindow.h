@@ -16,11 +16,11 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtSql>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 #include <QPrabhupadaDictionary.h>
 #include <ui_QPrabhupadaGoToLineWindow.h>
 
-class QPrabhupadaGoToLineWindow : public QPrabhupadaDialog
+class QPrabhupadaGoToLineWindow : public QDialog
 {
   CS_OBJECT( QPrabhupadaGoToLineWindow )
 
@@ -35,7 +35,7 @@ class QPrabhupadaGoToLineWindow : public QPrabhupadaDialog
     CS_SIGNAL_2( SignalGoToLine, Value )
 
   private:
-    using inherited = QPrabhupadaDialog;
+    using inherited = QDialog;
     void PushButtonGoClicked();
     void PushButtonCancelClicked();
   protected:

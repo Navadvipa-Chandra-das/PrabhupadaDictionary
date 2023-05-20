@@ -21,7 +21,7 @@
 #include <QPrabhupadaDictionaryWindow.h>
 
 #include <QApplication>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 #include <PrabhupadaUtil.h>
 
 int main( int argc, char *argv[] )
@@ -38,7 +38,6 @@ int main( int argc, char *argv[] )
   APrabhupadaStorage.LoadObject( &APrabhupadaDictionary.m_LanguageUIIndex, QPrabhupadaStorageKind::File );
 
   QPrabhupadaLoginWindow *PrabhupadaLoginWindow = new QPrabhupadaLoginWindow( &APrabhupadaDictionary );
-  PrabhupadaLoginWindow->m_PrabhupadaStorage = &APrabhupadaStorage;
 
   PrabhupadaLoginWindow->m_ui->ComboBoxUserName->setEditText( "Navadvipa Chandra das" );
   PrabhupadaLoginWindow->m_ui->ComboBoxDatabaseName->setEditText( "NewNavadvipa" );
@@ -69,7 +68,7 @@ int main( int argc, char *argv[] )
         QPrabhupadaDictionaryWindow PrabhupadaDictionaryWindow = QPrabhupadaDictionaryWindow( &APrabhupadaDictionary );
         PrabhupadaDictionaryWindow.m_PrabhupadaStorage = &APrabhupadaStorage;
         PrabhupadaDictionaryWindow.PrepareDictionary();
-        PrabhupadaDictionaryWindow.LoadMainWindow( QPrabhupadaStorageKind::DB );
+        APrabhupadaStorage.LoadObject( &PrabhupadaDictionaryWindow, QPrabhupadaStorageKind::DB );
         PrabhupadaDictionaryWindow.FirstShow();
         APrabhupadaStorage.SaveObject( PrabhupadaLoginWindow, QPrabhupadaStorageKind::File );
 

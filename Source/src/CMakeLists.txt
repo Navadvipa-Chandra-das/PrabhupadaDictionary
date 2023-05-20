@@ -3,7 +3,6 @@ list(APPEND PrabhupadaDictionary_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaLoginWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionaryWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.h
-  #${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaGoToLineWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaAboutWindow.h
@@ -14,7 +13,6 @@ list(APPEND PrabhupadaDictionary_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaLoginWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionaryWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/PrabhupadaUtil.cpp
-  #${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaStorage.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaDictionary.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaGoToLineWindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/QPrabhupadaAboutWindow.cpp
@@ -98,9 +96,9 @@ endif()
 
 # webkit temporarily removed, pending overflow issue resolution in CsWebKit
 
-# if("WebKit" IN_LIST COPPERSPICE_COMPONENTS)
-#  target_link_libraries(PrabhupadaDictionary CopperSpice::CsWebKit)
-# endif()
+if("WebKit" IN_LIST COPPERSPICE_COMPONENTS)
+  target_link_libraries(PrabhupadaDictionary CopperSpice::CsWebKit)
+endif()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
   set_target_properties( PrabhupadaDictionary PROPERTIES OUTPUT_NAME PrabhupadaDictionary )
@@ -160,13 +158,13 @@ cs_copy_library(CsXml)
 cs_copy_library(CsXmlPatterns)
 cs_copy_library(CsPrabhupada)
 
-if("Multimedia" IN_LIST COPPERSPICE_COMPONENTS)
+if ("Multimedia" IN_LIST COPPERSPICE_COMPONENTS)
   cs_copy_library(CsMultimedia)
 endif()
 
-if("WebKit" IN_LIST COPPERSPICE_COMPONENTS)
+if ("WebKit" IN_LIST COPPERSPICE_COMPONENTS)
   # webkit temporarily removed, pending overflow issue resolution in CsWebKit
-  # cs_copy_library(CsWebKit)
+  cs_copy_library(CsWebKit)
 endif()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")

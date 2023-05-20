@@ -13,7 +13,7 @@
 #include <PrabhupadaDictionary_build_info.h>
 #include <QPrabhupadaLoginWindow.h>
 #include <PrabhupadaUtil.h>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 
 QPrabhupadaLoginWindow::QPrabhupadaLoginWindow( QPrabhupadaDictionary *APrabhupadaDictionary )
   : inherited()

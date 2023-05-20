@@ -15,7 +15,7 @@
 
 #include <QtCore>
 #include <QtGui>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 #include <QPrabhupadaDictionary.h>
 #include <ui_QPrabhupadaDictionaryWindow.h>
 

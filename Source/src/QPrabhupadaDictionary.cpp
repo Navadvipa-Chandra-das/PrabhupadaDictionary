@@ -747,13 +747,13 @@ void QPrabhupadaDictionary::FilterSlovarChanged( QFilterSlovar Value )
               , ATranslateWithoutDiakritik = Value.m_TranslateWithoutDiakritik;
 
         if ( Value.m_PrabhupadaFindOptions.m_AutoPercentBegin ) {
-          ASanskritWithoutDiakritik  = QString::CharPercent + ASanskritWithoutDiakritik;
-          ATranslateWithoutDiakritik = QString::CharPercent + ATranslateWithoutDiakritik;
+          ASanskritWithoutDiakritik  = QPrabhupadaStorage::CharPercent + ASanskritWithoutDiakritik;
+          ATranslateWithoutDiakritik = QPrabhupadaStorage::CharPercent + ATranslateWithoutDiakritik;
         }
 
         if ( Value.m_PrabhupadaFindOptions.m_AutoPercentEnd ) {
-          ASanskritWithoutDiakritik  = ASanskritWithoutDiakritik  + QString::CharPercent;
-          ATranslateWithoutDiakritik = ATranslateWithoutDiakritik + QString::CharPercent;
+          ASanskritWithoutDiakritik  = ASanskritWithoutDiakritik  + QPrabhupadaStorage::CharPercent;
+          ATranslateWithoutDiakritik = ATranslateWithoutDiakritik + QPrabhupadaStorage::CharPercent;
         }
 
         for ( int I = 0; I < L; ++I ) {
@@ -761,7 +761,7 @@ void QPrabhupadaDictionary::FilterSlovarChanged( QFilterSlovar Value )
 
           if ( CheckSanskrit ) {
             NeedSanskrit =
-              QString::Like( ASanskritWithoutDiakritik.cend()
+              QPrabhupadaStorage::Like( ASanskritWithoutDiakritik.cend()
                                       , m_PrabhupadaSlovarVector[ I ]->m_SanskritWithoutDiakritik.cend()
                                       , ASanskritWithoutDiakritik.cbegin()
                                       , m_PrabhupadaSlovarVector[ I ]->m_SanskritWithoutDiakritik.cbegin() );
@@ -771,7 +771,7 @@ void QPrabhupadaDictionary::FilterSlovarChanged( QFilterSlovar Value )
           if ( NeedSanskrit ) {
             if ( CheckTranslate ) {
               NeedTranslate =
-                QString::Like( ATranslateWithoutDiakritik.end()
+                QPrabhupadaStorage::Like( ATranslateWithoutDiakritik.end()
                                         , m_PrabhupadaSlovarVector[ I ]->m_TranslateWithoutDiakritik.end()
                                         , ATranslateWithoutDiakritik.begin()
                                         , m_PrabhupadaSlovarVector[ I ]->m_TranslateWithoutDiakritik.begin() );

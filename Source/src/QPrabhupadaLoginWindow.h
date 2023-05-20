@@ -16,11 +16,11 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtSql>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 #include <QPrabhupadaDictionary.h>
 #include <ui_QPrabhupadaLoginWindow.h>
 
-class QPrabhupadaLoginWindow : public QPrabhupadaDialog
+class QPrabhupadaLoginWindow : public QDialog
 {
   CS_OBJECT( QPrabhupadaLoginWindow )
 
@@ -34,7 +34,7 @@ class QPrabhupadaLoginWindow : public QPrabhupadaDialog
     QPrabhupadaDictionary *m_PrabhupadaDictionary = nullptr;
     bool Connect( QSqlDatabase *DB );
   private:
-    using inherited = QPrabhupadaDialog;
+    using inherited = QDialog;
     void Connects();
     void Emits();
     void SQLRadioButton( bool checked );

@@ -16,7 +16,7 @@
 #include <QPrabhupadaGoToLineWindow.h>
 #include <QPrabhupadaAboutWindow.h>
 #include <PrabhupadaUtil.h>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 #include <QSaveFile>
 
 QPrabhupadaDictionaryWindow::QPrabhupadaDictionaryWindow( QPrabhupadaDictionary *APrabhupadaDictionary )

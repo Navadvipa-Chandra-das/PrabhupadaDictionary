@@ -16,11 +16,11 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtSql>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 #include <QPrabhupadaDictionary.h>
 #include <ui_QPrabhupadaAboutWindow.h>
 
-class QPrabhupadaAboutWindow : public QPrabhupadaDialog
+class QPrabhupadaAboutWindow : public QDialog
 {
   CS_OBJECT( QPrabhupadaAboutWindow )
 
@@ -31,7 +31,7 @@ class QPrabhupadaAboutWindow : public QPrabhupadaDialog
     Ui::QPrabhupadaAboutWindow *m_ui = new Ui::QPrabhupadaAboutWindow;
     QPrabhupadaStorage *m_PrabhupadaStorage;
   private:
-    using inherited = QPrabhupadaDialog;
+    using inherited = QDialog;
   protected:
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;

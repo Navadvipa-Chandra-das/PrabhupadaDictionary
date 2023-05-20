@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 #include <set>
-#include <QPrabhupadaStorage.h>
+#include <QPrabhupada.h>
 
 enum class QPrabhupadaDictionaryOrderBy : qint8
 {
