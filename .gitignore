@@ -34,5 +34,7 @@
 
 Release/
 Arhive/
-/SQL/NewNavadvipa.sql
-/SQL/Pamyatka.sql
+NewNavadvipa.sql
+Pamyatka.sql
+PrabhupadaDictionaryPostgreSQL.sql
+PrabhupadaDictionarySQLite.sql

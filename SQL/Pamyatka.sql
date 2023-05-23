@@ -5,7 +5,9 @@ C:\PostgreSQL\psqlODBC\bin\libpq.dll
 C:\PostgreSQL\15\bin\libpq.dll
 
 \i C:/C/NewNavadvipa/SQL/NewNavadvipa.sql 
-<enum>TopToolBarArea</enum>
+
+SELECT "UserRegKey", encode("UserData"::bytea, 'escape') 
+FROM "NewNavadvipa"."UserReg";
 
 -- Role: "Navadvipa Chandra das"
 -- DROP ROLE IF EXISTS "Navadvipa Chandra das";
