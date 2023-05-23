@@ -15,7 +15,7 @@
 #include <QPrabhupadaDictionaryWindow.h>
 #include <QPrabhupadaGoToLineWindow.h>
 #include <QPrabhupadaAboutWindow.h>
-#include <PrabhupadaUtil.h>
+#include <QPrabhupadaUtil.h>
 #include <QPrabhupada.h>
 #include <QSaveFile>
 
@@ -83,16 +83,16 @@ void QPrabhupadaDictionaryWindow::Connects()
                   , &QAction::triggered
                   , this
                   , &QPrabhupadaDictionaryWindow::actionDeleteAllBookmarks );
-  QObject::connect( m_ui->ActionSaveAllBukvaToFile
+  QObject::connect( m_ui->ActionSaveAllLetterToFile
                   , &QAction::triggered
                   , this
-                  , &QPrabhupadaDictionaryWindow::ActionSaveAllBukvaToFile );
+                  , &QPrabhupadaDictionaryWindow::ActionSaveAllLetterToFile );
   QObject::connect( m_ui->sbFontSize
                   , ( void ( QSpinBox::* )( int ) )( QSpinBox::valueChanged )
                   , this
                   , &QPrabhupadaDictionaryWindow::SpinBoxFontSizeChanged );
   QObject::connect( &m_PrabhupadaDictionary->m_FontSize
-                  , &QFontSize::SignalValueChanged
+                  , &QEmitInt::SignalValueChanged
                   , this
                   , &FontSizeChanged );
   QObject::connect( m_ui->ComboBoxLanguage
@@ -120,19 +120,19 @@ void QPrabhupadaDictionaryWindow::Connects()
                   , this
                   , &DoOrderBy );
   QObject::connect( &m_PrabhupadaDictionary->m_CaseSensitive
-                  , &QPrabhupadaBool::SignalValueChanged
+                  , &QEmitBool::SignalValueChanged
                   , this
                   , &CaseSensitiveChanged );
   QObject::connect( &m_PrabhupadaDictionary->m_RegularExpression
-                  , &QPrabhupadaBool::SignalValueChanged
+                  , &QEmitBool::SignalValueChanged
                   , this
                   , &RegularExpressionChanged );
   QObject::connect( &m_PrabhupadaDictionary->m_AutoPercentBegin
-                  , &QPrabhupadaBool::SignalValueChanged
+                  , &QEmitBool::SignalValueChanged
                   , this
                   , &AutoPercentBeginChanged );
   QObject::connect( &m_PrabhupadaDictionary->m_AutoPercentEnd
-                  , &QPrabhupadaBool::SignalValueChanged
+                  , &QEmitBool::SignalValueChanged
                   , this
                   , &AutoPercentEndChanged );
   QObject::connect( &m_PrabhupadaDictionary->m_PrabhupadaFilterSlovar
@@ -270,7 +270,7 @@ void QPrabhupadaDictionaryWindow::FontSizeChanged( int Value )
 
 void QPrabhupadaDictionaryWindow::actionFind()
 {
-  QFilterSlovar& FS = m_PrabhupadaDictionary->m_YazykVector[ m_PrabhupadaDictionary->m_LanguageIndex.m_Value ].m_FilterSlovar;
+  QFilterSlovar& FS = m_PrabhupadaDictionary->m_LanguageVector[ m_PrabhupadaDictionary->m_LanguageIndex.m_Value ].m_FilterSlovar;
 
   FS.m_PrabhupadaFindOptions = QPrabhupadaFindOptions( m_PrabhupadaDictionary->m_CaseSensitive.m_Value
                                                      , m_PrabhupadaDictionary->m_RegularExpression.m_Value
@@ -324,39 +324,39 @@ void QPrabhupadaDictionaryWindow::actionWhats_This_mode()
 
 void QPrabhupadaDictionaryWindow::actionGoToRow()
 {
-  QPrabhupadaGoToLineWindow PrabhupadaGoToLineWindow( m_PrabhupadaStorage );
+  QPrabhupadaGoToLineWindow PrabhupadaGoToLineWindow( m_Storage );
 
   QObject::connect( &PrabhupadaGoToLineWindow
                   , &QPrabhupadaGoToLineWindow::SignalGoToLine
                   , this
                   , &DoGoToLine );
 
-  m_PrabhupadaStorage->LoadObject( &PrabhupadaGoToLineWindow, QPrabhupadaStorageKind::Memory );
+  m_Storage->LoadObject( &PrabhupadaGoToLineWindow, QStorageKind::Memory );
   PrabhupadaGoToLineWindow.exec();
-  m_PrabhupadaStorage->SaveObject( &PrabhupadaGoToLineWindow, QPrabhupadaStorageKind::Memory );
+  m_Storage->SaveObject( &PrabhupadaGoToLineWindow, QStorageKind::Memory );
 }
 
 void QPrabhupadaDictionaryWindow::actionAbout()
 {
-  QPrabhupadaAboutWindow PrabhupadaAboutWindow( m_PrabhupadaStorage );
-  m_PrabhupadaStorage->LoadObject( &PrabhupadaAboutWindow, QPrabhupadaStorageKind::DB );
+  QPrabhupadaAboutWindow PrabhupadaAboutWindow( m_Storage );
+  m_Storage->LoadObject( &PrabhupadaAboutWindow, QStorageKind::DB );
   PrabhupadaAboutWindow.exec();
-  m_PrabhupadaStorage->SaveObject( &PrabhupadaAboutWindow, QPrabhupadaStorageKind::DB );
+  m_Storage->SaveObject( &PrabhupadaAboutWindow, QStorageKind::DB );
 }
 
 void QPrabhupadaDictionaryWindow::actionDeleteAllBookmarks()
 {
-  m_PrabhupadaDictionary->m_LanguageIndex.YazykInfo().m_PrabhupadaZakladkaMap.clear();
+  m_PrabhupadaDictionary->m_LanguageIndex.LanguageInfo().m_PrabhupadaZakladkaMap.clear();
 }
 
-void QPrabhupadaDictionaryWindow::ActionSaveAllBukvaToFile()
+void QPrabhupadaDictionaryWindow::ActionSaveAllLetterToFile()
 {
   QMessageBox::StandardButton reply;
 
   reply = QMessageBox::question( this
-                                , tr( "Пожалуйста, внимание!" )
-                                , tr( "Собираем все буквы в файл?" )
-                                , QMessageBox::Yes | QMessageBox::No );
+                               , tr( "Пожалуйста, внимание!" )
+                               , tr( "Собираем все буквы в файл?" )
+                               , QMessageBox::Yes | QMessageBox::No );
 
   if ( reply == QMessageBox::Yes ) {
     QString S, SB;
@@ -374,7 +374,7 @@ void QPrabhupadaDictionaryWindow::ActionSaveAllBukvaToFile()
       }
     }
 
-    QSaveFile ASaveFile = QSaveFile( "AllPrabhupadaBukva.txt" );
+    QSaveFile ASaveFile = QSaveFile( "AllPrabhupadaLetter.txt" );
     QDataStream  AStream = QDataStream( &ASaveFile );
     ASaveFile.open( QIODevice::WriteOnly );
 
@@ -400,9 +400,9 @@ void QPrabhupadaDictionaryWindow::changeEvent( QEvent *event )
 
 void QPrabhupadaDictionaryWindow::closeEvent( QCloseEvent *event )
 {
-  m_PrabhupadaStorage->SaveObject( m_PrabhupadaDictionary, QPrabhupadaStorageKind::DB );
-  m_PrabhupadaStorage->SaveObject( &m_PrabhupadaDictionary->m_LanguageUIIndex, QPrabhupadaStorageKind::File );
-  m_PrabhupadaDictionary->SaveYazykVectorToFile();
+  m_Storage->SaveObject( m_PrabhupadaDictionary, QStorageKind::DB );
+  m_Storage->SaveObject( &m_PrabhupadaDictionary->m_LanguageUIIndex, QStorageKind::File );
+  m_Storage->SaveObject( &m_PrabhupadaDictionary->m_LanguageVector, QStorageKind::File );
 
   inherited::closeEvent( event );
 }
@@ -423,7 +423,7 @@ void QPrabhupadaDictionaryWindow::LoadFromStream( QDataStream &ST )
   ST >> AS;
   m_ui->tbvPrabhupadaDictionary->horizontalHeader()->restoreState( AS );
   // 3
-  m_PrabhupadaStorage->LoadFromStream( ST );
+  m_Storage->LoadFromStream( ST );
 }
 
 void QPrabhupadaDictionaryWindow::SaveToStream( QDataStream &ST )
@@ -434,12 +434,12 @@ void QPrabhupadaDictionaryWindow::SaveToStream( QDataStream &ST )
   // 2
   ST << m_ui->tbvPrabhupadaDictionary->horizontalHeader()->saveState();
   // 3
-  m_PrabhupadaStorage->SaveToStream( ST );
+  m_Storage->SaveToStream( ST );
 }
 
 void QPrabhupadaDictionaryWindow::PrepareDictionary()
 {
-  m_PrabhupadaDictionary->PrepareYazykAndMaxID();
+  m_PrabhupadaDictionary->PrepareLanguageAndMaxID();
   PrepareLanguages();
 }
 
@@ -509,7 +509,6 @@ void QPrabhupadaDictionaryWindow::PrabhupadaFilterSlovarChanged( QFilterSlovar V
   m_ui->actionAutoPercentBegin ->setChecked( Value.m_PrabhupadaFindOptions.m_AutoPercentBegin );
   m_ui->actionAutoPercentEnd   ->setChecked( Value.m_PrabhupadaFindOptions.m_AutoPercentEnd );
 
-  PrabhupadaMessage( "Value.m_PrabhupadaFindOptions.m_AutoPercentBegin == " + QString::number( Value.m_PrabhupadaFindOptions.m_AutoPercentBegin ) );
   if ( Value.m_Sanskrit != m_ui->ComboBoxSanskrit->currentText() ) {
     m_ui->ComboBoxSanskrit ->setCurrentText( Value.m_Sanskrit );
   }
@@ -590,7 +589,7 @@ void QPrabhupadaDictionaryWindow::FirstShow()
 
 void QPrabhupadaDictionaryWindow::actionSet_Bookmark( unsigned short B )
 {
-  QYazykInfo& YI = m_PrabhupadaDictionary->m_LanguageIndex.YazykInfo();
+  QLanguageInfo& YI = m_PrabhupadaDictionary->m_LanguageIndex.LanguageInfo();
   QPrabhupadaZakladkaMap::iterator I = YI.m_PrabhupadaZakladkaMap.find( B );
   QModelIndex CI = m_ui->tbvPrabhupadaDictionary->currentIndex();
   int ARowNum    = CI.row()
@@ -656,7 +655,7 @@ void QPrabhupadaDictionaryWindow::actionSet_Bookmark_9()
 
 void QPrabhupadaDictionaryWindow::actionGo_to_bookmark( unsigned short B )
 {
-  QYazykInfo& YI = m_PrabhupadaDictionary->m_YazykVector[ m_PrabhupadaDictionary->m_LanguageIndex.m_Value ];
+  QLanguageInfo& YI = m_PrabhupadaDictionary->m_LanguageVector[ m_PrabhupadaDictionary->m_LanguageIndex.m_Value ];
   QPrabhupadaZakladkaMap::iterator ZI = YI.m_PrabhupadaZakladkaMap.find( B );
   if ( ZI != YI.m_PrabhupadaZakladkaMap.end() ) {
     QPrabhupadaZakladka& PrabhupadaZakladka = YI.m_PrabhupadaZakladkaMap[ B ];

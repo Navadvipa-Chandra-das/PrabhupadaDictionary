@@ -19,7 +19,7 @@
 #include <QPrabhupadaDictionary.h>
 #include <ui_QPrabhupadaDictionaryWindow.h>
 
-class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
+class QPrabhupadaDictionaryWindow : public QStorageMainWindow
 {
   CS_OBJECT( QPrabhupadaDictionaryWindow )
 
@@ -36,7 +36,7 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
     void PrepareDictionary();
     void FirstShow();
   private:
-    using inherited = QPrabhupadaMainWindow;
+    using inherited = QStorageMainWindow;
 
     void actionExit_Program();
     void actionFind();
@@ -51,7 +51,7 @@ class QPrabhupadaDictionaryWindow : public QPrabhupadaMainWindow
     void actionGoToRow();
     void actionAbout();
     void actionDeleteAllBookmarks();
-    void ActionSaveAllBukvaToFile();
+    void ActionSaveAllLetterToFile();
     void actionSet_Bookmark( unsigned short B );
     void actionSet_Bookmark_0();
     void actionSet_Bookmark_1();

@@ -201,7 +201,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionWhats_This_mode"/>
     <addaction name="actionGoToRow"/>
     <addaction name="actionAbout"/>
-    <addaction name="ActionSaveAllBukvaToFile"/>
+    <addaction name="ActionSaveAllLetterToFile"/>
     <addaction name="actionRegularExpression"/>
     <addaction name="actionAutoPercentBegin"/>
     <addaction name="actionAutoPercentEnd"/>
@@ -558,7 +558,7 @@ p, li { white-space: pre-wrap; }
     </iconset>
    </property>
   </action>
-  <action name="ActionSaveAllBukvaToFile">
+  <action name="ActionSaveAllLetterToFile">
    <property name="text" stdset="0">
     <string>Сохранить буквы в файл</string>
    </property>

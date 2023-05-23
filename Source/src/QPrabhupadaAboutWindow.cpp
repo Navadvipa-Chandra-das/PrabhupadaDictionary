@@ -12,12 +12,12 @@
 
 #include <PrabhupadaDictionary_build_info.h>
 #include <QPrabhupadaAboutWindow.h>
-#include <PrabhupadaUtil.h>
+#include <QPrabhupadaUtil.h>
 #include <QPrabhupada.h>
 
-QPrabhupadaAboutWindow::QPrabhupadaAboutWindow( QPrabhupadaStorage *APrabhupadaStorage )
+QPrabhupadaAboutWindow::QPrabhupadaAboutWindow( QStorage *AStorage )
   : inherited()
-  , m_PrabhupadaStorage( APrabhupadaStorage )
+  , m_Storage( AStorage )
 {
   m_ui->setupUi( this );
 }
@@ -31,14 +31,14 @@ void QPrabhupadaAboutWindow::LoadFromStream( QDataStream &ST )
 {
   inherited::LoadFromStream( ST );
 
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxRowNumber, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxRowNumber, ST );
 }
 
 void QPrabhupadaAboutWindow::SaveToStream( QDataStream &ST )
 {
   inherited::SaveToStream( ST );
 
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxRowNumber, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxRowNumber, ST );
 }
 
 void QPrabhupadaAboutWindow::changeEvent( QEvent *event )

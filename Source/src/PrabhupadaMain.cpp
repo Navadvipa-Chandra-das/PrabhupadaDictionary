@@ -22,20 +22,20 @@
 
 #include <QApplication>
 #include <QPrabhupada.h>
-#include <PrabhupadaUtil.h>
+#include <QPrabhupadaUtil.h>
 
 int main( int argc, char *argv[] )
 {
   QApplication app( argc, argv );
-  QPrabhupadaStorage APrabhupadaStorage;
+  QStorage AStorage;
 
   QPrabhupadaDictionary APrabhupadaDictionary( nullptr );
   APrabhupadaDictionary.setObjectName( "PrabhupadaDictionary" );
-  APrabhupadaDictionary.m_PrabhupadaStorage = &APrabhupadaStorage;
+  APrabhupadaDictionary.m_Storage = &AStorage;
   app.setObjectName( APrabhupadaDictionary.objectName() );
 
-  APrabhupadaStorage.LoadObject( &APrabhupadaDictionary.m_YazykVector, QPrabhupadaStorageKind::File );
-  APrabhupadaStorage.LoadObject( &APrabhupadaDictionary.m_LanguageUIIndex, QPrabhupadaStorageKind::File );
+  AStorage.LoadObject( &APrabhupadaDictionary.m_LanguageVector, QStorageKind::File );
+  AStorage.LoadObject( &APrabhupadaDictionary.m_LanguageUIIndex, QStorageKind::File );
 
   QPrabhupadaLoginWindow *PrabhupadaLoginWindow = new QPrabhupadaLoginWindow( &APrabhupadaDictionary );
 
@@ -45,7 +45,7 @@ int main( int argc, char *argv[] )
   PrabhupadaLoginWindow->m_ui->ComboBoxPort->setEditText( QString::number( 5432 ) );
   PrabhupadaLoginWindow->m_ui->ComboBoxSchema->setEditText( "\"NewNavadvipa\"" );
 
-  APrabhupadaStorage.LoadObject( PrabhupadaLoginWindow, QPrabhupadaStorageKind::File );
+  AStorage.LoadObject( PrabhupadaLoginWindow, QStorageKind::File );
   APrabhupadaDictionary.m_LanguageUIIndex.PrepareComboBox( PrabhupadaLoginWindow->m_ui->ComboBoxLanguageUI );
 
   int R, N = 0;
@@ -54,23 +54,24 @@ int main( int argc, char *argv[] )
     if ( R == QDialog::Accepted ) {
       QSqlDatabase DB = QSqlDatabase::addDatabase( PrabhupadaLoginWindow->m_DriverName, "PrabhupadaDB" );
       if ( PrabhupadaLoginWindow->Connect( &DB ) ) {
-        // Подготавливаем APrabhupadaStorage
-        APrabhupadaStorage.SetDatabase( &DB );
-        APrabhupadaStorage.m_Schema = PrabhupadaLoginWindow->m_Schema;
+        // Prepare AStorage
+        AStorage.SetDatabase( &DB );
+        AStorage.m_Schema = PrabhupadaLoginWindow->m_Schema;
         // Подготавливаем APrabhupadaDictionary
         APrabhupadaDictionary.m_DB = &DB;
-        APrabhupadaDictionary.m_Schema = APrabhupadaStorage.m_Schema;
-        // Удаляем настройки программы в базе данных, если надо!
+        APrabhupadaDictionary.m_Schema = AStorage.m_Schema;
+        // Reset settings in DB, if need!
         if ( PrabhupadaLoginWindow->m_ui->CheckBoxResetSettings->isChecked() ) {
-          APrabhupadaStorage.ResetSettings();
+          AStorage.ResetSettings();
         }
-        APrabhupadaStorage.LoadObject( &APrabhupadaDictionary, QPrabhupadaStorageKind::DB );
+        AStorage.LoadObject( &APrabhupadaDictionary, QStorageKind::DB );
         QPrabhupadaDictionaryWindow PrabhupadaDictionaryWindow = QPrabhupadaDictionaryWindow( &APrabhupadaDictionary );
-        PrabhupadaDictionaryWindow.m_PrabhupadaStorage = &APrabhupadaStorage;
+        PrabhupadaDictionaryWindow.m_StorageKind = QStorageKind::DB;
+        PrabhupadaDictionaryWindow.m_Storage = &AStorage;
         PrabhupadaDictionaryWindow.PrepareDictionary();
-        APrabhupadaStorage.LoadObject( &PrabhupadaDictionaryWindow, QPrabhupadaStorageKind::DB );
+        AStorage.LoadObject( &PrabhupadaDictionaryWindow, PrabhupadaDictionaryWindow.m_StorageKind );
         PrabhupadaDictionaryWindow.FirstShow();
-        APrabhupadaStorage.SaveObject( PrabhupadaLoginWindow, QPrabhupadaStorageKind::File );
+        AStorage.SaveObject( PrabhupadaLoginWindow, QStorageKind::File );
 
         delete PrabhupadaLoginWindow;
         PrabhupadaLoginWindow = nullptr;

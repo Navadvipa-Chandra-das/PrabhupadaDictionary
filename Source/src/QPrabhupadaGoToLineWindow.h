@@ -26,10 +26,10 @@ class QPrabhupadaGoToLineWindow : public QDialog
 
   public:
     QPrabhupadaGoToLineWindow() = delete;
-    QPrabhupadaGoToLineWindow( QPrabhupadaStorage *APrabhupadaStorage );
+    QPrabhupadaGoToLineWindow( QStorage *AStorage );
     ~QPrabhupadaGoToLineWindow();
     Ui::QPrabhupadaGoToLineWindow *m_ui = new Ui::QPrabhupadaGoToLineWindow;
-    QPrabhupadaStorage *m_PrabhupadaStorage;
+    QStorage *m_Storage;
 
     CS_SIGNAL_1( Public, void SignalGoToLine( int Value ) )
     CS_SIGNAL_2( SignalGoToLine, Value )

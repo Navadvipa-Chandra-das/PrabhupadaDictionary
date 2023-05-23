@@ -12,12 +12,12 @@
 
 #include <PrabhupadaDictionary_build_info.h>
 #include <QPrabhupadaGoToLineWindow.h>
-#include <PrabhupadaUtil.h>
+#include <QPrabhupadaUtil.h>
 #include <QPrabhupada.h>
 
-QPrabhupadaGoToLineWindow::QPrabhupadaGoToLineWindow( QPrabhupadaStorage *APrabhupadaStorage )
+QPrabhupadaGoToLineWindow::QPrabhupadaGoToLineWindow( QStorage *AStorage )
   : inherited()
-  , m_PrabhupadaStorage( APrabhupadaStorage )
+  , m_Storage( AStorage )
 {
   m_ui->setupUi( this );
   QObject::connect( m_ui->PushButtonGo
@@ -39,14 +39,14 @@ void QPrabhupadaGoToLineWindow::LoadFromStream( QDataStream &ST )
 {
   inherited::LoadFromStream( ST );
 
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxRowNumber, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxRowNumber, ST );
 }
 
 void QPrabhupadaGoToLineWindow::SaveToStream( QDataStream &ST )
 {
   inherited::SaveToStream( ST );
 
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxRowNumber, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxRowNumber, ST );
 }
 
 void QPrabhupadaGoToLineWindow::changeEvent( QEvent *event )

@@ -12,7 +12,7 @@
 
 #include <PrabhupadaDictionary_build_info.h>
 #include <QPrabhupadaLoginWindow.h>
-#include <PrabhupadaUtil.h>
+#include <QPrabhupadaUtil.h>
 #include <QPrabhupada.h>
 
 QPrabhupadaLoginWindow::QPrabhupadaLoginWindow( QPrabhupadaDictionary *APrabhupadaDictionary )
@@ -65,15 +65,15 @@ void QPrabhupadaLoginWindow::LoadFromStream( QDataStream &ST )
 {
   inherited::LoadFromStream( ST );
   // 1
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxUserName, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxUserName, ST );
   // 2
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxDatabaseName, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxDatabaseName, ST );
   // 3
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxHostName, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxHostName, ST );
   // 4
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxPort, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxPort, ST );
   // 5
-  QPrabhupadaStorage::LoadFromStream( m_ui->ComboBoxSchema, ST );
+  QStorage::LoadFromStream( m_ui->ComboBoxSchema, ST );
   // 6
   bool B;
   ST >> B;
@@ -89,15 +89,15 @@ void QPrabhupadaLoginWindow::SaveToStream( QDataStream &ST )
   inherited::SaveToStream( ST );
 
   // 1
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxUserName, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxUserName, ST );
   // 2
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxDatabaseName, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxDatabaseName, ST );
   // 3
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxHostName, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxHostName, ST );
   // 4
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxPort, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxPort, ST );
   // 5
-  QPrabhupadaStorage::SaveToStream( m_ui->ComboBoxSchema, ST );
+  QStorage::SaveToStream( m_ui->ComboBoxSchema, ST );
   // 6
   ST << m_ui->radioButtonSQLite->isChecked();
 }

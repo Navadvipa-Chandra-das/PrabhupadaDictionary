@@ -26,10 +26,10 @@ class QPrabhupadaAboutWindow : public QDialog
 
   public:
     QPrabhupadaAboutWindow() = delete;
-    QPrabhupadaAboutWindow( QPrabhupadaStorage *APrabhupadaStorage );
+    QPrabhupadaAboutWindow( QStorage *AStorage );
     ~QPrabhupadaAboutWindow();
     Ui::QPrabhupadaAboutWindow *m_ui = new Ui::QPrabhupadaAboutWindow;
-    QPrabhupadaStorage *m_PrabhupadaStorage;
+    QStorage *m_Storage;
   private:
     using inherited = QDialog;
   protected:

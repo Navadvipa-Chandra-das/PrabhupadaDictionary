@@ -24,6 +24,6 @@
 constexpr const char *versionString = "1.8.0";
 
 // PrabhupadaDictionary Build Date "16/12/2022"
-constexpr const char *buildDate = "20/05/2023";
+constexpr const char *buildDate = "23/05/2023";
 
 #endif

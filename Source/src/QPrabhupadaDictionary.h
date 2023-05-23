@@ -17,7 +17,7 @@ enum class QPrabhupadaDictionaryOrderBy : qint8
 , TranslateUbyvanie
 };
 
-using QPrabhupadaOrder = QPrabhupadaValue< QPrabhupadaDictionaryOrderBy >;
+using QPrabhupadaOrder = QEmitValue< QPrabhupadaDictionaryOrderBy >;
 
 class QStringMap : public std::map< QString, QString >
 {
@@ -156,24 +156,24 @@ inline QDataStream& operator >> ( QDataStream &ST, QFilterSlovar &FilterSlovar )
   return ST;
 }
 
-using QPrabhupadaFilterSlovar = QPrabhupadaValue< QFilterSlovar >;
+using QPrabhupadaFilterSlovar = QEmitValue< QFilterSlovar >;
 
-class QPrabhupadaBukva
+class QPrabhupadaLetter
 {
   public:
-    QChar32 m_Bukva;
+    QChar32 m_Letter;
     int m_Ves;
-    QPrabhupadaBukva();
-    ~QPrabhupadaBukva();
+    QPrabhupadaLetter();
+    ~QPrabhupadaLetter();
 };
 
-class QPrabhupadaBukvary : public std::map< QChar32, QPrabhupadaBukva >
+class QPrabhupadaPrimer : public std::map< QChar32, QPrabhupadaLetter >
 {
   private:
-    using inherited = std::map< QChar32, QPrabhupadaBukva >;
+    using inherited = std::map< QChar32, QPrabhupadaLetter >;
   public:
-    QPrabhupadaBukvary();
-    ~QPrabhupadaBukvary();
+    QPrabhupadaPrimer();
+    ~QPrabhupadaPrimer();
 };
 
 inline QDataStream& operator << ( QDataStream &ST, const QPrabhupadaDictionaryOrderBy &OrderBy )
@@ -250,50 +250,50 @@ class QPrabhupadaZakladkaMap : public std::map< unsigned short, QPrabhupadaZakla
     void SaveToStream( QDataStream &ST );
 };
 
-class QYazykInfo
+class QLanguageInfo
 {
   public:
-    QYazykInfo();
-    QYazykInfo( const QYazykInfo &A );
-    ~QYazykInfo();
+    QLanguageInfo();
+    QLanguageInfo( const QLanguageInfo &A );
+    ~QLanguageInfo();
 
     int m_ID;
-    QString m_Yazyk;
-    QString m_YazykSlovo;
+    QString m_Language;
+    QString m_LanguageSlovo;
     int m_CurrentRow = 0;
     QFilterSlovar m_FilterSlovar;
     QPrabhupadaZakladkaMap m_PrabhupadaZakladkaMap;
 };
 
-class QYazykVector : public std::vector< QYazykInfo >, public QObject
+class QLanguageVector : public std::vector< QLanguageInfo >, public QObject
 {
-  CS_OBJECT( QYazykVector )
+  CS_OBJECT( QLanguageVector )
   private:
-    using inherited_v = std::vector< QYazykInfo >;
+    using inherited_v = std::vector< QLanguageInfo >;
     using inherited_o = QObject;
   public:
-    QYazykVector();
-    ~QYazykVector();
+    QLanguageVector();
+    ~QLanguageVector();
     bool m_LoadSuccess = false;
-    int FindYazyk( const QString &S );
+    int FindLanguage( const QString &S );
     void LoadFromStream( QDataStream &ST ) override;
     void SaveToStream( QDataStream &ST ) override;
 };
 
-class QLanguageIndex : public QPrabhupadaValue< int >
+class QLanguageIndex : public QEmitValue< int >
 {
   private:
-    using inherited = QPrabhupadaValue< int >;
+    using inherited = QEmitValue< int >;
   public:
     QLanguageIndex() = delete;
     QLanguageIndex( int Value
-                  , QYazykVector &AYazykVector );
+                  , QLanguageVector &ALanguageVector );
     ~QLanguageIndex();
     static const int RussianIndex = 4;
-    QYazykVector& m_YazykVector;
+    QLanguageVector& m_LanguageVector;
     void PrepareComboBox( QComboBox *CB );
     void ComboBoxAddItem( QComboBox *CB, const QString &S );
-    inline QYazykInfo& YazykInfo() { return m_YazykVector[ m_Value ]; };
+    inline QLanguageInfo& LanguageInfo() { return m_LanguageVector[ m_Value ]; };
   protected:
 };
 
@@ -303,21 +303,21 @@ class QPrabhupadaDictionary : public QAbstractTableModel
   public:
     using inherited = QAbstractTableModel;
     QSqlDatabase *m_DB = nullptr;
-    QPrabhupadaStorage* m_PrabhupadaStorage;
+    QStorage* m_Storage;
     bool m_FilterSlovarIsEmpty = true;
     QPrabhupadaDictionary( QObject *parent = nullptr );
     ~QPrabhupadaDictionary();
     QTranslator m_Translator;
-    QYazykVector m_YazykVector;
-    QLanguageIndex m_LanguageIndex   = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
-    QLanguageIndex m_LanguageUIIndex = QLanguageIndex( QLanguageIndex::RussianIndex, m_YazykVector );
-    QFontSize m_FontSize = QFontSize( 14 );
+    QLanguageVector m_LanguageVector;
+    QLanguageIndex m_LanguageIndex   = QLanguageIndex( QLanguageIndex::RussianIndex, m_LanguageVector );
+    QLanguageIndex m_LanguageUIIndex = QLanguageIndex( QLanguageIndex::RussianIndex, m_LanguageVector );
+    QEmitInt m_FontSize = QEmitInt( 14 );
     QPrabhupadaOrder m_PrabhupadaOrder = QPrabhupadaOrder( QPrabhupadaDictionaryOrderBy::SanskritVozrastanie );
 
-    QPrabhupadaBool m_CaseSensitive     = QPrabhupadaBool( true );
-    QPrabhupadaBool m_RegularExpression = QPrabhupadaBool( false );
-    QPrabhupadaBool m_AutoPercentBegin  = QPrabhupadaBool( true );
-    QPrabhupadaBool m_AutoPercentEnd    = QPrabhupadaBool( true );
+    QEmitBool m_CaseSensitive     = QEmitBool( true );
+    QEmitBool m_RegularExpression = QEmitBool( false );
+    QEmitBool m_AutoPercentBegin  = QEmitBool( true );
+    QEmitBool m_AutoPercentEnd    = QEmitBool( true );
 
     QPrabhupadaFilterSlovar m_PrabhupadaFilterSlovar = QPrabhupadaFilterSlovar( QFilterSlovar( QPrabhupadaFindOptions(), "", "" ) );
     int m_MaxID;
@@ -327,12 +327,12 @@ class QPrabhupadaDictionary : public QAbstractTableModel
     void LanguageIndexChanged( int Value );
     void LanguageUIIndexChanged( int Value );
     void FilterSlovarChanged( QFilterSlovar Value );
-    void PrepareYazykAndMaxID();
+    void PrepareLanguageAndMaxID();
     void PreparePrabhupadaSlovarVector();
 
     static const QString PrabhupadaDictionaryFiles;
-    static QPrabhupadaBukvary PrabhupadaBukvary;
-    static void PreparePrabhupadaBukvary();
+    static QPrabhupadaPrimer PrabhupadaPrimer;
+    static void PreparePrabhupadaPrimer();
     static QString RemoveDiacritics( const QString& S );
     static bool PrabhupadaCompareLess( const QString& A, const QString& B );
     static bool PrabhupadaCompareMore( const QString& A, const QString& B );
@@ -345,14 +345,13 @@ class QPrabhupadaDictionary : public QAbstractTableModel
     QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
     QVariant headerData( int section, Qt::Orientation orientation, int role ) const override;
 
-    inline const QFilterSlovar& GetFilterSlovar() const { return m_YazykVector[ m_LanguageIndex.m_Value ].m_FilterSlovar; };
+    inline const QFilterSlovar& GetFilterSlovar() const { return m_LanguageVector[ m_LanguageIndex.m_Value ].m_FilterSlovar; };
     void sortByColumn( int column, Qt::SortOrder order );
     void OrderByChanged( QPrabhupadaDictionaryOrderBy Value );
     void CaseSensitiveChanged( bool Value );
     void RegularExpressionChanged( bool Value );
     void AutoPercentBeginChanged( bool Value );
     void AutoPercentEndChanged( bool Value );
-    void SaveYazykVectorToFile();
   protected:
 };
 
